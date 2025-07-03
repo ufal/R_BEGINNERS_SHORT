@@ -1,26 +1,97 @@
 ---
-title: "test"
-format: html
-editor: visual
+title: "Data Literacy with R for Students of Humanities"
+echo: true
+format:
+  revealjs:
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
 ---
 
-## Quartoeeeewww  
+## 
+::: callout-tip
+## RStudio on cloud
+[https://aic.ufal.mff.cuni.cz/jlab/](https://aic.ufal.mff.cuni.cz/jlab/)
+:::
+::: callout-tip
+## Learning materials on github
+[https://github.com/ufal/R_BEGINNERS_SHORT](https://github.com/ufal/R_BEGINNERS_SHORT)
+:::
+::: callout-tip
+## This course in the course catalogue
+[https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146](https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146)
+:::
+::: callout-tip
+## DataCamp
+[https://www.datacamp.com/users/sign_in](https://www.datacamp.com/users/sign_in)
+:::
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Core R
+- descriptive statistics
 
 ```{r}
-1 + 1
+observations <- runif(n = 1000, min = 0, max = 1)
+summary(observations)
 ```
-
-You can add options to executable code like this
-
 ```{r}
-#| echo: false
-2 * 2
+plot(observations)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+
+##
+
+
+
+- statistical modeling
+- visualization (plots)
+
+
+
+
+::: note
+Data science: making sense of data. around statistics & visualization. 
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
