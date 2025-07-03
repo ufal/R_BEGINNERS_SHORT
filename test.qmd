@@ -3,6 +3,7 @@ title: "Data Literacy with R for Students of Humanities"
 echo: true
 format:
   revealjs:
+    plugins: [notes]
     toc: true
     slide-number: true
     notes: true
@@ -12,7 +13,7 @@ format:
     scrollable: false
     code-block-height: 650px
     echo: true
-    output-location: slide
+    #output-location: slide
     preview-links: auto
   pdf:
     toc: true
@@ -24,74 +25,101 @@ format:
 ---
 
 ## 
+
 ::: callout-tip
 ## RStudio on cloud
-[https://aic.ufal.mff.cuni.cz/jlab/](https://aic.ufal.mff.cuni.cz/jlab/)
-:::
-::: callout-tip
-## Learning materials on github
-[https://github.com/ufal/R_BEGINNERS_SHORT](https://github.com/ufal/R_BEGINNERS_SHORT)
-:::
-::: callout-tip
-## This course in the course catalogue
-[https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146](https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146)
-:::
-::: callout-tip
-## DataCamp
-[https://www.datacamp.com/users/sign_in](https://www.datacamp.com/users/sign_in)
+
+<https://aic.ufal.mff.cuni.cz/jlab/>
 :::
 
-## Core R
-- descriptive statistics
+::: callout-tip
+## Learning materials on github
+
+<https://github.com/ufal/R_BEGINNERS_SHORT>
+:::
+
+::: callout-tip
+## This course in the course catalogue
+
+<https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146>
+:::
+
+::: callout-tip
+## DataCamp
+
+<https://www.datacamp.com/users/sign_in>
+:::
+
+## R vs. Python for Data Science
+- We ought to learn both... 
+- R probably best at tabular data (manipulation, plotting)
+- Nice comparison at statology.org:
+
+<https://www.statology.org/r-vs-python-for-data-science-a-comprehensive-comparison/>
+
+::: notes
+R used to be a highly specialized language for statistical computing unlike general programming languages such as Python. Its main advantage was vectorization: the ability to perform the same operation on all elements (e.g. table rows) simultaneously. Computer processors in 1990s could normally not do it, the general-purpose languages had to introduce a loop. With modern processors, general-purpose languages can vectorize many operations and R accrued functionalities of a general-purpose language. R possibly (still) better at data science. For application programming, use Python. Most important: use what your scientific community uses and supports with libraries.       
+:::
+
+## Mind map of R
+- Core concepts, links to DataCamp classes
+<https://orgpad.info/s/SKpWCNY4P7w>
+
+![](images_ATRIUM/QR_orgpad_r_big_picture_presentation.png){width="202"}
+
+::: {.notes} 
+
+Where the mindmap lives, snapshots follow on these slides.  
+:::
+
+
+
+## The Big Picture
+![](images_ATRIUM/orgpad_RBigPic_14.png)
+
+## Base R
+![](images_ATRIUM/orgpad_RBigPic_01.png)
+
+::: notes
+
+:::
+2. Base R: the original core. 
+Data structures:
+
+R works with (series of) single observations (vectors and matrices), tables (aka data frames), and lists that can contain any combinations of those, including other lists. 
+
+Class: The observations can be either numbers or strings, or Boolean values (TRUE/FALSE). In vectors and matrices all elements must be of the same class. In a column (in a data frame), all observations must also belong to the same class.   
+:::
+
+## Base R
+
+-   descriptive statistics
+-   plots
 
 ```{r}
 observations <- runif(n = 1000, min = 0, max = 1)
+```
+
+## Base R
+```{r}
 summary(observations)
 ```
+
+
 ```{r}
 plot(observations)
 ```
 
+## Current R
 
-
-##
-
-
-
-- statistical modeling
-- visualization (plots)
-
-
-
+-   Data wrangling
+-   Format conversions (XML, HTML, JSON, ...)
+-   Web scraping
+-   API communication
+-   Dynamic, interactive visualization
+-   Reporting, publishing
+-   Interoperable with
 
 ::: note
-Data science: making sense of data. around statistics & visualization. 
+Data science: making sense of data. around statistics & visualization.
 :::
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
