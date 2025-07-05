@@ -1,0 +1,220 @@
+---
+title: "Data Literacy with R for Students of Humanities"
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+---
+
+## Welcome {.smaller}
+
+::: callout-tip
+## RStudio on cloud
+
+<https://aic.ufal.mff.cuni.cz/jlab/>
+:::
+
+::: callout-tip
+## Learning materials on github
+
+<https://github.com/ufal/R_BEGINNERS_SHORT>
+:::
+
+::: callout-tip
+## This course in the course catalogue
+
+<https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146>
+:::
+
+::: callout-tip
+## DataCamp
+
+<https://www.datacamp.com/users/sign_in>
+:::
+
+## Note keeping tip
+
+::: callout-tip
+## How to keep notes in RStudio
+- Source file of this presentation: `01_Introduction.qmd`.
+- Edit your local copy to add your notes in [Markdown](). 
+- To preserve the slides structure, write your notes inside ```::: notes    :::```
+- You can render it as pdf/html even if you ruin the slides rendering.
+- How to keep the presentation structure 
+  - [https://quarto.org/docs/presentations/](https://quarto.org/docs/presentations/)
+:::
+![](images_ATRIUM/render_button.png)
+
+## R vs. Python for Data Science
+- Which is preferred in your research domain? 
+  - NLP, DH: both
+- R probably best at tabular data (manipulation, plotting)
+- Nice comparison at statology.org:
+
+<https://www.statology.org/r-vs-python-for-data-science-a-comprehensive-comparison/>
+
+::: notes
+R used to be a highly specialized language for statistical computing unlike general programming languages such as Python. Its main advantage was vectorization: the ability to perform the same operation on all elements (e.g. table rows) simultaneously. Computer processors in 1990s could normally not do it, the general-purpose languages had to process one value after another (a *loop*, present in possibly all programming languages). With modern processors, general-purpose languages can vectorize many operations and R accrued functionalities of a general-purpose language, so the differences are not so sharp any more. R possibly (still) better at data science. For application programming, use Python. Most important: use what your scientific community uses and supports with libraries.       
+:::
+
+## Mind map of R
+- Core concepts, links to DataCamp classes
+<https://orgpad.info/s/SKpWCNY4P7w>
+
+![](images_ATRIUM/QR_orgpad_r_big_picture_presentation.png){width="202"}
+
+::: {.notes} 
+I will walk you through my mind map of R functionalities. The QR code takes you where it lives, but  snapshots with comments follow on these slides and that should do.   
+:::
+
+
+## The Big Picture
+![](images_ATRIUM/orgpad_RBigPic_14.png)
+
+::: notes
+Some cells have content and can be opened on clicking on the live website. Cells of the same colors tend to link libraries or functionalities that belong together. 
+:::
+
+## Base R vs. "dialects"
+![](images_ATRIUM/orgpad_RBigPic_01.png)
+
+::: notes
+Base R: the original core. Great statistical computation work when you had a table to read in; preparation (data wrangling) not so comfortable. We will learn that bit of base R that is useful for data wrangling, with which we are going to spend virtually all time.   
+
+Modern "dialects" introduced new elements of syntax. We will learn to use such a family of software libraries for R called `tidyverse`.  They are not the only but very influential for data manipulation and plotting. We will learn just the modern plotting dialect called `ggplot2`. 
+:::
+
+
+## Base R
+![](images_ATRIUM/orgpad_RBigPic_02.png)
+
+::: notes
+R is optimized for fast operations on columns in tables, and hence it tends to treat all inputs as potential columns of a potential table. 
+Data types (classes): The observations can be either numbers or strings, or Boolean values (TRUE/FALSE). 
+You can gather the observations into diverse **Data structures** (e.g. tables).
+You can look at them as nouns in a natural language. 
+The verbs would be **Functions**. You give typically give them some values on input and they return some values on their output. Apart from functions, there are a few control structures: Condition and several types of loops.
+"Programming in R" usually refers to base R. Otherwise you "only" code using libraries.    
+:::
+
+
+##  Data structures
+![](images_ATRIUM/orgpad_RBigPic_03.png) 
+
+::: notes
+The signature data structure of R is the **vector**: ordered sequence of observations (i.e. position matters). 
+
+Each observation = vector element. A single observation = a vector with one element. 
+**Factor** = a vector of character strings that has been told that the strings are values of a categorical statistical variable, so it immediately records for R the frequency of each value, without calling a counting function every time.     
+When vectors and factors are equally long, they can be adopted as columns into a **data frame**. 
+These are the structures you are going to need regularly. Other important structure is *list*. It can store any other structures as its elements. For instance, you can have a list of several data frames, vectors, and other lists with anything inside. 
+**Matrix** is not much relevant for this course. It is actually a vector but it has an additional dimension of columns, which makes it similar to a data frame. However, all matrix columns must be the same data type, whereas in data frame, each column in a data frame can be a different data type (strings, numbers, Boolean values).  
+:::
+
+
+##  Functions and programming structures
+![](images_ATRIUM/orgpad_RBigPic_04.png) 
+
+::: notes
+A **function** is like a machine with a given purpose. Imagine a microwave oven. All it does is heating up, but the results of heating up depend on what you input and what time and intensity you select: Cold water -> boiling water, corn -> popcorn, ... You get rubbish when you put in something unintended or select wrong intensity or time. Unlike a microwave, you cannot destroy a function though. 
+
+Control structure **Loop**. You can call a function (or a larger piece of code) on a series of input objects, and the code will process one after another. 
+
+Control structure **Condition**: It says: "If this condition is met, run this piece of code". For instance, your piece of code takes a number and divides it by two. When you feed it a string instead of a number, it throws and error and stops your script. With a condition saying "do this only to numbers", you make sure that an accidental string would not crash your script. 
+:::
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_05.png) 
+
+::: notes
+
+:::
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_06.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_07.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_08.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_09.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_10.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_11.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_12.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_13.png) 
+
+##  
+![](images_ATRIUM/orgpad_RBigPic_14.png) 
+
+
+
+
+
+
+
+
+
+
+
+
+## Base R
+
+-   descriptive statistics
+-   plots
+
+```{r}
+observations <- runif(n = 1000, min = 0, max = 1)
+```
+
+## Base R
+```{r}
+summary(observations)
+```
+
+
+```{r}
+plot(observations)
+```
+
+## Current R
+
+-   Data wrangling
+-   Format conversions (XML, HTML, JSON, ...)
+-   Web scraping
+-   API communication
+-   Dynamic, interactive visualization
+-   Reporting, publishing
+-   Interoperable with
+
+::: note
+Data science: making sense of data. around statistics & visualization.
+:::
