@@ -24,6 +24,23 @@ format:
     number-sections: true
 ---
 
+## Welcome 
+- This course should stretch your frustration tolerance. 
+  - You will be lost without everyday self-study. 
+  - If not, maybe you were too modest in your self-assessment.
+
+- No question is stupid. *Please repeat* is excellent!
+  - You are asking for the shy ones.
+  - Teacher gets easily wrong or incoherent, like most people. 
+  
+- Hazard **loud guesses**. 
+  - Often legit assumptions stumble on idiosyncrasy. 
+  - You are hardly alone thinking so.
+ 
+
+
+
+
 ## Welcome {.smaller}
 
 ::: callout-tip
@@ -108,10 +125,13 @@ Modern "dialects" introduced new elements of syntax. We will learn to use such a
 
 ::: notes
 R is optimized for fast operations on columns in tables, and hence it tends to treat all inputs as potential columns of a potential table. 
+
 Data types (classes): The observations can be either numbers or strings, or Boolean values (TRUE/FALSE). 
 You can gather the observations into diverse **Data structures** (e.g. tables).
-You can look at them as nouns in a natural language. 
+You can look at them as nouns in a natural language.
+
 The verbs would be **Functions**. You give typically give them some values on input and they return some values on their output. Apart from functions, there are a few control structures: Condition and several types of loops.
+
 "Programming in R" usually refers to base R. Otherwise you "only" code using libraries.    
 :::
 
@@ -124,8 +144,10 @@ The signature data structure of R is the **vector**: ordered sequence of observa
 
 Each observation = vector element. A single observation = a vector with one element. 
 **Factor** = a vector of character strings that has been told that the strings are values of a categorical statistical variable, so it immediately records for R the frequency of each value, without calling a counting function every time.     
+
 When vectors and factors are equally long, they can be adopted as columns into a **data frame**. 
 These are the structures you are going to need regularly. Other important structure is *list*. It can store any other structures as its elements. For instance, you can have a list of several data frames, vectors, and other lists with anything inside. 
+
 **Matrix** is not much relevant for this course. It is actually a vector but it has an additional dimension of columns, which makes it similar to a data frame. However, all matrix columns must be the same data type, whereas in data frame, each column in a data frame can be a different data type (strings, numbers, Boolean values).  
 :::
 
@@ -139,14 +161,36 @@ A **function** is like a machine with a given purpose. Imagine a microwave oven.
 Control structure **Loop**. You can call a function (or a larger piece of code) on a series of input objects, and the code will process one after another. 
 
 Control structure **Condition**: It says: "If this condition is met, run this piece of code". For instance, your piece of code takes a number and divides it by two. When you feed it a string instead of a number, it throws and error and stops your script. With a condition saying "do this only to numbers", you make sure that an accidental string would not crash your script. 
+
+While loop and conditions are programming universals, base R has a specific family of functions to avoid loops. They are have `apply` in their name. You will see them a lot in base R code. They have a sligthly different syntax than regular functions, so you have to learn about them separately. When you are going to work mainly on data frames (tables), you would probably benefit from learning to use the corresponding functions from the `purrr` library, which is a "dialect" of R.    
 :::
+
+## Tidyverse
+https://www.tidyverse.org/
+![](images_ATRIUM/tidyverse_icons.png)
+
+::: notes
+In our course, we are going to focus on one modern R "dialect" for data manipulation, the `tidyverse`. It is a family of software libraries for convenient work on tables. It has a fabulous library for plotting, too. Here you see icons of the libraries with which we are going to work. Tidyverse is associated with the name *Hadley Wickham*, the initial author, but `tidyverse` became so popular that it has grown to an entire ecosystem of complementary libraries with many authors and contributors. The core idea of `tidyverse` is `tidy data`, which means each table row represents one observation and each column represents one variable.
+
+So when you work with data frames, you mostly need to filter away some rows or select just some columns, or to add another column based on a computation on other columns or something else. Or you have the data scattered in several different tables and want to merge them into one, just as if you query a relational database. And this is what the `dplyr` library is for.  `tidyr` is a library that helps you make your data comply with the `tidy` principles. `stringr` makes it easy for you to operate on strings (text search, replace, switch case etc.). `readr` is for reading files into R objects and saving R objects to files, e.g. a data frame to a `.csv` file. `lubridate` is for dates and times. Without it, they are just strings. When you need e.g. to compute duration from two dates and times, call `lubridate`. `ggplot2` is the plotting library. 
+
+The last three libraries are not so obvious at this moment, but for the sake of completeness: `purrr` processes things in lists. `forcats` works with factors (those vectors that know that they are categorical variables and count frequencies of their values). `tibble` adjusts base R data frames to fit better with `tidyverse` packages.    
+:::
+
+
+
 
 ##  
 ![](images_ATRIUM/orgpad_RBigPic_05.png) 
 
-::: notes
 
+::: notes
+The brown cells around the blue one at the bottom left give you an idea what it means to work with tabular data:  
+
+A table is called **data frame** in base R. In `tidyverse`, you will often meet the term **`tibble`**. A `tibble` is a data frame adjusted to the tidyverse packages. You do not have to worry about the difference. You can feed data frames to `tidyverse` functions and they just silently convert it to `tibble`.  
 :::
+
+
 
 ##  
 ![](images_ATRIUM/orgpad_RBigPic_06.png) 
