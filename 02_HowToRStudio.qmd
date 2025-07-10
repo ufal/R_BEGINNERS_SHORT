@@ -44,7 +44,7 @@ AIC is the name of the server. UFAL is the name of our department. MFF stands fo
 ::: notes
 Hit the RStudio tile marked with a green scribble square. The other tiles would take you to different programming languages. There are also two tiles with the icon of the R programming language. They would run the bare R console for you. Programmers like it, but we would rather stick to the polished GUI of RStudio.
 
-If you want to have it locally, install it from \[https://posit.co/products/open-source/rstudio/?sid=1\](https://posit.co/products/open-source/rstudio/?sid=1). It will tell you to download and install the bare R first, from \[https://cran.r-project.org/\](https://cran.r-project.org/).
+If you want to have it locally, install it from RStudio's web [https://posit.co/products/open-source/rstudio/?sid=1](#0). It will tell you to download and install the bare R first, from the *Comprehensive R Archive Network* <https://cran.r-project.org/> .
 :::
 
 ## Files in RStudio
@@ -52,7 +52,7 @@ If you want to have it locally, install it from \[https://posit.co/products/open
 ![](images_ATRIUM/Jupyterlab_04_RStudio_newQuarto.png){#fig-Quarto_newfile}
 
 ::: notes
-In the top Menu, Select File \> New. You will get a choice from a number of formats. I write this with the Quarto tool and choose Quarto presentation. Another option is Quarto document. It is no big deal what you choose. Both are plain text files.
+In the top `Menu`, `Select File` \> `New`. You will get a choice from a number of formats. I write this with the Quarto tool and choose `Quarto presentation`. Another option is `Quarto document`. It is no big deal which you choose. Both are plain text files.
 :::
 
 ## Quarto Editor Options: Visual
