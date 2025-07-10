@@ -1,24 +1,144 @@
 ---
 title: "Organize yourself in RStudio"
-format: revealjs
-editor: visual
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
 ---
 
-## Quarto  
+## Jupyter hub at our department's server
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+-   Work in your web browser, URL below.
 
-## Bullets
+-   Use your individual user name and password.
 
-When you click the **Render** button a document will be generated that includes:
+![Login to Jupyterlab](images_ATRIUM/jupyterlab_01_login.png){#fig-login}
 
--   Content authored with markdown
--   Output from executable code
+::: notes
+AIC is the name of the server. UFAL is the name of our department. MFF stands for faculty. CUNI.CZ stands for Charles university in Czechia. JLAB is the name of this service.
+:::
 
-## Code
+## Select RStudio
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+![Select RStudio](images_ATRIUM/jupyterlab_02_select_RStudio.png){#fig-select_RStudio}
 
-```{r}
-1 + 1
+::: notes
+Hit the RStudio tile marked with a green scribble square. The other tiles would take you to different programming languages. There are also two tiles with the icon of the R programming language. They would run the bare R console for you. Programmers like it, but we would rather stick to the polished GUI of RStudio.
+
+If you want to have it locally, install it from \[https://posit.co/products/open-source/rstudio/?sid=1\](https://posit.co/products/open-source/rstudio/?sid=1). It will tell you to download and install the bare R first, from \[https://cran.r-project.org/\](https://cran.r-project.org/).
+:::
+
+## Files in RStudio
+
+![](images_ATRIUM/Jupyterlab_04_RStudio_newQuarto.png){#fig-Quarto_newfile}
+
+::: notes
+In the top Menu, Select File \> New. You will get a choice from a number of formats. I write this with the Quarto tool and choose Quarto presentation. Another option is Quarto document. It is no big deal what you choose. Both are plain text files.
+:::
+
+## Quarto Editor Options: Visual
+
+-   many formatting options as buttons
+-   document displays as a rich text, even with images inserted.
+
+![Quarto with the visual editor](images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-quarto_visualeditor}
+
+## Quarto Editor Options: Source 
+
+-   Displays strictly plain text
+
+-   You must format everything manually.
+
+![Quarto editor in the source mode](images_ATRIUM/Jupyterlab_06_sourceEditor.png){#fig-Jupyter_SourceEditor}
+
+::: notes
+The basic formatting is done with **markdown** tags. You see a Level-2 Heading made with `##` and space and a URL link. For the fastest reference, go to RStudio's Menu bar and hit `Help > Markdown Quick Reference`. Look to the right bottom pane of RStudio. There are tabs `Files`, `Plots`, `Packages`, `Help`, `Viewer`, and `Presentation`. You will see the `Markdown Quick Reference` in the `Help` tab. But the little markdown you need you can absorb by reading the `.qmd` file of this document with the Source view on.
+:::
+
+## YAML header
+
+-   File `YAML_header_multiformat`
+
+-   Copy-paste it into your new file to get the same formatting you see here.
+
+-   Keep files `atrium.css` and `atrium.tex` in the same folder!!!
+
+```         
+---
+title: "Organize yourself in RStudio"
+echo: true
+format:
+  revealjs:
+    notes: true
+    css: atrium.css
+  pdf:
+    include-in-header: atrium.tex
+  html:
+    css: atrium.css
+---
 ```
+
+::: notes
+What makes plain text files real Quarto files is a piece of plain text metadata in the beginning: the YAML header, which you can overwrite.
+
+YAML is not part of R and you will be perfectly fine without it in this course. Here are easy-to-read references to YAML, should you really crave for more:
+
+-   <https://livingdevops.com/devops/a-complete-non-boring-guide-to-learn-yaml-in-2025/>
+
+-   <https://github.com/VLabStudio/Tutorials/blob/master/The%20Basics%20of%20YAML%20in%20Under%205%20Minutes/Introduction%20to%20YAML.pdf>
+
+Quarto has introduced a set of attributes and values in YAML. Here you see some of them. Some attributes explained:
+
+-   `echo: true` When you render the document (i.e. typeset the document for printing), also display executable code snippets.
+
+-   `format: revealjs, pdf, html` (watch out for the indentation!): you can render it in these three formats. `revealjs` are dynamic html slides as you see them in this presentation. Each format is specified with more fine-grained attributes. We are not going to delve into this. You can read the Quarto user guide and experiment yourself to become an expert.
+:::
+
+## CSS file
+
+-   Format template for HTML pages, not R-specific.
+
+-   Main purpose of `atrium.css`: larger font in code snippets
+
+-   No `atrium.css/.tex` in YAML header ⟾ Quarto default
+
+    ::: notes
+    My YAML header contains references to styling files for html (`atrium.css`) and LaTeX (`atrium.tex`), mainly to make code snippets more legible on slides and to prevent code spilling over the margin in LaTeX (PDF).
+
+    Generally, you should do fine without `.css` and `.tex` files like this, because the Quarto defaults are reasonable.
+    :::
+
+## Understand note taking with these teaching materials
+
+-   
+
+-   https://quarto.org/docs/presentations/revealjs/
+
+![](images_ATRIUM/render_button.png)
+
+## Start server when needed
+
+![Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this.](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning alt="Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this."}
+
+::: notes
+Normally you will see RStudio. Sometimes this appears instead. Then hit the Launch Server button. Also, when you stay idle for a long time, the server might stop. When you resume work, you will not be able to save or edit your files. Hit `Refresh` in your browser to invoke this page and relaunch the server.
+:::
