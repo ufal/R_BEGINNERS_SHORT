@@ -158,7 +158,10 @@ There is one more notable cell in the image: Iconic data sets. All libraries com
 
 ## Tidyverse
 https://www.tidyverse.org/
-![](images_ATRIUM/tidyverse_icons.png)
+
+
+
+![](images_ATRIUM/tidyverse_icons.png){width=80%}
 
 ::: notes
 In our course, we are going to focus on one modern R "dialect" for data manipulation, the `tidyverse`. It is a family of software libraries that has a fabulous library for plotting, too. Here you see icons of the `tidyverse` libraries. The `tidyverse` is associated with the name *Hadley Wickham*, the initial author, but it became so popular that it has grown to an entire ecosystem of complementary libraries with many authors and contributors. The core idea of `tidyverse` is `tidy data`, which means each table row represents one observation and each column represents one variable, and once you stick to this data philosophy, you can use an incredibly user-friendly and efficient toolkit. 
@@ -205,7 +208,9 @@ Just on the margin: reporting is more than reports you can print or run on your 
 ![](images_ATRIUM/render_button.png)
 
 ::: notes
-To keep notes in RStudio, you open a `.qmd` or `.Rmd` file. I write my teaching materials in Quarto and my default output is `revealjs` slides. I write the accompanying text into a field called speaker's notes. It is not a Markdown but a `revealjs` functionality. They are hidden to the audience during a slide show, but you see them when I render the same content in html or pdf, including the tags. You can also include latex commands and html code into markdown documents for better styling, but we will not learn this in this course. The goal here is that you have reproducible notes, and that you will get with the markdown template you see when you open a new markdown file.  
+To keep notes in RStudio, you open a `.qmd` or `.Rmd` file. I write my teaching materials in Quarto and my default output is `revealjs` slides. I write the accompanying text into a field called speaker's notes. It is not a Markdown but a `revealjs` functionality. They are hidden to the audience during a slide show, but you see them when I render the same content in html or pdf, including the tags. A block of notes like this one must always have one empty line (with its own number) before and one after, otherwise the notes appear in your slide along with the tag.  
+
+You can also include latex commands and html code into markdown documents for better styling, but we will not learn this in this course. The goal here is that you have reproducible notes, and that you will get with the markdown template you see when you open a new markdown file. Here is the user guide to Quarto: [https://quarto.org/](https://quarto.org/)  
 :::
 
 
@@ -213,7 +218,7 @@ To keep notes in RStudio, you open a `.qmd` or `.Rmd` file. I write my teaching 
 ![](images_ATRIUM/orgpad_RBigPic_07.png) 
 
 ::: notes
-The `dplyr`library is a big library to arrange rows according to the value of one or several variables, delete unwanted columns or rows, add new observations, or make a summary of your observations, for instance count the average of a variable or frequencies of the values of a categorical variable. With `dplyr`, you can also combine selected columns from several tables into a new table. Then you can visualize variables in a plot with `ggplot2`, which in the mind map is linked to a blue cell inscribed *Data Visualization*. `dplyr` and `ggplot2` are our main tools. When you need to split or merge columns (or to restructure your data frame more thoroughly), you use `tidyr`. 
+The `dplyr` library is a big library to arrange rows according to the value of one or several variables, delete unwanted columns or rows, add new observations, or make a summary of your observations, for instance count the average of a variable or frequencies of the values of a categorical variable. With `dplyr`, you can also combine selected columns from several tables into a new table. Then you can visualize variables in a plot with `ggplot2`, which in the mind map is linked to a blue cell inscribed *Data Visualization*. `dplyr` and `ggplot2` are our main tools. When you need to split or merge columns (or to restructure your data frame more thoroughly), you use `tidyr`. 
 :::
 
 
@@ -256,7 +261,7 @@ This course will pretend that your initial input is always a built-in data set o
 ![](images_ATRIUM/orgpad_RBigPic_13.png) 
 
 ::: notes
-With R you can do a lot of programming beyond data manipulation and analysis, even with data so big that you need several computers working on them in parallel. This is beyond our scope, but we will at least take a look at the powerful library `purrr` that allows you to 
+With R you can do a lot of programming beyond data manipulation and analysis, even with data so big that you need several computers working on them in parallel. This is beyond our scope, but we will at least take a look at the powerful library `purrr` that allows you to process many data frames at the same time. 
 :::
 
 ##  That's R!
