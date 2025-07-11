@@ -62,7 +62,7 @@ In the top `Menu`, `Select File` \> `New`. You will get a choice from a number o
 
 ![Quarto with the visual editor](images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-quarto_visualeditor}
 
-## Quarto Editor Options: Source 
+## Quarto Editor Options: Source
 
 -   Displays strictly plain text
 
@@ -129,15 +129,25 @@ Quarto has introduced a set of attributes and values in YAML. Here you see some 
 
 ## Understand note taking with these teaching materials
 
--   
+-   ***Render*** your source `.qmd` files to PDF, HTML, ~~MS Word~~
 
 -   https://quarto.org/docs/presentations/revealjs/
 
 ![](images_ATRIUM/render_button.png)
 
+::: notes
+`.qmd` is not very pretty for sharing. You should render it for print or web. Available document formats are PDF, HTML, and MS Word. The last one is not going to work here on the cloud because it needs MS Word locally installed and AIC Jupyterlab is a Linux machine.
+
+Another option is rendering it as `revealjs` slides. revealjs is a Java format based on HTML. It creates dynamic presentations that open in the web browser. It is a different file from the HTML file you get when you render qmd as HTML. In fact, you have to render it live from the source every time you want to run the slide show.
+
+The `revealjs` slide show enables speaker view, export to pdf, and many other widgets, if you list them in the YAML header. Render one of my source files as a slide show and explore it. And here is the user guide for `revealjs` Quarto presentations: [https://quarto.org/docs/presentations/revealjs/](#0) .
+
+Find Settings, hit `e` as `Export to PDF mode` and you will get all slides (without speakers notes). Then find `Print` in the browser menu and send it to a printer or to PDF to get a PDF file. Anyway, if you want all this accompanying text along, then you are better off rendering this directly as PDF.
+:::
+
 ## Start server when needed
 
-![Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this.](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning alt="Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this."}
+![Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this.](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning}
 
 ::: notes
 Normally you will see RStudio. Sometimes this appears instead. Then hit the Launch Server button. Also, when you stay idle for a long time, the server might stop. When you resume work, you will not be able to save or edit your files. Hit `Refresh` in your browser to invoke this page and relaunch the server.
