@@ -153,11 +153,11 @@ The `revealjs` slide show enables speaker view, export to pdf, and many other wi
 Find Settings, hit `e` as `Export to PDF mode` and you will get all slides (without speakers notes). Then find `Print` in the browser menu and send it to a printer or to PDF to get a PDF file. Anyway, if you want all this accompanying text along, then you are better off rendering this directly as PDF.
 :::
 
-## Resume broken connection 
+## Resume broken connection
 
 ::: columns
 ::: {.column width="50%"}
-![You can see this after login or being idle. Just launch the server. ](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning}
+![You can see this after login or being idle. Just launch the server.](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning}
 :::
 
 ::: {.column width="50%"}
@@ -195,4 +195,4 @@ You will be able to see the entire line even if you narrow your browser window.
 
 -   Display inserted figures in the editor (before rendering).
 
-![When you write in qmd/Rmd documents, you must set some options extra for them in a separate menu.](images_ATRIUM/Jupyterlab_14_RmarkdownSoftwrapInline.png){#fig-Jupyterlab_14_RmarkdownSoftwrapInline width="551"}
+![For `.qmd/.Rmd` documents, you have to adjust some options in a separate menu.](images_ATRIUM/Jupyterlab_14_RmarkdownSoftwrapInline.png){#fig-Jupyterlab_14_RmarkdownSoftwrapInline width="551"}
