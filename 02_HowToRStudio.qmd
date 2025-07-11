@@ -133,7 +133,15 @@ Quarto has introduced a set of attributes and values in YAML. Here you see some 
 
 -   https://quarto.org/docs/presentations/revealjs/
 
-![](images_ATRIUM/render_button.png)
+::: columns
+::: {.column width="35%"}
+![The `Render` button produces the document in the format you have specified in the YAML header as `format`.](images_ATRIUM/render_button.png){#fig-Jupyterlab_RenderButton}
+:::
+
+::: {.column width="65%"}
+![When your YAML header lists multiple output formats, you have to choose which you want to render.](images_ATRIUM/Jupyterlab_12_RenderMultipleFormatOptions.png){#fig-Jupyterlab_12_RenderMultipleFormatOptions width="353"}
+:::
+:::
 
 ::: notes
 `.qmd` is not very pretty for sharing. You should render it for print or web. Available document formats are PDF, HTML, and MS Word. The last one is not going to work here on the cloud because it needs MS Word locally installed and AIC Jupyterlab is a Linux machine.
@@ -145,10 +153,46 @@ The `revealjs` slide show enables speaker view, export to pdf, and many other wi
 Find Settings, hit `e` as `Export to PDF mode` and you will get all slides (without speakers notes). Then find `Print` in the browser menu and send it to a printer or to PDF to get a PDF file. Anyway, if you want all this accompanying text along, then you are better off rendering this directly as PDF.
 :::
 
-## Start server when needed
+## Resume broken connection 
 
-![Your server is not running. Just (re)start it. This can also happen to you when you are idle for a long time. When you refresh your non-responding page, you will see this.](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning}
+::: columns
+::: {.column width="50%"}
+![You can see this after login or being idle. Just launch the server. ](images_ATRIUM/Jupyterlab_07_ServerNotRunnin.png){#fig-jupyter_server_notrunning}
+:::
+
+::: {.column width="50%"}
+![When connection gets interrupted, you will see this. Just refresh and relaunch the server.](images_ATRIUM/Jupyterlab_08_RStudioDoesNotRespond.png){#fig-Jupyterlab_RStudio_NotResponding}
+:::
+:::
 
 ::: notes
-Normally you will see RStudio. Sometimes this appears instead. Then hit the Launch Server button. Also, when you stay idle for a long time, the server might stop. When you resume work, you will not be able to save or edit your files. Hit `Refresh` in your browser to invoke this page and relaunch the server.
+Normally you will see RStudio right after the start, but sometimes the server says it is not running. Then hit the Launch Server button. Also, when you stay idle for a long time, the server will stop (1,000 seconds by default).
+
+When the connection is broken, you will not be able to save or edit your files. Hit `Refresh` in your browser to invoke this page and relaunch the server.
 :::
+
+## Control RStudio's behavior
+
+![Saving, Encoding, Working directory, Line wrapping\...](images_ATRIUM/Jupyterlab_09_GlobalOptions.png){#fig-Jupyterlab_GlobalOptions}
+
+## Check autosaving options
+
+![Some reasonable options for autosaving.](images_ATRIUM/Jupyterlab_11_Autosave.png){#fig-Jupyterlab_Autosaving}
+
+## Control character encoding
+
+![UTF-8 fits most use cases.](images_ATRIUM/Jupyterlab_13_Encoding.png){#fig-Jupyterlab_13_Encoding}
+
+## Soft-wrap code
+
+You will be able to see the entire line even if you narrow your browser window.
+
+![Control code softwrapping](images_ATRIUM/Jupyterlab_10_SoftwrapCode.png){#fig-Jupyterlab_10_SoftwrapCode}
+
+## Control text in `.qmd/.Rmd` documents
+
+-   Soft-wrap text lines.
+
+-   Display inserted figures in the editor (before rendering).
+
+![When you write in qmd/Rmd documents, you must set some options extra for them in a separate menu.](images_ATRIUM/Jupyterlab_14_RmarkdownSoftwrapInline.png){#fig-Jupyterlab_14_RmarkdownSoftwrapInline width="551"}
