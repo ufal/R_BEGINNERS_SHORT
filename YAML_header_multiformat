@@ -23,4 +23,5 @@ format:
     toc: true
     number-sections: true
     css: atrium.css
+    embed-resources: true
 ---

@@ -1,6 +1,8 @@
 ---
 title: "Organize yourself in RStudio"
 echo: true
+resources: 
+  - "images_ATRIUM/"
 format:
   revealjs:
     plugins: [notes]
@@ -23,6 +25,7 @@ format:
     toc: true
     number-sections: true
     css: atrium.css
+    embed-resources: true
 ---
 
 ## Jupyter hub at our department's server

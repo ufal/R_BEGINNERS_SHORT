@@ -1,10 +1,13 @@
 ---
 title: "Your first Quarto document"
-resource-path: 
+embed-resources: true
+resources: 
   - "../images_ATRIUM/"
-format: 
+  - "../atrium.css"
+format:
   html:
     code-overflow: wrap
+    notes: true
     css: atrium.css
     include-in-header:
       text: |
@@ -15,12 +18,22 @@ format:
           }
          </style>
   pdf:
+    pdf-engine: xelatex
     keep-tex: true
-    include-in-header: 
-      text: |
-        \usepackage{fvextra}
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines=true,breakanywhere=true,commandchars=\\\{\},fontsize=\small}
-        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small}
+    include-in-header:
+      - text: |
+          \usepackage{fvextra}
+          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines=true,breakanywhere=true,commandchars=\\\{\},fontsize=\small}
+          \RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small}
+          \PassOptionsToPackage{hyphens}{url}
+          \usepackage{hyperref}
+          \usepackage{hyperref}
+          \usepackage{hyperref}
+          \usepackage{xurl}
+          \Urlmuskip=0mu plus 1mu
+          \def\UrlBreaks{
+          \do\/\do-\do\.\do\_\do\%}
+      - file: atrium.tex
 # This LaTeX command redefines a Quarto attribute so that it now prevents code lines from overflowing the page margin. Dont' worry about excessively smart things in the YAML header. I am getting this from MS Copilot. {.noexecute} with inline code is very important too, see below. Otherwise the YAML would be interpreted. 
 editor: visual
 ---
@@ -49,55 +62,53 @@ editor: visual
     Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
     ```
 
-7.  You should see this:
+7.  You should see this (@fig-Jupyterlab_05_Quarto_VisualEditor).
 
-![](../images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
+![Quarto template in visual editor](../images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
 
 ::: columns
 ::: column
-8.  Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this:
+8.  Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this (@fig-Quarto_01_Outline):
 :::
 
 ::: {.column width="20%"}
-![Quarto document outline](../images_ATRIUM/Quarto_01_Outline.png){#fig-Quarto_01_Outline}
+![Outline hierarchy](images/Quarto_01_Outline.png){#fig-Quarto_01_Outline}
 :::
 :::
 
-9.  Run the code chunks over and over and explore the behavior of the output field by clicking on the small grey icons on its top right. 
+9.  Run the code chunks over and over and explore the behavior of the output field by clicking on the small grey icons on its top right.
 
-10. Switch the editor to `Source` and inspect the source code of the entire document. Try and add another code chunk manually. Type in a small calculation like those ones in the template. 
+10. Switch the editor to `Source` and inspect the source code of the entire document. Try and add another code chunk manually. Type in a small calculation like those ones in the template.
 
-11. Switch the editor back to Visual and run your chunk. 
+11. Switch the editor back to Visual and run your chunk.
 
 ::: columns
-:::{.column width="80%"}
-12. Explore Quarto's buttons that add a new code chunk or run chunks in various ways.  
+::: {.column width="80%"}
+12. Explore Quarto's buttons that add a new code chunk or run chunks in various ways (@fig-Quarto_02_RunButtons).
 :::
 
-:::{.column width="20%"}
-![](images_ATRIUM/Quarto_02_RunButtons.png)
+::: {.column width="20%"}
+![Quarto's tool bar](../images_ATRIUM/Quarto_02_RunButtons.png){#fig-Quarto_02_RunButtons}
 :::
 :::
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+13. Insert an image of your choice from the web (it must be a `.png` file), give it a caption and an ID in the Visual editor. All IDs must start with `#`. Figure IDs must continual with `fig-`, for instance `noexecute @fig-Quarto_01_Outline`. You can try and adjust its width (the ratio of width and height is locked by default).
 
-## Running Code
+Like so:
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+``` noexecute
+![UFAL logo](https://ufal.mff.cuni.cz/sites/all/themes/drufal/css/logo/
+logo_ufal_110u.png){#fig-ufal width="20%"}
 
-```{r}
-1 + 1
+*This is the logo of UFAL, the host of this summer school (@fig-ufal). *
 ```
 
-You can add options to executable code like this
+This will render like this:
 
-```{r}
-#| echo: false
-2 * 2
-```
+![UFAL logo](https://ufal.mff.cuni.cz/sites/all/themes/drufal/css/logo/logo_ufal_110u.png){#fig-ufal width="20%"}
 
-The `echo: false` option disables the printing of code (only output is displayed).
-```{r}
-getwd()
-```
+*This is the logo of UFAL, the host of this summer school (@fig-ufal).*
 
+13. Type a piece of text and create a reference from the text to the image you have inserted.
+
+**NB** ⚠️ In some versions of RStudio the cross-references inserter in Visual Editor does not work. If this is your case, switch to the Source editor to type them manually. Then just switch back to the Visual editor. You can toggle between Source and Visual as much as you want.

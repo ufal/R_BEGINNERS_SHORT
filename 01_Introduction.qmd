@@ -1,6 +1,10 @@
 ---
 title: "Data Literacy with R for Students of Humanities"
 echo: true
+resources: 
+  - "images_ATRIUM/"
+  - "atrium.css"
+  - "atrium.tex"
 format:
   revealjs:
     plugins: [notes]
@@ -23,6 +27,7 @@ format:
     toc: true
     number-sections: true
     css: atrium.css
+    embed-resources: true
 ---
 
 ## Welcome 
