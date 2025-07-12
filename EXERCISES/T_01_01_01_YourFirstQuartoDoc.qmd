@@ -1,8 +1,19 @@
 ---
 title: "Your first Quarto document"
+resource-path: 
+  - "../images_ATRIUM/"
 format: 
   html:
     code-overflow: wrap
+    css: atrium.css
+    include-in-header:
+      text: |
+        <style>
+          pre code {
+          white-space: pre-wrap;
+          word-break: break-word;
+          }
+         </style>
   pdf:
     keep-tex: true
     include-in-header: 
@@ -10,6 +21,7 @@ format:
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines=true,breakanywhere=true,commandchars=\\\{\},fontsize=\small}
         \RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small}
+# This LaTeX command redefines a Quarto attribute so that it now prevents code lines from overflowing the page margin. Dont' worry about excessively smart things in the YAML header. I am getting this from MS Copilot. {.noexecute} with inline code is very important too, see below. Otherwise the YAML would be interpreted. 
 editor: visual
 ---
 
@@ -25,7 +37,7 @@ editor: visual
 
 6.  Inspect the contents of the new file. If you see something like this, switch the `Source` editor to `Visual`.
 
-    ```         
+    ``` noexecute
     ---
     title: "Untitled"
     format: html
@@ -39,9 +51,33 @@ editor: visual
 
 7.  You should see this:
 
-![](images/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
+![](../images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
 
-8.  Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this:![](images/Quarto_01_Outline.png){#fig-Quarto_01_Outline width = 90% height = 90%}
+::: columns
+::: column
+8.  Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this:
+:::
+
+::: {.column width="20%"}
+![Quarto document outline](../images_ATRIUM/Quarto_01_Outline.png){#fig-Quarto_01_Outline}
+:::
+:::
+
+9.  Run the code chunks over and over and explore the behavior of the output field by clicking on the small grey icons on its top right. 
+
+10. Switch the editor to `Source` and inspect the source code of the entire document. Try and add another code chunk manually. Type in a small calculation like those ones in the template. 
+
+11. Switch the editor back to Visual and run your chunk. 
+
+::: columns
+:::{.column width="80%"}
+12. Explore Quarto's buttons that add a new code chunk or run chunks in various ways.  
+:::
+
+:::{.column width="20%"}
+![](images_ATRIUM/Quarto_02_RunButtons.png)
+:::
+:::
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
@@ -61,3 +97,7 @@ You can add options to executable code like this
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+getwd()
+```
+
