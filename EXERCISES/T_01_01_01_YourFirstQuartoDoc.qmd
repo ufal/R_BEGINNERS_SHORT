@@ -1,0 +1,63 @@
+---
+title: "Your first Quarto document"
+format: 
+  html:
+    code-overflow: wrap
+  pdf:
+    keep-tex: true
+    include-in-header: 
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines=true,breakanywhere=true,commandchars=\\\{\},fontsize=\small}
+        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small}
+editor: visual
+---
+
+1.  Log in at JupyterLab: `aic.ufal.mff.cuni.cz/jlab` , using your credentials.
+
+2.  Select RStudio.
+
+3.  In the top left pane, select `File` \> `New File` \> `Quarto Document`.
+
+4.  Fill out the Title and Author fields in the form.
+
+5.  Save the file as `yourlogin_E01_01_01`
+
+6.  Inspect the contents of the new file. If you see something like this, switch the `Source` editor to `Visual`.
+
+    ```         
+    ---
+    title: "Untitled"
+    format: html
+    editor: visual
+    ---
+
+    ## Quarto
+
+    Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+    ```
+
+7.  You should see this:
+
+![](images/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
+
+8.  Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this:![](images/Quarto_01_Outline.png){#fig-Quarto_01_Outline width = 90% height = 90%}
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
