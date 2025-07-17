@@ -1,5 +1,5 @@
 ---
-title: "Navigation in RStudio"
+title: "File management in this course"
 echo: true
 format:
   revealjs:
@@ -9,8 +9,8 @@ format:
     notes: true
     pdf-export: true
     css: atrium.css
-    chalkboard: true
-    scrollable: false
+    #chalkboard: true
+    scrollable: true
     code-block-height: 650px
     echo: true
     #output-location: slide
@@ -26,12 +26,52 @@ format:
     embed-resources: true
 ---
 
+## Simplest ways to obtain the teaching materials
+
+-   Web ⤇ Your PC ⤇ Jupyterlab RStudio
+
+-   All on the cloud
+
+::: notes
+You will need some teaching materials to open in your RStudio. Here you will get tips how to manage files fully interactively, without using a single line of code.
+
+If you can manage files in the unix command line, use Git, or manage files programmatically with R, feel free to skip this tutorial and make use of your superpowers.
+:::
+
 ## File explorer in RStudio's bottom right pane
 
 ![Four panes in RStudio](images_ATRIUM/RStudio_01_FourPanes.png){#RStudio_01_FourPanes}
 
 ::: notes
 All around interactive file management happens in the bottom right RStudio pane, the `Files` tab.
+:::
+
+## Your RStudio ≈ Your Home Directory {.smaller}
+
+::: columns
+::: {.column width="60%"}
+-   Jupyterlab runs on OS Linux.
+
+-   Each user was given a home directory to
+
+    -   read files
+
+    -   write (create or edit) files
+
+    -   execute program files.
+
+-   You can see the entire file structure, but only read or write those folders that the IT admin or their owner made available to you.
+
+-   Do not delete the `bin` and `R` folders.
+:::
+
+::: {.column width="40%"}
+![Your Home directory](images_ATRIUM/RStudio_04_YourHome.png){#RStudio_04_YourHome width="503"}
+:::
+:::
+
+::: notes
+This tutorial will guide you through the folder structure later. For this moment, let us pretend that you are the only user of this RStudio installation or even on the entire server.
 :::
 
 ## Upload from your computer to Jupyterlab RStudio
@@ -52,20 +92,194 @@ You can upload files to the cloud from your local computer. Use the `Upload` but
 Check the file(s) on Jupyterlab in the explorer. Hit the `More` menu (the one with the gear icon) and select `Export...`. If you have selected more than one file, RStudio will export the batch as a zip file.
 :::
 
-## Copy teaching materials from GitHub
+## Move and Copy files in your RStudio
+
+![You want to copy a file into a folder in RStudio.](images_ATRIUM/FileManagement_RStudio_01_AFileAFolder.png){#FileManagement_RStudio_01_AFileAFolder width="472"}
+
+::: columns
+::: {.column width="50%"}
+![Copy a file into a folder in RStudio](images_ATRIUM/FileManagement_RStudio_02_CopyAFileToAFolder.png){#FileManagement_RStudio_02_CopyAFileToAFolder width="304"}
+:::
+
+::: {.column width="50%"}
+![You can as well save it under a different name.](images_ATRIUM/FileManagement_RStudio_03_CopyAFileToAFolderRename.png){#FileManagement_RStudio_03_CopyAFileToAFolderRename}
+:::
+:::
+
+## ATRIUM_RESOURCES symlink
+
+::: columns
+::: {.column width="50%"}
+-   Shortcut to teacher's folder
+
+    -   you can read and copy all files
+
+    -   you cannot delete them or edit them
+
+-   To edit, save outside this folder.
+:::
+
+::: {.column width="50%"}
+![A symlink folder in a user's folder](images_ATRIUM/FileManagement_RStudio_05_symlink.png){#FileManagement_RStudio_05_symlink}
+:::
+:::
+
+## Read other students' RStudio folders
+
+-   Students and teachers can read each others' folders and copy from them.
+
+-   Details at the end of this presentation.
 
 ::: notes
-I store all the teaching materials on GitHub.
+To copy files from others, you need to be familiar with the file system and how it works. Maybe you will not need it at all, so I will postpone this topic to the very end of this tutorial.
 :::
+
+## Download teaching materials from GitHub {.smaller}
+
+-   GitHub ≈ GoogleDrive for programmers
+
+    -   Files and folders in a dedicated **repository**
+
+    -   powered by a tool called **Git**
+
+        -   change tracking, sharing management
+
+        -   complex programmatic commands
+
+-   **Without Git: Download** a repository or file to your PC
+
+    -   you only get the current snapshot
+
+    -   Go to the repository URL
+
+    -   use GitHub's web GUI
+
+::: notes
+Should symlink not be available for you, download the teaching materials from GitHub.
+
+I store all my teaching materials in a GitHub **repository** for backup and access from different computers. You can download everything from there without bothering about the Git commands. If I change something later, it will not update in your copy.
+:::
+
+## GitHub Download Button {.smaller}
+
+-   Hit the `Code` Button and Select `Download ZIP`
+
+-   Each file has its own URL (click on it to get there)
+
+-   You can also download the entire repo
+
+![Download from GitHub](images_ATRIUM/FileManagement_03_GitHub_DownloadButton.png){#FileManagement_03_GitHub_DownloadButton}
+
+::: notes
+1.  **Go to the GitHub repository page** (you'll usually get a link).
+
+2.  **Find the file or folder** you want.
+
+3.  Click on the file name to open it.
+
+4.  Click the **"Download"** button (usually a small icon or you can right-click and choose "Save As").
+
+    -   If you want the **entire repository**, click the green **"Code"** button near the top right, then choose **"Download ZIP"**.
+:::
+
+## Download a folder from GitHub
+
+-   GitHub GUI Download works only for a file or a repository
+
+-   Use this web service to download a folder:
+
+`https://download-directory.github.io/?url=https://github.com/`*THE_NAME_OF_THE_REPO*`/tree/main/`*THE_NAME_OF_THE_FOLDER*
+
+::: notes
+Fortunately for us, there is a web service named `download-directory.github.io` and you can use it simply by opening your browser and typing in a URL containing its name and the path to the target folder.
+
+::: callout-warning
+## Caveat!
+
+-   The URL of each GitHub repository ends with a suffix `.git` . Do not include this suffix.
+
+-   GitHub imposes some additional structure on the folders. Include `/tree/` after the repository name, followed by another internal "folder name". This would typically be `main`. `main` is the default name given by GitHub, but the repository owner could have renamed it.
+:::
+:::
+
+## Download folders with `download-directory.github.io`
+
+![External web service `download-directory.github.io`](images_ATRIUM/FileManagement_04_GitHub_Folder.png){#FileManagement_04_GitHub_Folder}
 
 ## UFAL Linux Network
 
-![](images_ATRIUM/RStudio_06_AtRoot.png){#RStudio_06_AtRoot}
+::: columns
+::: {.column width="60%"}
+-   must-know if you
+
+    -   want to copy directly from teacher's or students' folders
+
+    -   get lost by inadvertently clicking on something in the `Files` tab.
+
+-   `/` is the top of the file system. The `home` folder contains home folders of all users.
+:::
+
+::: {.column width="40%"}
+![Your home is inside here.](images_ATRIUM/RStudio_06_AtRoot.png){#RStudio_06_AtRoot width="533"} ![Your home is inside here.](images_ATRIUM/RStudio_07_PickYourHome.png){width="522"}
+:::
+:::
 
 ::: notes
-Do not make this a big deal because you will probably not use Jupyterlab RStudio in your personal work setup after this course. But you could benefit from a basic orientation in the system.
+Do not make this a big deal because you will probably not use Jupyterlab RStudio in your personal work setup. But you could benefit from a basic orientation in the system during this course.
 
 Jupyterlab is installed on a computational grid called AIC (Artificial Intelligence Cluster).
 :::
 
-## Copy from someone at Jupyterlab
+## Alternative paths to your home
+
+::: columns
+::: {.column width="50%"}
+![Your home as `/home/YOURLOGIN`](images_ATRIUM/RStudio_04_YourHome.png)
+:::
+
+::: {.column width="50%"}
+![Path to your home as `/lnet/aic/personal/YOU`](images_ATRIUM/RStudio_08_PathOverLNET_AIC_PERSONAL.png){#RStudio_08_PathOverLNET_AIC_PERSONAL}
+:::
+:::
+
+Do not ponder on it. It's how the IT admin organized the file system.
+
+## Copy from someone's home to yours - Step 1
+
+![Navigate upwards in the file structure to `/home/`*YOUR_COLLEAGUE'S_FOLDER*](images_ATRIUM/RStudio_09_VisitSomeoneHome.png){#RStudio_09_VisitSomeoneHome.}
+
+## Copy from someone's home to yours - Step 2
+
+![Select the item to copy (one file) and activate the menu](images_ATRIUM/RStudio_11_CopyFromSomeoneCopy.png){#RStudio_11_CopyFromSomeoneCopy width="568"}
+
+## Copy from someone's home to yours - Step 3
+
+![Select the target folder (probably your home). To select a subfolder, type `~/`*FOLDER_NAME.*](images_ATRIUM/RStudio_12_TargetTheCopy.png){#RStudio_12_TargetTheCopy}
+
+## Copy from someone's home to yours - Step 4
+
+-   Note that you are still in your colleague's folder.
+
+-   It's only the file that travels!
+
+![\... Or select a subfolder interactively](images_ATRIUM/RStudio_13_PickTargetFolder.png){#RStudio_13_PickTargetFolder}
+
+## Copy from someone's home to yours - Step 5
+
+![Navigate home!](images_ATRIUM/RStudio_14_ReturnHome.png){#RStudio_14_ReturnHome}
+
+## Copy from someone's home to yours - Step 6
+
+![Mission accomplished!](images_ATRIUM/RStudio_15_MissionAccomplished.png){#RStudio_15_MissionAccomplished}
+
+## Copy someone's [**folder**]{.underline} to your home {.smaller}
+
+::: columns
+::: {.column width="50%"}
+![When you copy a **folder**, you must give the copy a name before saving.](images_ATRIUM/RStudio_16_CopyFolderHome.png){#RStudio_16_CopyFolderHome width="509"}
+:::
+
+::: {.column width="50%"}
+![Folder copy in your home, renamed](images_ATRIUM/RStudio_17_FolderCopiedHome.png){#RStudio_17_FolderCopiedHome width="516"}
+:::
+:::
