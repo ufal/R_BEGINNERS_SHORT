@@ -1,0 +1,71 @@
+---
+title: "Navigation in RStudio"
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## File explorer in RStudio's bottom right pane
+
+![Four panes in RStudio](images_ATRIUM/RStudio_01_FourPanes.png){#RStudio_01_FourPanes}
+
+::: notes
+All around interactive file management happens in the bottom right RStudio pane, the `Files` tab.
+:::
+
+## Upload from your computer to Jupyterlab RStudio
+
+![](images_ATRIUM/RStudio_02_UploadFileFromYourPC.png){#RStudio_02_UploadFileFromYourPC .Interactive .upload .to .RStudio .on .Jupyterlab}
+
+::: notes
+You can upload files to the cloud from your local computer. Use the `Upload` button. The upper field in the dialog box navigates you through the file system on Jupyterlab. The `Browse…` button will take you to your local file system.
+
+**NB!** ⚠️You can only upload one file at a time. If you need to upload several files or a folder, you have to pack them into a `.zip` file. Jupyterlab RStudio will automatically unzip it.
+:::
+
+## Download from Jupyterlab RStudio to your computer
+
+![Interactive Download from Jupyterlab RStudio](images_ATRIUM/RStudio_03_DownloadToYourPC.png){#RStudio_03_DownloadToYourPC}
+
+::: notes
+Check the file(s) on Jupyterlab in the explorer. Hit the `More` menu (the one with the gear icon) and select `Export...`. If you have selected more than one file, RStudio will export the batch as a zip file.
+:::
+
+## Copy teaching materials from GitHub
+
+::: notes
+I store all the teaching materials on GitHub.
+:::
+
+## UFAL Linux Network
+
+![](images_ATRIUM/RStudio_06_AtRoot.png){#RStudio_06_AtRoot}
+
+::: notes
+Do not make this a big deal because you will probably not use Jupyterlab RStudio in your personal work setup after this course. But you could benefit from a basic orientation in the system.
+
+Jupyterlab is installed on a computational grid called AIC (Artificial Intelligence Cluster).
+:::
+
+## Copy from someone at Jupyterlab
