@@ -1,7 +1,8 @@
 ---
-title: "# Data Literacy with R for Students of Humanities - ATRIUM summer school"
+title: "Data Literacy with R for Students of Humanities - ATRIUM summer school"
 output: html
 embed-resources: true
+markdown: asciidoc
 ---
 
 **REGISTRATION CLOSED**
