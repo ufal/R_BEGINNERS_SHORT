@@ -53,34 +53,38 @@ editor: visual
 
 ## 1
 
-1. Log in at JupyterLab: `aic.ufal.mff.cuni.cz/jlab` , using your credentials.
-2. Select RStudio.
-3. In the top left pane, select `File` \> `New File` \> `Quarto Document`.
-4. Fill out the Title and Author fields in the form.
+1.  Log in at JupyterLab: `aic.ufal.mff.cuni.cz/jlab` , using your credentials.
+2.  Select RStudio.
+3.  In the top left pane, select `File` \> `New File` \> `Quarto Document`.
+4.  Fill out the Title and Author fields in the form.
 5.  Save the file as `yourlogin_E01_01_01`.
 
 ## 2
 
 Inspect the contents of the new file. If you see something like this, switch the `Source` editor to `Visual`.
 
-    ``` noexecute
-    ---
-    title: "Untitled"
-    format: html
-    editor: visual
-    ---
+````         
+``` noexecute
+---
+title: "Untitled"
+format: html
+editor: visual
+---
 
-    ## Quarto
+## Quarto
 
-    Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-    ```
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+```
+````
 
 ## 3
+
 With the Visual editor on, you should see this (@fig-Jupyterlab_05_Quarto_VisualEditor).
 
 ![Quarto template in visual editor](../images_ATRIUM/Jupyterlab_05_Quarto_VisualEditor.png){#fig-Jupyterlab_05_Quarto_VisualEditor}
 
 ## 4
+
 ::: columns
 ::: column
 Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outline` to the right of your document. You should see this (@fig-Quarto_01_Outline):
@@ -92,14 +96,17 @@ Change the level of *Quarto* from `Heading 2` to `Heading 1`. Inspect the `Outli
 :::
 
 ## 5
+
 Run the code chunks over and over and explore the behavior of the output field by clicking on the small grey icons on its top right.
 
 ## 6
+
 Switch the editor to `Source` and inspect the source code of the entire document. Try and add another code chunk manually. Type in a small calculation like those ones in the template.
 
 Switch the editor back to Visual and run your chunk.
 
 ## 7
+
 ::: columns
 ::: {.column width="80%"}
 Explore Quarto's buttons that add a new code chunk or run chunks in various ways. Feel free to add another chunk with a calculation. (@fig-Quarto_02_RunButtons).
@@ -111,19 +118,20 @@ Explore Quarto's buttons that add a new code chunk or run chunks in various ways
 :::
 
 ## 8 {.smaller}
-Insert a random image from the web. Give it a caption and an ID.
-IDs must start with `#`. Figure IDs must continue with `fig-`, for instance `noexecute @fig-Quarto_01_Outline`. 
-You can try and adjust its width (it affects height too).
+
+Insert a random image from the web. Give it a caption and an ID. IDs must start with `#`. Figure IDs must continue with `fig-`, for instance `noexecute @fig-Quarto_01_Outline`. You can try and adjust its width (it affects height too).
 
 Like so:
 
-``` noexecute 
+``` noexecute
 ![UFAL logo](https://ufal.mff.cuni.cz/sites/all/themes/drufal/css/logo/
 logo_ufal_110u.png){#fig-ufal width="20%"}
 
 *This is the logo of the Institute of Formal and Applied Linguistics, Charles University (@fig-ufal).*
 ```
+
 ## 9
+
 It should render like this:
 
 ![UFAL logo](https://ufal.mff.cuni.cz/sites/all/themes/drufal/css/logo/logo_ufal_110u.png){#fig-ufal width="15%"}
@@ -131,6 +139,7 @@ It should render like this:
 *This is the logo of the Institute of Formal and Applied Linguistics, Charles University (@fig-ufal).*
 
 ## 10
+
 Type a piece of text and create a reference from the text to the image you have inserted.
 
 **NB** ⚠️ In some versions of RStudio the cross-references inserter in Visual Editor does not work. If this is your case, switch to the Source editor to type them manually. Then just switch back to the Visual editor. You can toggle between Source and Visual as much as you want.
