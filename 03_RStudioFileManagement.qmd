@@ -28,7 +28,7 @@ format:
 
 ## Simplest ways to obtain the teaching materials
 
--   Web ⤇ Your PC ⤇ Jupyterlab RStudio
+-   Web $\rightarrow$ Your PC $\rightarrow$ Jupyterlab RStudio
 
 -   All on the cloud
 
@@ -46,7 +46,7 @@ If you can manage files in the unix command line, use Git, or manage files progr
 All around interactive file management happens in the bottom right RStudio pane, the `Files` tab.
 :::
 
-## Your RStudio ≈ Your Home Directory {.smaller}
+## Your RStudio $\approx$ Your Home Directory {.smaller}
 
 ::: columns
 ::: {.column width="60%"}
@@ -81,7 +81,11 @@ This tutorial will guide you through the folder structure later. For this moment
 ::: notes
 You can upload files to the cloud from your local computer. Use the `Upload` button. The upper field in the dialog box navigates you through the file system on Jupyterlab. The `Browse…` button will take you to your local file system.
 
-**NB!** ⚠️You can only upload one file at a time. If you need to upload several files or a folder, you have to pack them into a `.zip` file. Jupyterlab RStudio will automatically unzip it.
+::: callout-caution
+## One File at a time
+
+You can only upload one file at a time. If you need to upload several files or a folder, you have to pack them into a `.zip` file. Jupyterlab RStudio will automatically unzip it.
+:::
 :::
 
 ## Download from Jupyterlab RStudio to your computer
@@ -124,6 +128,10 @@ Check the file(s) on Jupyterlab in the explorer. Hit the `More` menu (the one wi
 :::
 :::
 
+::: notes
+A symlink is the most convenient way for you to access teacher's folder. It is a folder in your home (created by the IT admin) that mirrors the corresponding folder in teacher's home. When you open a file that the teacher is just working with, you can follow with the changes almost in real time. Every time the teacher saves the file and you refresh the view in the browser, you will see the latest changes.
+:::
+
 ## Read other students' RStudio folders
 
 -   Students and teachers can read each others' folders and copy from them.
@@ -157,7 +165,7 @@ To copy files from others, you need to be familiar with the file system and how 
 ::: notes
 Should symlink not be available for you, download the teaching materials from GitHub.
 
-I store all my teaching materials in a GitHub **repository** for backup and access from different computers. You can download everything from there without bothering about the Git commands. If I change something later, it will not update in your copy.
+I store all my teaching materials in a GitHub **repository** for backup and access from different computers. You can download everything from there without bothering about the Git commands. But note that this ordinary download is but a snapshot and will not reflect future changes in the original.
 :::
 
 ## GitHub Download Button {.smaller}
@@ -184,11 +192,13 @@ I store all my teaching materials in a GitHub **repository** for backup and acce
 
 ## Download a folder from GitHub
 
--   GitHub GUI Download works only for a file or a repository
+-   GitHub GUI Download works only for a file or a repository.
 
 -   Use this web service to download a folder:
 
-`https://download-directory.github.io/?url=https://github.com/`*THE_NAME_OF_THE_REPO*`/tree/main/`*THE_NAME_OF_THE_FOLDER*
+`https://download-directory.github.io/?url=https://github.com/`
+
+*THE_NAME_OF_THE_REPO*`/tree/main/`*THE_NAME_OF_THE_FOLDER*
 
 ::: notes
 Fortunately for us, there is a web service named `download-directory.github.io` and you can use it simply by opening your browser and typing in a URL containing its name and the path to the target folder.
@@ -238,7 +248,7 @@ Jupyterlab is installed on a computational grid called AIC (Artificial Intellige
 :::
 
 ::: {.column width="50%"}
-![Path to your home as `/lnet/aic/personal/YOU`](images_ATRIUM/RStudio_08_PathOverLNET_AIC_PERSONAL.png){#RStudio_08_PathOverLNET_AIC_PERSONAL}
+![Path to your home as `/lnet/aic/personal/YOURLOGIN`](images_ATRIUM/RStudio_08_PathOverLNET_AIC_PERSONAL.png){#RStudio_08_PathOverLNET_AIC_PERSONAL}
 :::
 :::
 
@@ -260,7 +270,7 @@ Do not ponder on it. It's how the IT admin organized the file system.
 
 -   Note that you are still in your colleague's folder.
 
--   It's only the file that travels!
+-   The file went ahead of you!
 
 ![\... Or select a subfolder interactively](images_ATRIUM/RStudio_13_PickTargetFolder.png){#RStudio_13_PickTargetFolder}
 
@@ -272,7 +282,7 @@ Do not ponder on it. It's how the IT admin organized the file system.
 
 ![Mission accomplished!](images_ATRIUM/RStudio_15_MissionAccomplished.png){#RStudio_15_MissionAccomplished}
 
-## Copy someone's [**folder**]{.underline} to your home {.smaller}
+## Copy someone's **folder** to your home {.smaller}
 
 ::: columns
 ::: {.column width="50%"}

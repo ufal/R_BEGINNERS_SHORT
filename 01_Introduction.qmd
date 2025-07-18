@@ -1,5 +1,7 @@
 ---
 title: "Data Literacy with R for Students of Humanities"
+date: 2025-07-18
+author: "Silvie Cinková"
 echo: true
 resources: 
   - "images_ATRIUM/"

@@ -1,0 +1,143 @@
+---
+title: "Navigating R Studio for programming"
+date: 2025-07-18
+author: "Silvie Cinková"
+echo: true
+resources: 
+  - "images_ATRIUM/"
+  - "atrium.css"
+  - "atrium.tex"
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    #chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## The four panes of RStudio
+
+![`File`, `Console`, `Environment`, and `Files` tabs](images_ATRIUM/RStudio_01_FourPanes.png){#RStudio_01_FourPanes}
+
+::: notes
+By default, RStudio opens with four panes. All but the top left one even have several tabs with their own menu bars. In this tutorial, I will call the panes with the names of the tabs in focus.
+:::
+
+## Console {.smaller}
+
+-   Command line of the bare R
+
+-   Type a command (e.g. `1 + 1`) and hit Enter to execute it.
+
+-   Console displays the output.
+
+-   `>` at line start: R is ready to accept your next command
+
+-   Console does not save your scripts. Use files to save your work.
+
+-   Clear Console: hit the broom icon or `Ctrl + L`.
+
+![De-clutter the Console with the broom icon.](images_ATRIUM/Programming_01_Console.png){#Programming_01_Console width="311"}
+
+## File formats for writing scripts
+
+![File formats for writing R scripts](images_ATRIUM/Programming_02_ScriptingFormats.png){#Programming_02_ScriptingFormats}
+
+::: notes
+Quarto, R Notebook, and R Markdown are markdown-based formats you have learned about. They are fantastic when you need to accompany your code with text and report the results in a single file. But not all scripts require fancy presentation. If you just want to do something quick (but still worth saving for later reuse), you may prefer the bare R Script file (`.R`). It comes as an empty plain text file with the `.R` suffix.
+:::
+
+## Run a script with comments
+
+::: columns
+::: {.column width="50%"}
+![Comment your code correctly.](images_ATRIUM/Programming_04_Comments.png){#Programming_04_Comments}
+:::
+
+::: {.column width="50%"}
+![Highlight and *run* a line or several lines or *source* the whole file at once.](images_ATRIUM/Programming_03_Script.png){#Programming_03_Script}
+:::
+:::
+
+::: notes
+::: notes
+In this format, R reads each line as a command and will throw an error and stop at each line it cannot execute. When you want (you should) comment your code, you must put a fence `#` before the text to tell R to ignore it.
+:::
+:::
+
+## Environment pane {.smaller}
+
+
+-   lists objects currently loaded in R
+
+    -   variables
+
+    -   functions you have written
+
+-   Delete objects with the broom icon. 
+
+    -   Toggle List and Grid view.
+
+    -   Grid view can mark individual objects for deletion.
+
+![Environment with objects in Grid View](images_ATRIUM/Programming_05_EnvironmentGridview.png){#Programming_05_EnvironmentGridview}
+
+
+::: notes
+What you see is the so-called Global Environment. Each software library (aka software package) that you load (more later) will create its own environment. In this course, we will only consider the Global Environment.
+:::
+
+## Packages pane
+
+::: columns
+::: {.column width="50%"}
+![Installed packages](images_ATRIUM/Programming_06_Packages.png){#Programming_06_Packages}
+You typically install packages from <https://cran.r-project.org/>
+
+:::
+
+::: {.column width="50%"}
+![Install packages](images_ATRIUM/Programming_07_InstallPackages.png){#07_InstallPackages}
+:::
+
+::: 
+
+::: notes
+A package sometimes has dependencies; i.e., requires other packages to work correctly. When you check `Install dependencies`, R will load all missing dependent packages automatically. 
+CRAN is the official repository of R packages. But you can as well download a package from GitHub or elsewhere. You just adjust the source with `Configuring Repositories` in the `Install` menu.  
+:::
+
+
+## Get Help
+- Roll down menu top left pane
+- Help tab in bottom right pane
+- <https://stackoverflow.com/questions>
+- MS Copilot, ChatGPT & Co. quite good. 
+- Wickham et al.: [*R for Data Science*](https://r4ds.hadley.nz/)
+- Grolemund: [*Hands-On Programming with R*](https://rstudio-education.github.io/hopr/) 
+- <https://www.tidyverse.org/>
+
+
+## Plots pane
+- plots output from Console/R file
+- you can export them interactively
+
+![`Plots` pane](images_ATRIUM/Programming_09_PlotsPane.png){#Programming_09_PlotsPane}
+

@@ -1,6 +1,8 @@
 ---
 title: "Organize yourself in RStudio"
 echo: true
+date: 2025-07-18
+author: "Silvie Cinková"
 resources: 
   - "images_ATRIUM/"
 format:
