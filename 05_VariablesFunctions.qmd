@@ -97,9 +97,25 @@ What are these two tables to do with each other? The one to the left contains ob
 
 ![Data Structures in R](images_ATRIUM/orgpad_RBigPic_03.png){#orgpad_RBigPic_03}
 
-## Data types
+::: notes
+Now let us try and trace these concepts in R data structures. The table itself is implemented as **data frame**, or, in the `tidyverse` dialect, **tibble** (a tibble is an enhanced data frame, so let me just stick to *data frame*). Data frames have columns and these columns have names. Each value in a column corresponds to a row. Rows, on the other hand, are not explicitly described in R. All operations on tables are conceived from the perspective of columns. R believes that each column stores one statistical variable and it is ready to aggregate it to a summary statistics with a one-line command.
 
-![R data types: characters, numbers, `TRUE/FALSE` (aka logical/boolean)](images_ATRIUM/orgpad_RBigPic_02.png){#orgpad_RBigPic_02}
+And now is the right moment to introduce the most basic R data structure, which is the *vector*. A vector is an ordered sequence of *elements*. An element is an individual value, such as a number. In terms of data science, it is the value of a statistical variable in one observation. If you imagine you record the air temperature at noon every day. When you have done this for a week, you have a vector of seven elements. Each element contains the temperature value. To store this as a meaningful information, you will probably keep another vector, in which each element is going to be the date of the measurement. After a week, you are going to have a seven-element vector. You can put them together into a data frame as two columns and give them some column names. Then the first element of the date vector is going to correspond to the first element of the temperature vector, and so on. Vector elements on the same position in the vector are the implicit rows in a data frame.
+
+So when you add a row to a data frame, you actually add one element to each of its column vectors.
+
+Vector and data frame are the most relevant data structures in this course. Let us leave the others (*factor*, *list*, and *matrix*) aside for a while.
+:::
+
+## Data types (aka classes)
+
+![R data types: characters, numbers, `TRUE/FALSE` (aka logical/Boolean)](images_ATRIUM/orgpad_RBigPic_02.png){#orgpad_RBigPic_02}
+
+::: notes
+Recall what you just rehearsed about statistical variables: categorical or quantitative. How absurd would you find a statistical record that would mix numerical values with verbal descriptors in one column, such as *20,* *25,* and *around twenty* or *forgot to measure it today*! So R simply disallows such a mix in one vector. A vector can contain numbers or characters/strings or Boolean values, but never in combination.
+:::
+
+## Programmatic variables
 
 ## Functions
 
