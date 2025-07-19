@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -3083,8 +3117,10 @@ display: none !important;
   <li><a href="#observations-vs.-aggregations-summaries" id="toc-observations-vs.-aggregations-summaries" class="nav-link" data-scroll-target="#observations-vs.-aggregations-summaries"><span class="header-section-number">2</span> Observations vs. aggregations (summaries)</a></li>
   <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures"><span class="header-section-number">3</span> Data structures</a></li>
   <li><a href="#data-types-aka-classes" id="toc-data-types-aka-classes" class="nav-link" data-scroll-target="#data-types-aka-classes"><span class="header-section-number">4</span> Data types (aka classes)</a></li>
-  <li><a href="#programmatic-variables" id="toc-programmatic-variables" class="nav-link" data-scroll-target="#programmatic-variables"><span class="header-section-number">5</span> Programmatic variables</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">6</span> Functions</a></li>
+  <li><a href="#programmatic-objects" id="toc-programmatic-objects" class="nav-link" data-scroll-target="#programmatic-objects"><span class="header-section-number">5</span> Programmatic objects</a></li>
+  <li><a href="#programmatic-variables" id="toc-programmatic-variables" class="nav-link" data-scroll-target="#programmatic-variables"><span class="header-section-number">6</span> Programmatic variables</a></li>
+  <li><a href="#variable-assignment-statement" id="toc-variable-assignment-statement" class="nav-link" data-scroll-target="#variable-assignment-statement"><span class="header-section-number">7</span> Variable assignment statement</a></li>
+  <li><a href="#functions-and-their-arguments" id="toc-functions-and-their-arguments" class="nav-link" data-scroll-target="#functions-and-their-arguments"><span class="header-section-number">8</span> Functions and their arguments</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="05_VariablesFunctions.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="05_VariablesFunctions.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -3267,11 +3303,49 @@ display: none !important;
 <p>Recall what you just rehearsed about statistical variables: categorical or quantitative. How absurd would you find a statistical record that would mix numerical values with verbal descriptors in one column, such as <em>20,</em> <em>25,</em> and <em>around twenty</em> or <em>forgot to measure it today</em>! So R simply disallows such a mix in one vector. A vector can contain numbers or characters/strings or Boolean values, but never in combination.</p>
 </div>
 </section>
-<section id="programmatic-variables" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="programmatic-variables"><span class="header-section-number">5</span> Programmatic variables</h2>
+<section id="programmatic-objects" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="programmatic-objects"><span class="header-section-number">5</span> Programmatic objects</h2>
+<ul>
+<li><p><strong>object</strong> <span class="math inline">\(\approx\)</span> anything you enter to the computer without an error message coming</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>The resulting object vanished as soon as it appeared on the screen.</p></li>
+</ul>
 </section>
-<section id="functions" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="functions"><span class="header-section-number">6</span> Functions</h2>
+<section id="programmatic-variables" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="programmatic-variables"><span class="header-section-number">6</span> Programmatic variables</h2>
+<ul>
+<li><p><strong>variable</strong> <span class="math inline">\(\approx\)</span> a labeled box in computer memory to store an object</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_calculation <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nothing appeared, but the object exists in the variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_calculation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="variable-assignment-statement" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="variable-assignment-statement"><span class="header-section-number">7</span> Variable assignment statement</h2>
+<pre class="noexecute"><code>variable_name &lt;- object</code></pre>
+<ul>
+<li><p>variable names must not</p>
+<ul>
+<li><p>start with a digit</p></li>
+<li><p>contain any characters but ASCII letters, numbers, and <code>_</code> (underscore)</p></li>
+<li><p>coincide with a few reserved words in R (e.g. <code>for</code> or <code>in</code>)</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="functions-and-their-arguments" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="functions-and-their-arguments"><span class="header-section-number">8</span> Functions and their arguments</h2>
 </section>
 
 

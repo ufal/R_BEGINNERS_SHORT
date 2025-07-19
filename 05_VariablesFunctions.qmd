@@ -115,9 +115,46 @@ Vector and data frame are the most relevant data structures in this course. Let 
 Recall what you just rehearsed about statistical variables: categorical or quantitative. How absurd would you find a statistical record that would mix numerical values with verbal descriptors in one column, such as *20,* *25,* and *around twenty* or *forgot to measure it today*! So R simply disallows such a mix in one vector. A vector can contain numbers or characters/strings or Boolean values, but never in combination.
 :::
 
+## Programmatic objects 
+
+-   **object** $\approx$ anything you enter to the computer without an error message coming
+
+    ```{r}
+    3 + 2
+    ```
+
+    The resulting object vanished as soon as it appeared on the screen.
+
 ## Programmatic variables
 
-## Functions
+-   **variable** $\approx$ a labeled box in computer memory to store an object
+
+    ```{r}
+    my_calculation <- 3 + 2
+    ```
+
+    Nothing appeared, but the object exists in the variable.
+
+    ```{r}
+    my_calculation
+
+    ```
+
+## Variable assignment statement
+
+``` noexecute
+variable_name <- object
+```
+
+-   variable names must not
+
+    -   start with a digit
+
+    -   contain any characters but ASCII letters, numbers, and `_` (underscore)
+
+    -   coincide with a few reserved words in R (e.g. `for` or `in`)
+
+## Functions and their arguments
 
 [^1]: Variables = columns (two), observations = rows
 
