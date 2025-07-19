@@ -3,6 +3,7 @@ title: "Variables and functions"
 echo: true
 format:
   revealjs:
+    endnotes: true
     plugins: [notes]
     toc: true
     slide-number: true
@@ -16,31 +17,92 @@ format:
     #output-location: slide
     preview-links: auto
   pdf:
+    endnotes: true
     toc: true
     number-sections: true
     include-in-header: atrium.tex
   html:
+    endnotes: true
     toc: true
     number-sections: true
     css: atrium.css
     embed-resources: true
 ---
 
-## Quarto
+## Tabular data
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+```{r tbl-01}
+#| echo: false
+#| warning: false
+#| message: false
+#| tbl-cap: "Top longevity Europe 2007"
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(gapminder, warn.conflicts = FALSE, quietly = TRUE)
+library(kableExtra, warn.conflicts = FALSE, quietly = TRUE)
+gapminder::gapminder %>% group_by(country) %>% 
+  slice_max(order_by = year, n = 1) %>% filter(continent == "Europe") %>%
+  select(c(country, lifeExp)) %>% ungroup() %>% slice_max(order_by = lifeExp, n = 5) %>%
+  rename(`LifeExpectancy` = lifeExp) %>%
+  kable() 
 
-## Bullets
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
 ```
+
+::: notes
+Before we delve into programming, let us sort out how we use tables to capture data and generate insights from them. This will help us to understand how things are done with R, because R was designed for statistical computation on tables. You can imagine that most things R does to an objects, it makes sure to keep that object ready to include into a table or convert to one.
+
+**Table** is a central concept in data science. It has **rows** and **columns**. Columns $\approx$ [**statistical**]{.underline} **variables** (not to confuse with programming variables that we will meet soon).
+
+🏋️
+
+1.  How many observations and how many variables can you see in the table in @tbl-01?[^1]
+2.  How would you characterize each variable in terms of discreteness-continuity and whether it is qualitative/categorical or quantitative?[^2]
+3.  Sketch for yourself a few tables with different sorts of variables, as you could meet them or need to create in real life.
+:::
+
+## Observations vs. aggregations (summaries)
+
+```{r tbl-02}
+#| echo: false
+#| warning: false
+#| message: false
+#| tbl-cap: "Life expectancy data in two countries"
+gapminder %>% filter(country %in% c("Albania", "Denmark")) %>% group_by(country) %>% 
+  slice_max(order_by = year, n = 3) %>% 
+  select(c(country, year, lifeExp)) %>%  ungroup() %>% 
+  rename(`LifeExpectancy` = lifeExp) %>%
+  kable() 
+```
+
+::: columns
+::: {.column width="50%"}
+```{r tbl-03}
+#| echo: false
+#| warning: false
+#| message: false
+#| tbl-cap: "Average life expectancy in Albania and Denmark 1997 - 2007"
+gapminder %>% filter(country %in% c("Albania", "Denmark")) %>% group_by(country) %>% 
+  slice_max(order_by = year, n = 3) %>% 
+  select(c(country, year, lifeExp)) %>%  
+  summarize(AverageLifeExpectancy = mean(lifeExp)) %>% 
+  kable() 
+```
+:::
+:::
+
+::: notes
+What are these two tables to do with each other? The one to the left contains observations. The one to the right contains the aggregation of life expectancy for each country across years.
+:::
+
+## Data structures
+
+![Data Structures in R](images_ATRIUM/orgpad_RBigPic_03.png){#orgpad_RBigPic_03}
+
+## Data types
+
+![R data types: characters, numbers, `TRUE/FALSE` (aka logical/boolean)](images_ATRIUM/orgpad_RBigPic_02.png){#orgpad_RBigPic_02}
+
+## Functions
+
+[^1]: Variables = columns (two), observations = rows
+
+[^2]: Qualitative/categorical variables are always discrete: When the values are names of countries like in the example, you cannot have a value that would lie, e.g., between Denmark and Sri Lanka. Life expectancy is a quantitative value and it is continuous. When you see neighboring values, it is very well possible that another country's life expectancy would still lie between. When you disregard rounding, you could see extremely tiny differences, for instance five seconds or so... On the other hand, year is usually interpreted as a discrete variable, although time is unarguably a continuous concept.
