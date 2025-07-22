@@ -3,26 +3,23 @@ title: "Variables and functions"
 echo: true
 format:
   revealjs:
-    endnotes: true
     plugins: [notes]
     toc: true
     slide-number: true
     notes: true
     pdf-export: true
     css: atrium.css
-    chalkboard: true
-    scrollable: false
+    #chalkboard: true
+    scrollable: true
     code-block-height: 650px
     echo: true
     #output-location: slide
     preview-links: auto
   pdf:
-    endnotes: true
     toc: true
     number-sections: true
     include-in-header: atrium.tex
   html:
-    endnotes: true
     toc: true
     number-sections: true
     css: atrium.css
@@ -54,13 +51,17 @@ Before we delve into programming, let us sort out how we use tables to capture d
 
 🏋️
 
-1.  How many observations and how many variables can you see in the table in @tbl-01?[^1]
-2.  How would you characterize each variable in terms of discreteness-continuity and whether it is qualitative/categorical or quantitative?[^2]
+1.  How many observations and how many variables can you see in the table in @tbl-01?\[\^1\]
+
+2.  How would you characterize each variable in terms of discreteness-continuity and whether it is qualitative/categorical or quantitative?\[\^2\]
+
 3.  Sketch for yourself a few tables with different sorts of variables, as you could meet them or need to create in real life.
 :::
 
-## Observations vs. aggregations (summaries)
+## Observations vs. aggregations (summaries) {.smaller}
 
+::: columns
+::: {.column width="50%"}
 ```{r tbl-02}
 #| echo: false
 #| warning: false
@@ -72,8 +73,8 @@ gapminder %>% filter(country %in% c("Albania", "Denmark")) %>% group_by(country)
   rename(`LifeExpectancy` = lifeExp) %>%
   kable() 
 ```
+:::
 
-::: columns
 ::: {.column width="50%"}
 ```{r tbl-03}
 #| echo: false
@@ -113,9 +114,15 @@ Vector and data frame are the most relevant data structures in this course. Let 
 
 ::: notes
 Recall what you just rehearsed about statistical variables: categorical or quantitative. How absurd would you find a statistical record that would mix numerical values with verbal descriptors in one column, such as *20,* *25,* and *around twenty* or *forgot to measure it today*! So R simply disallows such a mix in one vector. A vector can contain numbers or characters/strings or Boolean values, but never in combination.
+
+::: callout-note
+## A terminological note
+
+When a value consists of letters and numbers meant as symbols, it is called a **string**. A string consists of **characters**. Sometimes we use *string* and *character* interchangeably, but usually we refer to a value consisting of one character as a *character* and when it is longer, it is a *string*.
+:::
 :::
 
-## Programmatic objects 
+## Programmatic objects
 
 -   **object** $\approx$ anything you enter to the computer without an error message coming
 
@@ -140,7 +147,7 @@ Recall what you just rehearsed about statistical variables: categorical or quant
 
     ```
 
-## Variable assignment statement
+## Variable assignment statement {.smaller}
 
 ``` noexecute
 variable_name <- object
@@ -154,8 +161,397 @@ variable_name <- object
 
     -   coincide with a few reserved words in R (e.g. `for` or `in`)
 
+    ![Each variable appears in the Environment tab](images_ATRIUM/Programming_05_EnvironmentGridview.png){#Programming_05_EnvironmentGridview width="463"}
+
+::: notes
+The assignment operator consists of two characters: "smaller than" (`<`) and dash (`-`) next to each other. You must keep a space before and after this operator. When you assign an object to a variable, it happens quietly. Nothing gets printed out. To print out what is stored in a variable, type its name and run the line.
+:::
+
+## Variable overwriting {.smaller}
+
+-   create a different variable for each step in your script
+
+    ```{r}
+    a <- 1
+    b <- a + 2
+    b
+    ```
+
+-   overwrite the variable
+
+    ```{r}
+    a <- 1
+    a <- a + 2
+    a
+    ```
+
+::: notes
+You must save each step in your script to a variable. When you write this:
+
+```{r}
+a <- 3
+a + 2
+```
+
+```{r}
+a
+```
+
+The result (`5`) has not be stored in `a`.
+:::
+
 ## Functions and their arguments
 
-[^1]: Variables = columns (two), observations = rows
+-   Functions $\approx$ verbs
 
-[^2]: Qualitative/categorical variables are always discrete: When the values are names of countries like in the example, you cannot have a value that would lie, e.g., between Denmark and Sri Lanka. Life expectancy is a quantitative value and it is continuous. When you see neighboring values, it is very well possible that another country's life expectancy would still lie between. When you disregard rounding, you could see extremely tiny differences, for instance five seconds or so... On the other hand, year is usually interpreted as a discrete variable, although time is unarguably a continuous concept.
+-   "argument structure"/"valency"
+
+    -   obligatory vs. free vs. unacceptable (no slot)
+
+    -   collocability
+
+        -   argument does not fit
+
+        -   argument causes a meaning shift
+
+::: notes
+Functions are very similar to content verbs in natural languages. Like verbs, they have a meaning on their own and individual argument structure; that is, they open slots for diverse clause elements.
+
+Argument structure is a syntactic property. Virtually all verbs open a slot for subject. Transitive verbs open another slot for the direct object. These are then obligatory. When any of them remains unfilled, odds are that the whole clause becomes non-grammatical or at least confusing.
+
+Collocability primarily concerns meaning. Many verbs require their arguments to belong to a specific semantic class; e.g. the direct object of *read* would be a textual medium. You can often use the verb metaphorically, such as *read someone's mood* or *read the weather*. Some of these metaphors are so widely used that a dictionary may even capture them as separate senses), but some just would not work. For instance *read a mushroom* would require an explanation.
+
+Each function in R that you load from CRAN has a user documentation. Sometimes it is extremely technical to read, but at least it exists.
+:::
+
+## Documentation in `Help`
+
+![Help - functions to replace strings](images_ATRIUM/Programming_10_HelpTolower.png){#Programming_10_HelpTolower}
+
+::: notes
+This help page in the R manual describes four similar functions in one bulk. Functions come in packages/libraries. These functions are part of the `base` library, which downloads with every installation of R. You see the library name in the curled braces above.
+
+Normally, each function gets its own documentation page, but such a bulk documentation for a set of related functions is also quite common. All these functions take a character string and either modify its letter case or replace a substring (i.e. piece) with another substring.
+
+Each documentation page has the following sections:
+
+-   Description (one line)
+
+-   Usage (all arguments listed)
+
+-   Arguments (each argument described)
+
+-   Details (a more description)
+
+-   Value (what output you get from the function)
+
+-   Examples (thankfully, you can run a few examples and observe the function's behavior in the Help pane.)
+:::
+
+## Function with an argument
+
+```{r}
+toupper(x = "hello")
+```
+
+::: notes
+This function is called `toupper` and requires one argument that it calls `x` . This argument is supposed to be a string. The function returns the same string, only with all letters converted to upper case if they were originally lower case.
+
+Each function has a name and requires some arguments in parentheses. Their number, names and accepted data class are a decision of the programmer who wrote that function.
+
+Functions in R have been written by many different authors over several decades. You must not expect that they are all written in the same way. Sometimes the value that you input is called x like here, but that is a fully arbitrary decision of the author of that function. Other functions can call it differently. To make sure to use a new function correctly, you must read its documentation in the `Help` tab.
+:::
+
+## Function with several arguments {.smaller}
+
+```{r}
+chartr(old = "a", new = "A", x = "banana")
+```
+
+```{r}
+chartr(new = "A", x = "banana", old = "a")
+```
+
+```{r}
+chartr("a", "A", "banana") 
+```
+
+::: notes
+When you write out the names of the arguments, you can list them in any order. When you omit the names, R will believe they are ordered like in the documentation.
+:::
+
+## Coercion to string
+
+::: columns
+::: {.column width="40%"}
+```{r}
+toupper(3)
+```
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="\"40%"}
+```{r}
+toupper(TRUE)
+```
+:::
+:::
+
+::: notes
+In this example, I fed this function a number and a Boolean value instead of a string. The function accepts either, but outputs them as strings, as you can tell from the quotes that surround the printed output. So, behind the scenes, this function converts the input to a character. This behavior is called **coercion** and is typical of R. Rather than throwing an error, a function may *coerce* a wrong input class to becoming the required class - but it is not always the case. Again, it depends on how the R developer in charge wrote it.
+:::
+
+## No coercion with error {.smaller}
+
+```{r}
+
+chartr(old = "mo", new = "fa", x = "mother") # strings 
+
+```
+
+```{r}
+chartr(old = "5", new = "0",   x = "5toFour") # digits as strings
+```
+
+```{r}
+#| error: true # Do not worry about these grey lines.
+#| # They are messages to Quarto. Without this one it would crash on the error without rendering
+chartr(old = "5", new = 0, x = "5toFour" ) # new won't work
+```
+
+::: notes
+The `chartr` function takes three arguments: `x` is the input string, `old` is a string sequence in that string you want to find, and `new` is what you want to replace the old with. Both must have the same number of characters. In the first example, `old` and `new` are unarguably strings. In the second example, we served the digits as strings by enclosing them in the quotes, and it worked, too. However, in the third example, no coercion took place, and the function threw an error when the `new` argument contained a digit. And this is what you met in two functions that belong to the same package, do related things and have even been described bulk-wise in one `Help` entry. Were you expecting the digit to be coerced to a string like with `tolower`? I believe your expectation was fully legitimate.
+:::
+
+## Write and run your own function
+
+```{r}
+my_function <- function(my_1_arg, 
+                        my_2_arg) {
+  my_argument <- paste(my_1_arg,# existing R function
+                       my_2_arg, 
+                       sep = "--")
+  toupper(my_argument)
+}
+# run it like so:
+my_function(my_1_arg = "Hello",
+            my_2_arg = "again")
+```
+
+::: notes
+Writing your own function is as easy as this:
+
+1.  Make a variable assignment (`<-`) to a new variable name. This is going to be the name of your function.
+
+2.  Type `function`.
+
+3.  Add a pair of parentheses and list arguments that your function will require.
+
+4.  Write the function body between a pair of curly braces.
+
+Then run this code. The name of the function appears in the `GlobalEnvironment` in the `Environment` pane.
+
+Finally, call your function and give it the required arguments.
+:::
+
+## Vector {.smaller}
+
+-   `c()` function to concatenate / combine values to a vector
+
+```{r}
+my_vector <- c(200, 0.3, 8)
+my_vector
+```
+
+```{r}
+str(my_vector) # shows object's structure: numeric vector of 3 elements
+```
+
+## Vectorized functions
+
+```{r}
+nice_strings <- c("HOME", "EYE", "SET") # create vector 
+result_vector <- tolower(nice_strings) # process with tolower
+str(result_vector)
+```
+
+```{r}
+chartr(new = "e", old = "E", x = result_vector)
+```
+
+::: notes
+What you see in the slide: You give `tolower` a character vector and it returns the same vector but elements converted to lower case.
+
+Most R functions are **vectorized** like `tolower`. That means that you give the function a vector as argument, and the function processes all elements of the vector simultaneously, also returning the result in a vector.
+
+When a function is not vectorized, it either takes a vector and returns one single value, or it requires a single value at input. When you need to process all elements of a vector with such a function, you must run the function on each vector element separately, using a `loop` or an `apply` function or a function from the `purrr` package. (Let us ignore those for the moment.)
+:::
+
+## Non-vectorized case
+
+-   `chartr` cannot do a vector of replacements:
+
+```{r}
+#| error: true
+#| warning: true
+chartr(old = c("a", "b"), new = c("A", "B"), x = "banana")
+```
+
+## Step by step (no automation)
+
+```{r}
+banana_1 <- chartr(old = "a", new = "A",  x = "banana")
+banana_1
+banana_2 <- chartr(old = "b", new = "B", x = banana_1)
+banana_2
+```
+
+::: notes
+This would be a perfect use case for a loop, but there are still more basic things to mention.
+:::
+
+## Vector
+
+-   Class
+    -   numeric, character, logical
+-   Length (how many elements)
+-   Elements can have names (named vector).
+-   Order of elements matters.
+
+::: notes
+`class` says whether R should treat the elements as numbers, or as characters or Boolean values. All elements of one vector are always of the same class. You will see soon what happens when you mix elements from different classes. The `numeric` class has two subclasses: `integer` and `double`. R automatically scrutinizes the elements and assigns the class automatically. You do not need to worry about a numeric class being silently changed into `integer` or `double`.
+:::
+
+## Create a vector, combine them {.smaller}
+
+```{r}
+(a <- c(23:27)) # colon generates incremental sequence
+```
+
+```{r}
+(b <- c(a, FALSE, TRUE))
+```
+
+::: notes
+## Programming basics
+
+Put each command on one line.
+
+When you enclose an assignment statement in parentheses, the variable will print out.
+
+What you see in the second chunk is called **class coercion**.
+:::
+
+## Vector class coercion logical to numeric
+
+-   logical + numeric = numeric
+-   boolean values translate to `0` and `1`
+
+```{r}
+boolean_vec <- c(TRUE, TRUE, FALSE) # logical 
+numeric_vec <-  c(3, 2, 6) # numeric
+c(boolean_vec, numeric_vec)
+class(c(boolean_vec, numeric_vec))
+```
+
+::: notes
+You have to watch out for the class being changed from any kind of `numeric` to `character` or from `logical` to `numeric` or `character`. Whenever you wonder why your numbers result in a character vector, you must check each element for non-numeric characters. The most common causes of a sequence of apparent numbers being resolved as characters are a space after the digit, or the decimal sign not corresponding to the locale of your system (by default, R is US-centric, so it uses decimal points, not commas). This is extremely important because wrong class on input to a function may either cause error, or worse, you get something different from what you expected. Most typically, if you call the function `sort` on numbers, they will get sorted in the linear order, but when this vector silently converts to characters, they will be sorted alphabetically. In the former case, you will get `1,2,3`...`11`. In the latter case, you will get `1, 11, 2, 3...`.
+:::
+
+## Vector class coercion to character
+
+-   anything + character = character
+-   even digits can be characters
+
+```{r}
+mix_vec <- c(boolean_vec, 
+             numeric_vec, 
+             "June 8", "3 ") 
+class(mix_vec)
+```
+
+## Vector subsetting by positions
+
+```{r}
+vec <- c("John", "Mary", "Paul")
+vec[1]
+```
+
+```{r}
+vec[2:3]
+```
+
+```{r}
+vec[c(1,3)]
+```
+
+::: notes
+You can pick elements from the vector with an operation called **subsetting**. The subsetting operator is a pair of square brackets with the indices (numbers) of the positions of the elements you want to pick up.
+:::
+
+## Vector subsetting with logical operators
+
+```{r}
+vec <- c(1, 20, 3, 4)
+vec[vec < 20]
+```
+
+```{r}
+vec[vec < 20 & vec > 1] # and
+```
+
+```{r}
+vec[vec > 15 | vec < 3 ] # or 
+```
+
+## Vector recycling
+
+-   many functions proceed element by element
+
+-   nothing gets recycled with equally long vectors
+
+```{r}
+c(2,4,6,8)/c(2,2,2,2)
+```
+
+```{r}
+c(1000, 100, 10) / c(100, 10, 1)
+```
+
+## Vector recycling
+
+-   The second vector contains just one value and that must serve each element of the first vector
+
+-   `2` gets *recycled*
+
+```{r}
+c(2,4,6,8) / 2  
+```
+
+## Vector recycling
+
+-   the second vector gets recycled once
+
+-   each of its element must serve twice
+
+-   R believes you want it this way
+
+```{r}
+c(2,4,6,8) / c(2,1) 
+```
+
+## Vector recycling
+
+-   Did you really want this? Warning.
+
+```{r warning=TRUE}
+c(10, 10, 10) * c(1,2)
+```
+
+## Endnotes
+
+1: Variables = columns (two), observations = rows
+
+2: Qualitative/categorical variables are always discrete: When the values are names of countries like in the example, you cannot have a value that would lie, e.g., between Denmark and Sri Lanka. Life expectancy is a quantitative value and it is continuous. When you see neighboring values, it is very well possible that another country's life expectancy would still lie between. When you disregard rounding, you could see extremely tiny differences, for instance five seconds or so... On the other hand, year is usually interpreted as a discrete variable, although time is unarguably a continuous concept.
