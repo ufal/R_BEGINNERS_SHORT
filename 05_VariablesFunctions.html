@@ -3137,13 +3137,14 @@ display: none !important;
   <li><a href="#programming-basics" id="toc-programming-basics" class="nav-link" data-scroll-target="#programming-basics"><span class="header-section-number">22</span> Programming basics</a></li>
   <li><a href="#vector-class-coercion-logical-to-numeric" id="toc-vector-class-coercion-logical-to-numeric" class="nav-link" data-scroll-target="#vector-class-coercion-logical-to-numeric"><span class="header-section-number">23</span> Vector class coercion logical to numeric</a></li>
   <li><a href="#vector-class-coercion-to-character" id="toc-vector-class-coercion-to-character" class="nav-link" data-scroll-target="#vector-class-coercion-to-character"><span class="header-section-number">24</span> Vector class coercion to character</a></li>
-  <li><a href="#vector-subsetting-by-positions" id="toc-vector-subsetting-by-positions" class="nav-link" data-scroll-target="#vector-subsetting-by-positions"><span class="header-section-number">25</span> Vector subsetting by positions</a></li>
-  <li><a href="#vector-subsetting-with-logical-operators" id="toc-vector-subsetting-with-logical-operators" class="nav-link" data-scroll-target="#vector-subsetting-with-logical-operators"><span class="header-section-number">26</span> Vector subsetting with logical operators</a></li>
-  <li><a href="#vector-recycling" id="toc-vector-recycling" class="nav-link" data-scroll-target="#vector-recycling"><span class="header-section-number">27</span> Vector recycling</a></li>
-  <li><a href="#vector-recycling-1" id="toc-vector-recycling-1" class="nav-link" data-scroll-target="#vector-recycling-1"><span class="header-section-number">28</span> Vector recycling</a></li>
-  <li><a href="#vector-recycling-2" id="toc-vector-recycling-2" class="nav-link" data-scroll-target="#vector-recycling-2"><span class="header-section-number">29</span> Vector recycling</a></li>
-  <li><a href="#vector-recycling-3" id="toc-vector-recycling-3" class="nav-link" data-scroll-target="#vector-recycling-3"><span class="header-section-number">30</span> Vector recycling</a></li>
-  <li><a href="#endnotes" id="toc-endnotes" class="nav-link" data-scroll-target="#endnotes"><span class="header-section-number">31</span> Endnotes</a></li>
+  <li><a href="#programming-with-vectors" id="toc-programming-with-vectors" class="nav-link" data-scroll-target="#programming-with-vectors"><span class="header-section-number">25</span> Programming with vectors</a></li>
+  <li><a href="#vector-subsetting-by-positions" id="toc-vector-subsetting-by-positions" class="nav-link" data-scroll-target="#vector-subsetting-by-positions"><span class="header-section-number">26</span> Vector subsetting by positions</a></li>
+  <li><a href="#vector-subsetting-with-logical-operators" id="toc-vector-subsetting-with-logical-operators" class="nav-link" data-scroll-target="#vector-subsetting-with-logical-operators"><span class="header-section-number">27</span> Vector subsetting with logical operators</a></li>
+  <li><a href="#vector-recycling" id="toc-vector-recycling" class="nav-link" data-scroll-target="#vector-recycling"><span class="header-section-number">28</span> Vector recycling</a></li>
+  <li><a href="#vector-recycling-1" id="toc-vector-recycling-1" class="nav-link" data-scroll-target="#vector-recycling-1"><span class="header-section-number">29</span> Vector recycling</a></li>
+  <li><a href="#vector-recycling-2" id="toc-vector-recycling-2" class="nav-link" data-scroll-target="#vector-recycling-2"><span class="header-section-number">30</span> Vector recycling</a></li>
+  <li><a href="#vector-recycling-3" id="toc-vector-recycling-3" class="nav-link" data-scroll-target="#vector-recycling-3"><span class="header-section-number">31</span> Vector recycling</a></li>
+  <li><a href="#endnotes" id="toc-endnotes" class="nav-link" data-scroll-target="#endnotes"><span class="header-section-number">32</span> Endnotes</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="05_VariablesFunctions.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="05_VariablesFunctions.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -3742,8 +3743,21 @@ A terminological note
 </div>
 </div>
 </section>
-<section id="vector-subsetting-by-positions" class="level2" data-number="25">
-<h2 data-number="25" class="anchored" data-anchor-id="vector-subsetting-by-positions"><span class="header-section-number">25</span> Vector subsetting by positions</h2>
+<section id="programming-with-vectors" class="level2" data-number="25">
+<h2 data-number="25" class="anchored" data-anchor-id="programming-with-vectors"><span class="header-section-number">25</span> Programming with vectors</h2>
+<ul>
+<li><p>select elements of a vector</p>
+<ul>
+<li><p>by their position</p></li>
+<li><p>by some condition</p></li>
+</ul></li>
+</ul>
+<div class="notes">
+<p>This will take you away from data frames for a while, but it is the very fundamentals of the R language. You would really struggle with the data frames if you had no idea of how to deal with vectors. Selecting elements from a vector is a training for filtering rows of a data frame, even in <code>tidyverse</code> (let alone with base R, should you ever be forced to do it!)</p>
+</div>
+</section>
+<section id="vector-subsetting-by-positions" class="level2" data-number="26">
+<h2 data-number="26" class="anchored" data-anchor-id="vector-subsetting-by-positions"><span class="header-section-number">26</span> Vector subsetting by positions</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Paul&quot;</span>)</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>vec[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3767,8 +3781,8 @@ A terminological note
 <p>You can pick elements from the vector with an operation called <strong>subsetting</strong>. The subsetting operator is a pair of square brackets with the indices (numbers) of the positions of the elements you want to pick up.</p>
 </div>
 </section>
-<section id="vector-subsetting-with-logical-operators" class="level2" data-number="26">
-<h2 data-number="26" class="anchored" data-anchor-id="vector-subsetting-with-logical-operators"><span class="header-section-number">26</span> Vector subsetting with logical operators</h2>
+<section id="vector-subsetting-with-logical-operators" class="level2" data-number="27">
+<h2 data-number="27" class="anchored" data-anchor-id="vector-subsetting-with-logical-operators"><span class="header-section-number">27</span> Vector subsetting with logical operators</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>vec[vec <span class="sc">&lt;</span> <span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3789,8 +3803,8 @@ A terminological note
 </div>
 </div>
 </section>
-<section id="vector-recycling" class="level2" data-number="27">
-<h2 data-number="27" class="anchored" data-anchor-id="vector-recycling"><span class="header-section-number">27</span> Vector recycling</h2>
+<section id="vector-recycling" class="level2" data-number="28">
+<h2 data-number="28" class="anchored" data-anchor-id="vector-recycling"><span class="header-section-number">28</span> Vector recycling</h2>
 <ul>
 <li><p>many functions proceed element by element</p></li>
 <li><p>nothing gets recycled with equally long vectors</p></li>
@@ -3808,8 +3822,8 @@ A terminological note
 </div>
 </div>
 </section>
-<section id="vector-recycling-1" class="level2" data-number="28">
-<h2 data-number="28" class="anchored" data-anchor-id="vector-recycling-1"><span class="header-section-number">28</span> Vector recycling</h2>
+<section id="vector-recycling-1" class="level2" data-number="29">
+<h2 data-number="29" class="anchored" data-anchor-id="vector-recycling-1"><span class="header-section-number">29</span> Vector recycling</h2>
 <ul>
 <li><p>The second vector contains just one value and that must serve each element of the first vector</p></li>
 <li><p><code>2</code> gets <em>recycled</em></p></li>
@@ -3821,8 +3835,8 @@ A terminological note
 </div>
 </div>
 </section>
-<section id="vector-recycling-2" class="level2" data-number="29">
-<h2 data-number="29" class="anchored" data-anchor-id="vector-recycling-2"><span class="header-section-number">29</span> Vector recycling</h2>
+<section id="vector-recycling-2" class="level2" data-number="30">
+<h2 data-number="30" class="anchored" data-anchor-id="vector-recycling-2"><span class="header-section-number">30</span> Vector recycling</h2>
 <ul>
 <li><p>the second vector gets recycled once</p></li>
 <li><p>each of its element must serve twice</p></li>
@@ -3835,8 +3849,8 @@ A terminological note
 </div>
 </div>
 </section>
-<section id="vector-recycling-3" class="level2" data-number="30">
-<h2 data-number="30" class="anchored" data-anchor-id="vector-recycling-3"><span class="header-section-number">30</span> Vector recycling</h2>
+<section id="vector-recycling-3" class="level2" data-number="31">
+<h2 data-number="31" class="anchored" data-anchor-id="vector-recycling-3"><span class="header-section-number">31</span> Vector recycling</h2>
 <ul>
 <li>Did you really want this? Warning.</li>
 </ul>
@@ -3851,8 +3865,8 @@ shorter object length</code></pre>
 </div>
 </div>
 </section>
-<section id="endnotes" class="level2" data-number="31">
-<h2 data-number="31" class="anchored" data-anchor-id="endnotes"><span class="header-section-number">31</span> Endnotes</h2>
+<section id="endnotes" class="level2" data-number="32">
+<h2 data-number="32" class="anchored" data-anchor-id="endnotes"><span class="header-section-number">32</span> Endnotes</h2>
 <p>1: Variables = columns (two), observations = rows</p>
 <p>2: Qualitative/categorical variables are always discrete: When the values are names of countries like in the example, you cannot have a value that would lie, e.g., between Denmark and Sri Lanka. Life expectancy is a quantitative value and it is continuous. When you see neighboring values, it is very well possible that another country’s life expectancy would still lie between. When you disregard rounding, you could see extremely tiny differences, for instance five seconds or so… On the other hand, year is usually interpreted as a discrete variable, although time is unarguably a continuous concept.</p>
 </section>

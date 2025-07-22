@@ -472,6 +472,18 @@ mix_vec <- c(boolean_vec,
 class(mix_vec)
 ```
 
+## Programming with vectors
+
+-   select elements of a vector
+
+    -   by their position
+
+    -   by some condition
+
+::: notes
+This will take you away from data frames for a while, but it is the very fundamentals of the R language. You would really struggle with the data frames if you had no idea of how to deal with vectors. Selecting elements from a vector is a training for filtering rows of a data frame, even in `tidyverse` (let alone with base R, should you ever be forced to do it!)
+:::
+
 ## Vector subsetting by positions
 
 ```{r}
