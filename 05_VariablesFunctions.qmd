@@ -248,6 +248,22 @@ Each documentation page has the following sections:
 -   Examples (thankfully, you can run a few examples and observe the function's behavior in the Help pane.)
 :::
 
+## Libraries (aka packages)
+
+-   additional functions and data sets
+
+-   first install (`Packages` tab)
+
+-   load when you need a function from there
+
+    -   `library(thelibrary)` without quotes
+
+-   when functions from different packages happen to have the same name
+
+    -   R warns when it finds such a pair across your loaded libraries.
+
+    -   Use these functions with package name like this: `library::function()`
+
 ## Function with an argument
 
 ```{r}

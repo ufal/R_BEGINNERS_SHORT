@@ -11,7 +11,7 @@
 .reveal .cell-output pre,
 .reveal .cell-output code {
   white-space: pre-wrap !important;
-  word-break: break-word !important;
+  word-break: break-all !important;
   overflow-wrap: break-word !important;
   overflow-x: hidden !important;
 }
@@ -34,7 +34,7 @@
 
 /* === Code chunks (input) === */
 .reveal pre.sourceCode {
-  font-size: 1em !important;
+  font-size: 0.8em !important;
   font-family: "Fira Code", monospace;
   white-space: pre-wrap !important;
   word-break: break-word !important;
@@ -50,7 +50,7 @@
 /* === Output blocks (text output) === */
 .reveal .cell-output-stdout pre,
 .reveal .cell-output-stdout code {
-  font-size: 1em !important;
+  font-size: 0.8em !important;
   font-family: "Fira Code", monospace;
   white-space: pre-wrap !important;
   word-break: break-word !important;
@@ -74,7 +74,7 @@
 
 /* === INLINE CODE === */
 .reveal code {
-  font-size: 1em !important;
+  font-size: 0.9em !important;
   white-space: pre-wrap;
   word-break: break-word;
 }
