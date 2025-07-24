@@ -1,0 +1,37 @@
+---
+title: "E02_01_01"
+author: Silvie Cinková
+date: 2025-07-24
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Read a file from the web
+
+1.  Load the `readr` library (install it if it is not installed yet).
+
+2.  Manually inspect this URL: `https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/refs/heads/master/countries-etc-datapoints/ddf–datapoints–hourly_labour_cost_constant_2017_usd–by–geo–time.csv` .
+
+3.  Look up the help pages for the `readr` function `read_delim` ...
