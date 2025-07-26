@@ -5,6 +5,8 @@ date: 2025-07-24
 echo: true
 format:
   revealjs:
+    pdf-engine: weasyprint
+    theme: default
     plugins: [notes]
     toc: true
     slide-number: true
@@ -12,7 +14,7 @@ format:
     pdf-export: true
     css: atrium.css
     chalkboard: true
-    scrollable: false
+    scrollable: true
     code-block-height: 650px
     echo: true
     #output-location: slide
@@ -28,14 +30,107 @@ format:
     embed-resources: true
 ---
 
-## Working directory
+## Working directory {.smaller}
 
 -   folder from which R sees other files and folders
 
+</br>
+
+::: columns
+::: {.column width="20%"}
+![Interactive control of Working Directory location](images_ATRIUM/Programming_11_WorkingDirectory.png){#Programming_11_WorkingDirectory}
+:::
+
+::: {.column width="80%"}
+Print path to your current Working Directory
+
+```{r}
+getwd()
+```
+
+Set a different Working Directory
+
+```{r}
+#| eval: false
+setwd("~/folder/subfolder/") # ~ means your home
+```
+:::
+:::
+
+## Let's have a common file path {.smaller}
+
+1.  Make sure that your Working directory is your home.
+
+2.  Create a new folder in your home. Call it `R_BEGINNERS_SHORT`.
+
+    Enter that folder. Make it your Working Directory. (Gear icon $\rightarrow$ `Set As Working Directory`.
+
+3.  Create new folders `datasets_ATRIUM` and `my_output_files`.
+
+In the `File` tab, select `New project` $\rightarrow$ `In an existing directory`, and pick `R_BEGINNERS_SHORT`.
+
+::: notes
+If you execute this procedure, you will not need to adapt file paths in the teaching materials to your user account, except perhaps the user account name.
+:::
+
+## Download from GitHub URL {.smaller}
+
+::: columns
+::: {.column width="38%"}
+![GitHub default view](images_ATRIUM/Programming_12_GitHub.png){#Programming_12_GitHub}
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+![Switched to raw file URL](images_ATRIUM/Programming_13_GitHubRaw.png){#Programming_13_GitHubRaw}
+:::
+:::
+
+```{r}
+
+download.file(
+  url = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv",
+  destfile = "datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
+  )
+```
+
+::: notes
+The `download.file` function is universal to download any file from anywhere. Sometimes you can copy a download link from a website and use this URL to download the file programmatically.
+
+This is how to download some data from GitHub, which is a bit specific. Here I work with data from Gapminder on Github. Their repository is very large and this was a largely random pick: `https://github.com/open-numbers/ddf–gapminder–systema_globalis/tree/master/countries-etc-datapoints`. This repository contains a table that explains each data set, but I am going to select one that is intelligible without reading much metadata. It is going to be a table about average labor cost in a given country in a given year: <https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/refs/heads/master/countries-etc-datapoints/ddf–datapoints–hourly_labour_cost_constant_2017_usd–by–geo–time.csv>
+
+Manually navigate to the file you want and copy its URL. Mind to use the URL that appears when you hit the `Raw` button ( starting with `https://raw.githubusercontent`) to download the contents of the file. On the default `https://github.com/….` you would only download a html file of the website you are seeing.
+
+Use the `download.file` function. Leave all arguments at default, except `url` and `destfile`. Put the file into the new empty `datasets_ATRIUM` folder. Use the end part of the original file name and give it a prefix `gapminder_` and keep doing this with all files that you happen do download from this source. This will help you keep a system in your files.
+:::
+
+## https://www.gapminder.org/ 
+
 ::: columns
 ::: {.column width="50%"}
+![Gapminder](images_ATRIUM/gapminder_02.png){#gapminder_02}
 :::
 
 ::: {.column width="50%"}
+![Introducing Gapminder](images_ATRIUM/gapminder_03.png){#gapminder_03}
 :::
 :::
+
+## Excel file
+
+```{r}
+download.file(url = "https://gapm.io/dl_geo",
+              destfile = "datasets_ATRIUM/gapminder_geonames.xls"
+              )
+```
+
+## Google sheets
+
+```{r}
+library(googlesheets4)
+gs4_deauth()
+googlesheets4::gs4_get("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495")
+googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495", sheet = "geo-names")
+```
