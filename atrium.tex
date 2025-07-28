@@ -25,7 +25,10 @@
   left=1mm, right=1mm, top=1mm, bottom=1mm
 }
 
-
-
-
-
+\usepackage{etoolbox}
+\usepackage{fancyvrb}
+\makeatletter
+\pretocmd{\FV@BeginVerbatim}{\leftskip=1em \rightskip=0pt plus 1fil \spaceskip=.5em}{}{}
+\makeatother
+\pretocmd{\Highlighting}{\leftskip=1em \rightskip=0pt plus 1fil \spaceskip=.5em}{}{}
+\makeatother
