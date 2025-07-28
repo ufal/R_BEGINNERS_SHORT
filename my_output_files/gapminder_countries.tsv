@@ -1,0 +1,4 @@
+geo	name	four_regions	eight_regions	six_regions	members_oecd_g77	Latitude	Longitude	UN member since	World bank region	World bank, 4 income groups 2017	World bank, 3 income groups 2017	UNHCR
+aus	Australia	asia	east_asia_pacific	east_asia_pacific	oecd	-25	135	1945-11-01T00:00:00Z	East Asia & Pacific	High income	High income	Asia and the Pacific
+brn	Brunei	asia	east_asia_pacific	east_asia_pacific	g77	4.5	114.66667	1984-09-21T00:00:00Z	East Asia & Pacific	High income	High income	Asia and the Pacific
+khm	Cambodia	asia	east_asia_pacific	east_asia_pacific	g77	13	105	1955-12-14T00:00:00Z	East Asia & Pacific	Lower middle income	Middle income	Asia and the Pacific
