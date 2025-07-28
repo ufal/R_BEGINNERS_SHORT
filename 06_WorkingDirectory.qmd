@@ -5,7 +5,7 @@ date: 2025-07-24
 echo: true
 format:
   revealjs:
-    pdf-engine: weasyprint
+    pdf-engine: xelatex
     theme: default
     plugins: [notes]
     toc: true
@@ -13,7 +13,7 @@ format:
     notes: true
     pdf-export: true
     css: atrium.css
-    chalkboard: true
+    chalkboard: false
     scrollable: true
     code-block-height: 650px
     echo: true
@@ -22,7 +22,9 @@ format:
   pdf:
     toc: true
     number-sections: true
+    number-depth: 1
     include-in-header: atrium.tex
+    keep-tex: true
   html:
     toc: true
     number-sections: true
@@ -89,7 +91,7 @@ If you execute this procedure, you will not need to adapt file paths in the teac
 :::
 
 ```{r}
-
+#| name: downloadfiles
 download.file(
   url = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv",
   destfile = "datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
@@ -99,14 +101,14 @@ download.file(
 ::: notes
 The `download.file` function is universal to download any file from anywhere. Sometimes you can copy a download link from a website and use this URL to download the file programmatically.
 
-This is how to download some data from GitHub, which is a bit specific. Here I work with data from Gapminder on Github. Their repository is very large and this was a largely random pick: `https://github.com/open-numbers/ddf–gapminder–systema_globalis/tree/master/countries-etc-datapoints`. This repository contains a table that explains each data set, but I am going to select one that is intelligible without reading much metadata. It is going to be a table about average labor cost in a given country in a given year: <https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/refs/heads/master/countries-etc-datapoints/ddf–datapoints–hourly_labour_cost_constant_2017_usd–by–geo–time.csv>
+This is how to download some data from GitHub, which is a bit specific. Here I work with data from Gapminder on Github. Their repository is very large and this was a largely random pick: `https://github.com/open-numbers/ddf–gapminder–systema_globalis/tree/master/countries-etc-datapoints`. This repository contains a table that explains each data set, but I am going to select one that is intelligible without reading much metadata. It is going to be a table about average labor cost in a given country in a given year: [https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv](https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv){.uri}.
 
 Manually navigate to the file you want and copy its URL. Mind to use the URL that appears when you hit the `Raw` button ( starting with `https://raw.githubusercontent`) to download the contents of the file. On the default `https://github.com/….` you would only download a html file of the website you are seeing.
 
 Use the `download.file` function. Leave all arguments at default, except `url` and `destfile`. Put the file into the new empty `datasets_ATRIUM` folder. Use the end part of the original file name and give it a prefix `gapminder_` and keep doing this with all files that you happen do download from this source. This will help you keep a system in your files.
 :::
 
-## https://www.gapminder.org/ 
+## https://www.gapminder.org/
 
 ::: columns
 ::: {.column width="50%"}
@@ -118,19 +120,128 @@ Use the `download.file` function. Leave all arguments at default, except `url` a
 :::
 :::
 
-## Excel file
+
+## Read a `.csv`/`.tsv` file {.smaller}
+
+-   plain text with column separators: `;` `,` or tabulator
+
+-   inspect the file reading it as text (first 3 lines)
 
 ```{r}
-download.file(url = "https://gapm.io/dl_geo",
-              destfile = "datasets_ATRIUM/gapminder_geonames.xls"
-              )
+#| name: baser_readlines
+mypath <- "datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
+
 ```
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| name: readr_readlines
+library(readr)
+read_lines(
+  file = mypath, 
+  n_max = 3)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| name: baser_readlines
+readLines(
+  con = mypath,
+  n = 3)
+```
+:::
+:::
+
+::: notes
+What you are seeing are the first three lines of a tabular file we have just read as a text file, assuming no columns or headers. This comes handy when a file is too large to open interactively in a text editor, for instance.
+
+A tabular file is a plaintext file where each line is one table row and the columns are on each line separated by the same character (throughout the file). The best-known tabular format is **comma-separated values** (`csv`). The original U.S. format uses comma. The European csv uses semicolons because comma is often reserved for the decimal operator (vs. decimal point in the U.S.). To skip these issues altogether, you better save your files as `tsv` (tab-separated values).
+
+In the code above you see two functions that look similar and whose output looks exact the same. One is a base-R function, the other is from a `tidyverse` package called `readr`. Feel free to choose either and just make a mental note that there is an alternative. Sometimes, when a file is tricky to read in with one function, it goes well with the other.
+
+Look at the Help to either function and explore its other arguments using the file you have just loaded.
+:::
+
+## Reading a table with `readr` {.smaller}
+
+-   `read_csv`, `read_csv2`, `read_tsv`: tailored to the common separators `,`, `;`, tab
+
+-   `read_delim` : you name the separator (aka delimiter), more arguments
+
+```{r}
+#| name: readcsv
+read_csv(file = mypath, n_max = 3) #just top 3 rows
+```
+
+## Other arguments in `read_csv`
+
+```{r}
+#| name: savefiles_more
+read_csv(file = mypath, col_names = c("country", "year", "USD_hour_2017"), n_max = 3)
+```
+
+## Read directly from URL
+
+```{r}
+#| name: readrURL
+URL <- "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
+read_csv(file = URL, n_max = 3)
+```
+
+## Download an Excel file
+```{r}
+#| name: downloadexcel
+download.file(url = "https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/export?format=xlsx", 
+              destfile = "datasets_ATRIUM/gapminder_geonames.xlsx", mode = "wb")
+```
+
+With Windows formats and on Windows-operated computers, set `mode` to `wb`. Otherwise the file may get corrupted during the transmission.
+
+## Read Excel
+- `readxl` reads only local file paths, not URLs.
+
+```{r}
+#| name: readxlfile
+library(readxl)
+read_xlsx(path = "datasets_ATRIUM/gapminder_geonames.xlsx", n_max = 3)
+#readxl::read_xlsx(path = "datasets_ATRIUM/DataGeographies-v2-by-Gapminder.xlsx") #the same file
+
+```
+
+## Excel sheets listed
+- `read_xlsx` reads the first sheet by default
+- Have the spreadsheets listed:
+
+```{r}
+#| name: xlsheets
+readxl::excel_sheets("datasets_ATRIUM/gapminder_geonames.xlsx")
+```
+
+```{r}
+#| name: readxlsheet
+readxl::read_xlsx("datasets_ATRIUM/gapminder_geonames.xlsx", sheet = 2, n_max = 3)
+# or sheet = "list-of-countries-etc"
+```
+
 
 ## Google sheets
 
+-   inspect [it](https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495) manually and pick one worksheet
+
 ```{r}
 library(googlesheets4)
-gs4_deauth()
-googlesheets4::gs4_get("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495")
-googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495", sheet = "geo-names")
+gs4_deauth() # skip logging in at GoogleDrive
+googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495", sheet = 2, n_max = 3)
+
 ```
+
+# Saving tabular files
+
+```{r}
+#| name: savefiles
+gapminder_countries <- readxl::read_xlsx("datasets_ATRIUM/gapminder_geonames.xlsx", sheet = 2, n_max = 3)
+readr::write_tsv(gapminder_countries, "my_output_files/gapminder_countries.tsv")
+```
+
