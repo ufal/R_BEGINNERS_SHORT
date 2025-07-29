@@ -54,6 +54,7 @@ format:
 Print path to your current Working Directory
 
 ```{r}
+#|name: getwd
 getwd()
 ```
 
@@ -61,6 +62,7 @@ Set a different Working Directory
 
 ```{r}
 #| eval: false
+#| name: justexamplexxxx
 setwd("~/folder/subfolder/") # ~ means your home
 ```
 :::

@@ -1,5 +1,8 @@
 ---
-title: "Exploring a data frame"
+title: "Exploring a data frame with `dplyr` and `ggplot2.`"
+subtitle: "First steps."
+author: "Silvie Cinková"
+date: 2025-07-28
 echo: true
 format:
   revealjs:
@@ -28,6 +31,7 @@ format:
       wrap: true
     number-sections: true
     include-in-header: atrium.tex
+    shift-heading-level-by: -1
   html:
     toc: true
     number-sections: true
@@ -41,6 +45,7 @@ format:
 library(dplyr)
 library(readr)
 library(ggplot2)
+library(glue) # just to make long strings wrap in PDF
 ```
 
 ::: notes
@@ -128,11 +133,222 @@ colnames(laborcost_df)
 You already know you could have named all columns your way when reading in the file. Here are two ways to rename a column: one base-R-like and the other one provided by `dplyr`.
 :::
 
-## Plot the data set
+## Filter rows with `dplyr`
 
 ```{r}
-ggplot(data = laborcost_df, 
+cze_deu_df <- dplyr::filter(laborcost_df, geo %in% c("cze", "deu"))
+write_csv(cze_deu_df, "datasets_ATRIUM/gapminder_laborcost_cze_deu.csv")
+```
+
+::: notes
+`dplyr::filter` keeps only rows that meet a condition (or a set of conditions) that you determine with logical operators.
+
+We will return to this in more detail in a separate session.
+:::
+
+## List distinct values with `dplyr::distinct` {.scrollable}
+
+```{r}
+#| results: hide
+dplyr::distinct(.data = laborcost_df, geo, .keep_all = FALSE)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+dplyr::distinct(.data = laborcost_df, geo, .keep_all = FALSE) %>% kableExtra::kable()
+```
+
+::: notes
+The data set contains almost 50 countries. They will probably not be distinguishable in the plot.
+:::
+
+## Plot the data set
+
+-   obviously not a very helpful plot, but anyway...
+
+```{r}
+laborcost_plot <- ggplot(data = laborcost_df, 
        mapping = aes(x = time, 
                      y = labor_cost,
-                     color = geo)) + geom_point()
+                     color = geo)) + 
+  geom_point()
+laborcost_plot
 ```
+
+::: notes
+### Comment on the plot 
+
+How do you call plots with points and two axes?
+
+How many variables does the plot capture and how? Which are the types of variables?
+
+Look at the script. Try to dissect it in parts and interpret them.
+:::
+
+## Different mapping in the same plot
+
+```{r}
+laborcost_plot_size <- ggplot(data = laborcost_df,
+                              mapping = aes(x = geo,
+                                            y = time, 
+                                            alpha = labor_cost)) + 
+  geom_point()
+laborcost_plot_size
+```
+
+::: notes
+### Comment on this plot as well
+
+How does it capture the variables now? Is it telling a different story?
+:::
+
+## Save a plot
+
+```{r}
+ggsave(filename = "my_output_files/laborcost_plot.svg", 
+       plot = laborcost_plot)
+ggsave(filename = "my_output_files/laborcost_plot.png", 
+       plot = laborcost_plot,
+       device = grDevices::png) 
+# device = "png" or this when RStudio hickups
+ggsave(filename = "my_output_files/laborcost_plot.pdf",
+       plot = laborcost_plot)
+list.files(path = "my_output_files/", pattern = "laborcost_plot")
+
+```
+
+::: notes
+`ggsave` wants a file name (with path) including the format suffix.
+
+Sometimes, especially when you run your scripts over and over in Quarto, something breaks behind the scenes and you get cryptical error messages about mismatch of graphical devices or similar. Sometimes the best solution is to restart R, close the file, clean the Environment and reopen the file. Or run the command directly in the Console.
+:::
+
+## First insights about `ggplot2`
+
+-   Specific syntax
+
+-   A plot is an object (goes in a variable)
+
+-   Can be saved to files - include desired format in the file name
+
+-   Maps variables on X, Y, color, transparency...
+
+::: notes
+Feel free to add more insights or impressions.
+:::
+
+## `ggplot2` $\approx$ implemented *Grammar of Graphics* 
+
+<https://ggplot2.tidyverse.org/>
+
+-   All plots have the same logic and components in a few layers.
+
+-   Not just drawings, statistical transformations behind the scenes (e.g. histogram)
+
+-   When you see a `ggplot2` plot you have an idea how the source table is structured
+
+::: notes
+*Grammar of Graphics* is a [book by Leland Wilkinson](#0).
+
+Base R plots: many independent packages $\rightarrow$ less consistence, harder to learn properly
+
+You cannot save base R plots as objects.
+:::
+
+## Layers of `ggplot2`
+
+-   Data
+
+-   Aesthetic mappings + Facets (subgraphs)
+
+-   Geometric objects (aka *geoms*)
+
+-   Statistical transformations (aka *stats*)
+
+-   Coordinate system
+
+-   Theme
+
+::: notes
+Today just data, aesthetic mappings and geoms. This is enough to make an informative plot if you don't need it super pretty for publication.
+:::
+
+## Data
+
+-   data frame with tidy data structure
+
+    -   each observation on one row
+
+    -   each variable in one column
+
+-   categorical variables automatically read as factors
+
+## Aesthetic scales (aka *mappings, aesthetics*)
+
+-   axes X, Y
+
+-   shape / linetype
+
+-   color / fill / stroke
+
+-   size / linewidth
+
+-   alpha (transparency)
+
+-   label
+
+## Geometric objects aka *geoms*
+
+plot types, such as:
+
+-   histogram
+
+-   scatterplot
+
+-   barplot
+
+-   boxplot
+
+-   heatmap
+
+-   and many others
+
+::: notes
+Try and sketch these plots by hand (fake data). What are these plots good at telling? How many of which variables?
+:::
+
+## A neater example dataset: just Czechia and Germany  {.smaller}
+
+-   only two values of a categorical variable, under 50 rows
+
+```{r}
+#| echo: false
+cze_deu_df <- dplyr::filter(laborcost_df, geo %in% c("cze", "deu"))
+write_csv(cze_deu_df, "datasets_ATRIUM/gapminder_laborcost_cze_deu.csv")
+```
+
+```{r}
+cze_deu_df <- read_csv("datasets_ATRIUM/gapminder_laborcost_cze_deu.csv")
+ggplot(data = cze_deu_df, 
+       mapping = aes(x = time, y = labor_cost, color = geo)) + 
+  geom_point(size = 7)
+```
+
+## Syntax 
+
+`ggplot(data, mappings) + geom_…( )`
+
+or
+
+`ggplot(data) + geom_…(mappings)`
+
+::: notes
+The `mapping` argument always takes the `aes()` function.
+
+-   The plus sign never works at the beginning of a new line.
+
+-   The geometric object (actual plot) is generated by a `geom_`*something*`()` function.
+
+-   Different `geom_` functions require/accept different aesthetic scales. Look them up in help/cheat sheet.
+:::
