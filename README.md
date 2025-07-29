@@ -2,6 +2,8 @@
 
 Charles University, Prague, August 4 - 15, 2025
 
+
+
 **REGISTRATION CLOSED**
 
 ## Venue
@@ -12,52 +14,4 @@ Malostranské náměstí 25, 4th floor, Room S1
 
 This course in the course catalog: <https://is.cuni.cz/studium/eng/predmety/index.php?do=predmet&kod=NPFL146>
 
-## Schedule
-
-### Monday, August 4
-
-+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| time slot     | contents                                                                                                                                                                 |
-+===============+==========================================================================================================================================================================+
-| 9:00 - 10:30  | 🧭 [01_Introduction](https://ufal.github.io/R_BEGINNERS_SHORT/01_Introduction.html).- [02_HowToRStudio](https://ufal.github.io/R_BEGINNERS_SHORT/02_HowToRStudio.html) - |
-|               |                                                                                                                                                                          |
-|               | 🏋️Follow with 02 and log in at RStudio.                                                                                                                                  |
-|               |                                                                                                                                                                          |
-|               | ❗Create your account at [DataCamp]([https://www.datacamp.com/users/sign_up](#0)) with the same e-mail address you registered with to this course.                       |
-+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 10:50 - 12:10 | 🏋️ Explore RStudio [Exercise T_01_01_01_YourFirstQuartoDoc](https://ufal.github.io/R_BEGINNERS_SHORT/EXERCISES/T_01_01_01_YourFirstQuartoDoc.html){.uri}                 |
-|               |                                                                                                                                                                          |
-|               | 🧭[03_RStudioFileManagement](https://ufal.github.io/R_BEGINNERS_SHORT/03_RStudioFileManagement.html){.uri}                                                               |
-+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 14:00 - 15:30 | 🧭 [04_NavigatingRStudioForProgramming](https://ufal.github.io/R_BEGINNERS_SHORT/04_NavigatingRStudioForProgramming.html)                                                |
-|               |                                                                                                                                                                          |
-|               | 🧭[05_VariablesFunctions](https://ufal.github.io/R_BEGINNERS_SHORT/05_VariablesFunctions.html)                                                                           |
-+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 15:50 - 17:10 |                                                                                                                                                                          |
-+---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-https://ufal.github.io/R_BEGINNERS_SHORT/
-
-#### Wednesday, August 6
-
-#### Thursday, August 7
-
-#### Friday, August 8
-
-#### Monday, August 11
-
-#### Tuesday, August 12
-
-#### Wednesday, August 13
-
-#### Thursday, August 14
-
-#### Friday, August 15
-
-### Download the entire repository
-
-### Download an individual file
-
-### Download a folder from this repository
-
-You cannot download subfolder (e.g. `images_ATRIUM`) directly from GitHub. <https://download-directory.github.io/?url=https://github.com/ufal/R_BEGINNERS_SHORT/tree/main/images_ATRIUM>
+Schedule and materials: <https://ufal.github.io/R_BEGINNERS_SHORT>
