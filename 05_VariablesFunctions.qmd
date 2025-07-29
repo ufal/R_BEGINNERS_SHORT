@@ -19,13 +19,15 @@ format:
     preview-links: auto
   pdf:
     toc: true
-    number-sections: false
+    shift-heading-level-by: -1
+    number-sections: true
     include-in-header: atrium.tex
   html:
     toc: true
     number-sections: true
     css: atrium.css
     embed-resources: true
+    
 ---
 
 ## Tabular data

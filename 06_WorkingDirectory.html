@@ -3231,10 +3231,17 @@ display: none !important;
 </div>
 </div>
 <div class="cell" name="downloadfiles">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue) <span class="co"># enables multiline with \\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;https://raw.githubusercontent.com/open-numbers/ddf--gapminder--</span><span class="sc">\\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">            systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--</span><span class="sc">\\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">            datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>my_destination <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;datasets_ATRIUM/</span><span class="sc">\\</span><span class="st">                       </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">gapminder_hourly_labour_cost_constant_2017_</span><span class="sc">\\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">                       usd--by--geo--time.csv&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> URL,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> my_destination</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="notes">
 <p>The <code>download.file</code> function is universal to download any file from anywhere. Sometimes you can copy a download link from a website and use this URL to download the file programmatically.</p>
@@ -3270,7 +3277,8 @@ display: none !important;
 <li><p>inspect the file reading it as text (first 3 lines)</p></li>
 </ul>
 <div class="cell" name="baser_readlines">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mypath <span class="ot">&lt;-</span> <span class="st">&quot;datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mypath <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd</span><span class="sc">\\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">               --by--geo--time.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -3362,9 +3370,12 @@ chr (3): country, year, USD_hour_2017
 <section id="read-directly-from-url" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="read-directly-from-url"><span class="header-section-number">9</span> Read directly from URL</h2>
 <div class="cell" name="readrURL">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv&quot;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="at">file =</span> URL, </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">n_max =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>URL2 <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;https://raw.githubusercontent.com/open-numbers/ddf--gapminder--</span><span class="sc">\\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">             systema_globalis/refs/heads/master/countries-etc-datapoints/</span><span class="sc">\\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">             ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--</span><span class="sc">\\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">             time.csv&quot;</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="at">file =</span> URL2, </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">n_max =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 3 Columns: 3
 ── Column specification ────────────────────────────────────────────────────────
@@ -3388,9 +3399,12 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <section id="download-an-excel-file" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="download-an-excel-file"><span class="header-section-number">10</span> Download an Excel file</h2>
 <div class="cell" name="downloadexcel">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/export?format=xlsx&quot;</span>, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> <span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>, </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>URL3 <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;https://docs.google.com/spreadsheets/d/1qHalit8s</span><span class="sc">\\</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">             XC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/export?format=xlsx&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> URL3, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With Windows formats and on Windows-operated computers, set <code>mode</code> to <code>wb</code>. Otherwise the file may get corrupted during the transmission.</p>
 </section>
@@ -3419,7 +3433,7 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 # ℹ abbreviated names: ¹​`Data: Geographies — v2`,
 #   ²​`Free data from www.gapminder.org`</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#readxl::read_xlsx(path = &quot;datasets_ATRIUM/DataGeographies-v2-by-Gapminder.xlsx&quot;) #the same file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># readxl::read_xlsx(path = &quot;datasets_ATRIUM/DataGeographies-v2-by-Gapminder.xlsx&quot;) #the same file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="excel-sheets-listed" class="level2" data-number="12">
@@ -3436,7 +3450,8 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 </div>
 </div>
 <div class="cell" name="readxlsheet">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">2</span>, <span class="at">n_max =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">2</span>, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">n_max =</span> <span class="dv">3</span>) <span class="co"># or sheet = &quot;list-of-countries-etc&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 13
   geo   name    four_regions eight_regions six_regions members_oecd_g77 Latitude
@@ -3448,7 +3463,6 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 #   `World bank region` &lt;chr&gt;, `World bank, 4 income groups 2017` &lt;chr&gt;,
 #   `World bank, 3 income groups 2017` &lt;chr&gt;, UNHCR &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or sheet = &quot;list-of-countries-etc&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="google-sheets" class="level2" data-number="13">
@@ -3457,9 +3471,12 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <li>inspect <a href="https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495">it</a> manually and pick one worksheet</li>
 </ul>
 <div class="cell" name="gog4">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_deauth</span>() <span class="co"># skip logging in at GoogleDrive</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>googlesheets4<span class="sc">::</span><span class="fu">read_sheet</span>(<span class="st">&quot;https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495&quot;</span>, <span class="at">sheet =</span> <span class="dv">2</span>, <span class="at">n_max =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>shURL <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;https://docs.google.com/spreadsheets/d/1qHalit8sXC</span><span class="sc">\\</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">              0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495&quot;</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_deauth</span>() <span class="co"># skip logging in at GoogleDrive</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>googlesheets4<span class="sc">::</span><span class="fu">read_sheet</span>(shURL, <span class="at">sheet =</span> <span class="dv">2</span>, </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">n_max =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Reading from &quot;Data Geographies - v2 - by Gapminder&quot;.</code></pre>
 </div>
@@ -3482,10 +3499,11 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <section id="saving-tabular-files" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="saving-tabular-files"><span class="header-section-number">14</span> Saving tabular files</h2>
 <div class="cell" name="savefiles">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gapminder_countries <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sheet =</span> <span class="dv">2</span>, <span class="at">n_max =</span> <span class="dv">3</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(<span class="at">x =</span> gapminder_countries, </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">file =</span> <span class="st">&quot;my_output_files/gapminder_countries.tsv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gapminder_countries <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&quot;datasets_ATRIUM/gapminder_geonames.xlsx&quot;</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sheet =</span> <span class="dv">2</span>, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">n_max =</span> <span class="dv">3</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(<span class="at">x =</span> gapminder_countries, </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">file =</span> <span class="st">&quot;my_output_files/gapminder_countries.tsv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="some-file-management-functions" class="level2" data-number="15">
@@ -3493,8 +3511,8 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <ul>
 <li><p>create a file to save your exercise scripts</p>
 <div class="cell" name="dircreate">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="at">path =</span> <span class="st">&quot;~/R_BEGINNERS_SHORT/my_exercise_scripts/&quot;</span>,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">mode =</span> <span class="st">&#39;750&#39;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="at">path =</span> <span class="st">&quot;~/R_BEGINNERS_SHORT/my_exercise_scripts/&quot;</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">mode =</span> <span class="st">&#39;750&#39;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in dir.create(path = &quot;~/R_BEGINNERS_SHORT/my_exercise_scripts/&quot;, :
 &#39;/home/cinkova/R_BEGINNERS_SHORT/my_exercise_scripts&#39; already exists</code></pre>
@@ -3508,7 +3526,7 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <li><p>just those with <code>qmd</code> in their names</p></li>
 <li><p><code>recursive</code>: search in subfolders?</p>
 <div class="cell" name="listfiles">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;~/R_BEGINNERS_SHORT&quot;</span>, <span class="at">recursive =</span> <span class="cn">FALSE</span>, <span class="at">include.dirs =</span> <span class="cn">FALSE</span>, <span class="at">pattern =</span> <span class="st">&quot;qmd&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;~/R_BEGINNERS_SHORT&quot;</span>, <span class="at">recursive =</span> <span class="cn">FALSE</span>, <span class="at">include.dirs =</span> <span class="cn">FALSE</span>, <span class="at">pattern =</span> <span class="st">&quot;qmd&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;/home/cinkova/R_BEGINNERS_SHORT/01_Introduction.qmd&quot;                   
 [2] &quot;/home/cinkova/R_BEGINNERS_SHORT/02_HowToRStudio.qmd&quot;                   
@@ -3516,7 +3534,8 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 [4] &quot;/home/cinkova/R_BEGINNERS_SHORT/04_NavigatingRStudioForProgramming.qmd&quot;
 [5] &quot;/home/cinkova/R_BEGINNERS_SHORT/05_VariablesFunctions.qmd&quot;             
 [6] &quot;/home/cinkova/R_BEGINNERS_SHORT/06_WorkingDirectory.qmd&quot;               
-[7] &quot;/home/cinkova/R_BEGINNERS_SHORT/index.qmd&quot;                             </code></pre>
+[7] &quot;/home/cinkova/R_BEGINNERS_SHORT/07_Exploring_dataframes.qmd&quot;           
+[8] &quot;/home/cinkova/R_BEGINNERS_SHORT/index.qmd&quot;                             </code></pre>
 </div>
 </div></li>
 </ul></li>

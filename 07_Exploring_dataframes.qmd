@@ -1,0 +1,138 @@
+---
+title: "Exploring a data frame"
+echo: true
+format:
+  revealjs:
+    pdf: true
+    pdf-engine: pagedjs
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    engine: xelatex
+    #highlight-style: kate
+    documentclass: article
+    toc: true
+    code-block-border-left: false
+    code-block:
+      engine: listings
+      wrap: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## `readr`, `dplyr`, and `ggplot2`
+
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+```
+
+::: notes
+These are the three libraries you need most when you explore a tabular dataset.
+:::
+
+## Read the Gapminder labor cost data set
+
+```{r}
+myfilepath <-"datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv" 
+laborcost_df <- read_csv(file = myfilepath, 
+                         show_col_types = TRUE)
+```
+
+::: notes
+It is the file demonstrated in the previous session. We saved it into the folder `datasets_ATRIUM`. You can also get it at <https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv>.
+
+Watch the message `read_csv` gives you about the file. You can suppress it by overriding the default to `show_col_types = FALSE`.
+:::
+
+## `dplyr::glimpse`
+
+-   peek at the dataset (tilted 90°)
+
+```{r}
+glimpse(laborcost_df)
+```
+
+::: notes
+Gives you the number of rows and columns, the column names with their data class, and it also shows as many elements (values) in each column as to fit your screen.
+:::
+
+## `summary`
+
+```{r}
+summary(laborcost_df)
+```
+
+::: notes
+Gives you the "five-number summary" of each numeric column (it's often called this way, although the numbers are obviously six...). With categorical columns, it depends, whether the column is a character vector or a factor.
+:::
+
+## `summary` with categorical columns as factors
+
+```{r}
+#| echo: false
+laborcost_df %>% mutate(across(geo, ~ as.factor(.x))) %>% summary()
+```
+
+::: notes
+If you have a data frame with categorical variables converted to factors, the summary will show you a glimpse of their **levels** (unique values) and their frequencies, as well as tell you how many levels there are.
+
+So far, do not worry about factors. The `dplyr` as well as the `ggplot2` libraries do this factor conversion on the fly whenever they need it.
+:::
+
+## Rename a column with base R
+
+`hourly_labour_cost_constant_2017_usd` too long, shorten to `labor_cost`.
+
+```{r}
+colnames(laborcost_df)[colnames(laborcost_df) ==
+                         "hourly_labour_cost_constant_2017_usd"] <- "labor_cost"
+```
+
+```{r}
+colnames(laborcost_df)
+```
+
+## Rename a column with `dplyr`
+
+```{r}
+#| echo: false
+laborcost_df <- read_csv(file = myfilepath, 
+                         show_col_types = FALSE)
+```
+
+```{r}
+laborcost_df <- rename(.data = laborcost_df,
+                       labor_cost = hourly_labour_cost_constant_2017_usd
+                       )
+colnames(laborcost_df)
+```
+
+::: notes
+You already know you could have named all columns your way when reading in the file. Here are two ways to rename a column: one base-R-like and the other one provided by `dplyr`.
+:::
+
+## Plot the data set
+
+```{r}
+ggplot(data = laborcost_df, 
+       mapping = aes(x = time, 
+                     y = labor_cost,
+                     color = geo)) + geom_point()
+```

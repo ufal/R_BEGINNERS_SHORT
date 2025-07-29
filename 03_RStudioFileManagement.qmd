@@ -230,7 +230,15 @@ Fortunately for us, there is a web service named `download-directory.github.io` 
 :::
 
 ::: {.column width="40%"}
-![Your home is inside here.](images_ATRIUM/RStudio_06_AtRoot.png){#RStudio_06_AtRoot width="533"} ![Your home is inside here.](images_ATRIUM/RStudio_07_PickYourHome.png){width="522"}
+::: columns
+::: {.column width="50%"}
+![Your home is inside here.](images_ATRIUM/RStudio_06_AtRoot.png){#RStudio_06_AtRoot}
+:::
+
+::: {.column width="50%"}
+![Your home is inside here.](images_ATRIUM/RStudio_07_PickYourHome.png)
+:::
+:::
 :::
 :::
 
@@ -243,12 +251,15 @@ Jupyterlab is installed on a computational grid called AIC (Artificial Intellige
 ## Alternative paths to your home
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="45%"}
 ![Your home as `/home/YOURLOGIN`](images_ATRIUM/RStudio_04_YourHome.png)
 :::
 
-::: {.column width="50%"}
-![Path to your home as `/lnet/aic/personal/YOURLOGIN`](images_ATRIUM/RStudio_08_PathOverLNET_AIC_PERSONAL.png){#RStudio_08_PathOverLNET_AIC_PERSONAL}
+::: {.column width="10%"}
+:::
+
+::: {.column width="45%"}
+![Path to your home as `/lnet/aic/personal/YOURLOGIN`](images_ATRIUM/RStudio_08_PathOverLNET_AIC_PERSONAL.png){#RStudio_08_PathOverLNET_AIC_PERSONAL2}
 :::
 :::
 
@@ -256,11 +267,11 @@ Do not ponder on it. It's how the IT admin organized the file system.
 
 ## Copy from someone's home to yours - Step 1
 
-![Navigate upwards in the file structure to `/home/`*YOUR_COLLEAGUE'S_FOLDER*](images_ATRIUM/RStudio_09_VisitSomeoneHome.png){#RStudio_09_VisitSomeoneHome.}
+![Navigate upwards in the file structure to `/home/` *YOUR_COLLEAGUE'S_FOLDER*](images_ATRIUM/RStudio_09_VisitSomeoneHome.png){#RStudio_09_VisitSomeoneHome2}
 
 ## Copy from someone's home to yours - Step 2
 
-![Select the item to copy (one file) and activate the menu](images_ATRIUM/RStudio_11_CopyFromSomeoneCopy.png){#RStudio_11_CopyFromSomeoneCopy width="568"}
+![Select the item to copy (one file) and activate the menu](images_ATRIUM/RStudio_11_CopyFromSomeoneCopy.png){#RStudio_11_CopyFromSomeoneCopy2}
 
 ## Copy from someone's home to yours - Step 3
 
@@ -276,17 +287,17 @@ Do not ponder on it. It's how the IT admin organized the file system.
 
 ## Copy from someone's home to yours - Step 5
 
-![Navigate home!](images_ATRIUM/RStudio_14_ReturnHome.png){#RStudio_14_ReturnHome}
+![Navigate home!](images_ATRIUM/RStudio_14_ReturnHome.png){#RStudio_14_ReturnHome2}
 
 ## Copy from someone's home to yours - Step 6
 
-![Mission accomplished!](images_ATRIUM/RStudio_15_MissionAccomplished.png){#RStudio_15_MissionAccomplished}
+![Mission accomplished!](images_ATRIUM/RStudio_15_MissionAccomplished.png){#RStudio_15_MissionAccomplished2}
 
 ## Copy someone's **folder** to your home {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
-![When you copy a **folder**, you must give the copy a name before saving.](images_ATRIUM/RStudio_16_CopyFolderHome.png){#RStudio_16_CopyFolderHome width="509"}
+![When you copy a **folder**, you must give the copy a name before saving.](images_ATRIUM/RStudio_16_CopyFolderHome.png){#RStudio_16_CopyFolderHome2 width="509"}
 :::
 
 ::: {.column width="50%"}

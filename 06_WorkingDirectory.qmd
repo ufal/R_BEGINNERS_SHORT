@@ -5,8 +5,8 @@ date: 2025-07-24
 echo: true
 format:
   revealjs:
-    pdf-engine: xelatex
-    theme: default
+    pdf: true
+    pdf-engine: pagedjs
     plugins: [notes]
     toc: true
     slide-number: true
@@ -20,17 +20,24 @@ format:
     #output-location: slide
     preview-links: auto
   pdf:
+    engine: xelatex
+    #highlight-style: kate
+    documentclass: article
     toc: true
+    code-block-border-left: false
+    code-block:
+      engine: listings
+      wrap: true
     number-sections: true
-    number-depth: 1
+    shift-heading-level-by: -1
     include-in-header: atrium.tex
-    keep-tex: true
   html:
     toc: true
     number-sections: true
     css: atrium.css
     embed-resources: true
 ---
+
 
 ## Working directory {.smaller}
 
@@ -75,7 +82,7 @@ In the `File` tab, select `New project` $\rightarrow$ `In an existing directory`
 If you execute this procedure, you will not need to adapt file paths in the teaching materials to your user account, except perhaps the user account name.
 :::
 
-## RStudio Projects 
+## RStudio Projects
 
 -   `.Rproj` file stores project configuration
 
@@ -100,9 +107,16 @@ If you execute this procedure, you will not need to adapt file paths in the teac
 
 ```{r}
 #| name: downloadfiles
+library(glue) # enables multiline with \\
+URL <- glue("https://raw.githubusercontent.com/open-numbers/ddf--gapminder--\\
+            systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--\\
+            datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv")
+my_destination <- glue("datasets_ATRIUM/\\                       
+gapminder_hourly_labour_cost_constant_2017_\\
+                       usd--by--geo--time.csv")
 download.file(
-  url = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv",
-  destfile = "datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
+  url = URL,
+  destfile = my_destination
   )
 ```
 
@@ -136,8 +150,8 @@ Use the `download.file` function. Leave all arguments at default, except `url` a
 
 ```{r}
 #| name: baser_readlines
-mypath <- "datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
-
+mypath <- glue("datasets_ATRIUM/gapminder_hourly_labour_cost_constant_2017_usd\\
+               --by--geo--time.csv")
 ```
 
 ::: columns
@@ -196,8 +210,11 @@ read_csv(file = mypath,
 
 ```{r}
 #| name: readrURL
-URL <- "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/refs/heads/master/countries-etc-datapoints/ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--time.csv"
-read_csv(file = URL, 
+URL2 <- glue("https://raw.githubusercontent.com/open-numbers/ddf--gapminder--\\
+             systema_globalis/refs/heads/master/countries-etc-datapoints/\\
+             ddf--datapoints--hourly_labour_cost_constant_2017_usd--by--geo--\\
+             time.csv")
+read_csv(file = URL2, 
          n_max = 3)
 ```
 
@@ -205,8 +222,11 @@ read_csv(file = URL,
 
 ```{r}
 #| name: downloadexcel
-download.file(url = "https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/export?format=xlsx", 
-              destfile = "datasets_ATRIUM/gapminder_geonames.xlsx", 
+URL3 <- glue("https://docs.google.com/spreadsheets/d/1qHalit8s\\
+             XC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/export?format=xlsx")
+download.file(url = URL3, 
+              destfile = 
+                "datasets_ATRIUM/gapminder_geonames.xlsx", 
               mode = "wb")
 ```
 
@@ -221,7 +241,7 @@ With Windows formats and on Windows-operated computers, set `mode` to `wb`. Othe
 library(readxl)
 read_xlsx(path = "datasets_ATRIUM/gapminder_geonames.xlsx", 
           n_max = 3) # just three rows
-#readxl::read_xlsx(path = "datasets_ATRIUM/DataGeographies-v2-by-Gapminder.xlsx") #the same file
+# readxl::read_xlsx(path = "datasets_ATRIUM/DataGeographies-v2-by-Gapminder.xlsx") #the same file
 
 ```
 
@@ -237,8 +257,8 @@ readxl::excel_sheets(path = "datasets_ATRIUM/gapminder_geonames.xlsx")
 
 ```{r}
 #| name: readxlsheet
-readxl::read_xlsx(path = "datasets_ATRIUM/gapminder_geonames.xlsx", sheet = 2, n_max = 3)
-# or sheet = "list-of-countries-etc"
+readxl::read_xlsx(path = "datasets_ATRIUM/gapminder_geonames.xlsx", sheet = 2, 
+                  n_max = 3) # or sheet = "list-of-countries-etc"
 ```
 
 ## Google sheets
@@ -248,8 +268,11 @@ readxl::read_xlsx(path = "datasets_ATRIUM/gapminder_geonames.xlsx", sheet = 2, n
 ```{r}
 #| name: gog4
 library(googlesheets4)
+shURL <- glue("https://docs.google.com/spreadsheets/d/1qHalit8sXC\\
+              0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495")
 gs4_deauth() # skip logging in at GoogleDrive
-googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8oVXibc2wa2gY7bkwGzOybEMTWp-08o/edit?gid=425865495#gid=425865495", sheet = 2, n_max = 3)
+googlesheets4::read_sheet(shURL, sheet = 2, 
+                          n_max = 3)
 
 ```
 
@@ -258,7 +281,8 @@ googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1qHalit8sXC0R8
 ```{r}
 #| name: savefiles
 gapminder_countries <- readxl::read_xlsx("datasets_ATRIUM/gapminder_geonames.xlsx",
-                                         sheet = 2, n_max = 3)
+                                         sheet = 2, 
+                                         n_max = 3)
 readr::write_tsv(x = gapminder_countries, 
                  file = "my_output_files/gapminder_countries.tsv")
 ```
@@ -273,9 +297,8 @@ readr::write_tsv(x = gapminder_countries,
                mode = '750', recursive = TRUE )
     ```
 
-```{=html}
 <!-- -->
-```
+
 -   list files in a folder
 
     -   just those with `qmd` in their names
