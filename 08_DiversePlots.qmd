@@ -1,0 +1,134 @@
+---
+title: "Aesthetic scales and geometries with statistical transformations"
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+    shift-heading-level-by: -1
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Different plots for different stories
+
+-   use ggplot2 cheatsheet (hardcopy or available in RStudio Help top left menu bar)
+
+-   some demonstrations on `diamonds`, a built-in data set.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+colnames(diamonds)
+```
+
+## Structure of the `diamonds` data frame
+
+```{r}
+#| echo: false
+str(diamonds)
+```
+
+## Histogram
+
+-   one quantitative variable
+
+-   frequency distribution of value intervals
+
+```{r}
+#| name: histo-price
+ggplot(data = diamonds) + geom_histogram(mapping = aes(x = price))
+```
+
+::: notes
+It takes your variable, sorts the values and divides them into equally wide intervals (30 by default). They are called **bins** and look like bars. The height of each bin is the count of observations that fit in the bin.
+:::
+
+## Density
+
+-   like histogram but computes how likely you pay that exact sum in USD if you pick a random diamond.
+
+```{r}
+#| name: histo-price-density
+ggplot(data = diamonds) + geom_density(mapping = aes(x = price))
+```
+
+::: notes
+You see that you will pay most likely between a few hundred and 2,000 USD, but the probabilities are very low (around 0.035% the highest) because of the unit being one 1USD. Would you hazard picking a random diamond if you did not see the entire curve? Almost certainly not.
+
+You would probably want to know how likely you will pay at most a given price! That is what **cumulative density** is for.
+:::
+
+## Cumulative density
+
+-   shows you how likely you pay that and lower price for a random diamond
+
+```{r}
+#| name: histo-price-cumulative-density
+ggplot(data = diamonds) + geom_density(mapping = aes(x = price), stat = "ecdf")
+```
+
+::: notes
+This tells you that you have a 50% chance to get your random diamond for at most USD 2,500, and a 75% chance that you pay at most 5,000 USD. This is a much better estimation of whether a random purchase is going to ruin you! Note that `stat` argument and look it up in the cheat sheet. It is mostly calculations in different flavors of bins and probability density curves. All this fits well with a histogram.
+:::
+
+## Boxplot
+
+```{r}
+#| name: histo-price
+ggplot(data = diamonds) + geom_boxplot(mapping = aes( y = price)) 
+```
+
+::: notes
+This is a boxplot. The function sorts the observations and computes their percentiles. The box reaches from the first to the third quartile. That is, half of the observations seen in the data fit into the box. The vertical bar is the median value (50% of observations are lower than this or equal). The whiskers show the range of observations within 1.5 height of the box from each side. What is beyond that counts as **outliers**, that is, extreme values. The height of the box, the location of the vertical bar, as well as the presence of outliers and length of the whiskers give you an idea of how the values are distributed. Boxplots are very nicely described for instance here: [https://www.simplypsychology.org/boxplots.html](#0).
+
+Note that the numbers on the x-axis do not have any meaning and ought to be removed for a presentation.
+:::
+
+## Boxplots compared {.smaller}
+
+-   You can break them by a discrete variable (categorical or ordinal)
+
+-  for instance map cut on the x-axis ...
+
+```{r}
+ggplot(data = diamonds) + geom_boxplot(mapping = aes(y = price,  x = cut)) 
+```
+
+## Boxplots compared {.smaller}
+
+- or map cut on fill or color
+
+```{r}
+ggplot(data = diamonds) + geom_boxplot(mapping = aes( y = price, fill = cut)) 
+```
+
+## Bar plot
+- frequency counts of categorical/ordinal variables
+- each bar represents one variable category (value)
+- bar height means the frequency/count
+
+```{r}
+
+```
+
+
+## Scatterplot
+- great to explore an association between 

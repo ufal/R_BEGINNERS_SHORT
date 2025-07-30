@@ -9,8 +9,8 @@ format:
     notes: true
     pdf-export: true
     css: atrium.css
-    chalkboard: true
-    scrollable: false
+    chalkboard: false
+    scrollable: true
     code-block-height: 650px
     echo: true
     #output-location: slide
@@ -19,6 +19,7 @@ format:
     toc: true
     number-sections: true
     include-in-header: atrium.tex
+    shift-heading-level-by: -1
   html:
     toc: true
     number-sections: true
