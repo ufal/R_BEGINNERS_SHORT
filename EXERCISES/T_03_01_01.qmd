@@ -91,4 +91,4 @@ ggplot(data = billionaires_df) +
   geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-## sss
+## sssvv
