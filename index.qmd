@@ -73,7 +73,7 @@ Courtesy of <https://www.datacamp.com/>. The links in this schedule always point
 | 14:00 - 15:30  |🏋️🎧DataCamp <https://campus.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2/introduction-713e9e31-9e6c-4a0f-b242-9bc4e692fd8a?ex=1>   |
 | 15:50 - 17:10  |🏋️🎧DataCamp    <https://campus.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2/aesthetics?ex=1>              |
 
-#### Thursday, August 7
+#### Thursday, August 7  
 
 | time slot     | contents |
 |---------------|----------|
