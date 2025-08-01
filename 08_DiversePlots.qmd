@@ -9,7 +9,7 @@ format:
     notes: true
     pdf-export: true
     css: atrium.css
-    chalkboard: true
+    chalkboard: false
     scrollable: true
     code-block-height: 650px
     echo: true
@@ -25,23 +25,54 @@ format:
     number-sections: true
     css: atrium.css
     embed-resources: true
+    shift-heading-level-by: -1
 ---
 
 ## Different plots for different stories
 
+::: columns
+::: {.column width="80%"}
 -   use ggplot2 cheatsheet (hardcopy or available in RStudio Help top left menu bar)
 
--   some demonstrations on `diamonds`, a built-in data set.
+-   some demonstrations on built-in dataset `diamonds`
+:::
+
+::: {.column width="20%"}
+![](images_ATRIUM/diamond_sketch.png){#diamond_sketch width="996"}
+:::
+:::
 
 ```{r}
-library(dplyr)
-library(ggplot2)
+#| name: libraries
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
 colnames(diamonds)
 ```
+
+::: notes
+`diamonds` is a built-in dataset of `ggplot2`. It describes a collection of almost 54,000 diamonds in ten variables. Some of them are numeric. The others are ordinal, which for the purposes of plotting is the same as categorical. The variables are:
+
+-   `carat` (weight unit) - numeric
+
+-   `cut` (quality of the cut) - ordinal, intelligible values like *Fair*, *Good*...
+
+-   `color` - ordinal, colors encoded with random capital letters
+
+-   `clarity` - ordinal, encoded with combinations of capital letters and digits
+
+-   `depth` - numeric (distance between the flat side and the point of the pointed one)
+
+-   `table` - numeric (size of the flat part)
+
+-   `price` - numeric
+
+-   `x`, `y`, `z` - numeric variables, sizes of some other dimensions
+:::
 
 ## Structure of the `diamonds` data frame
 
 ```{r}
+#| name: structure
 #| echo: false
 str(diamonds)
 ```
@@ -54,11 +85,11 @@ str(diamonds)
 
 ```{r}
 #| name: histo-price
-ggplot(data = diamonds) + geom_histogram(mapping = aes(x = price))
+ggplot(data = diamonds) + geom_histogram(mapping = aes(x = price), binwidth = 1000)
 ```
 
 ::: notes
-It takes your variable, sorts the values and divides them into equally wide intervals (30 by default). They are called **bins** and look like bars. The height of each bin is the count of observations that fit in the bin.
+It takes your variable, sorts the values and divides them into equally wide intervals (30 by default). They are called **bins** and look like bars. The height of each bin is the count of observations that fit in the bin. Here the bin width is set to 1000 (USD). You can either determine the width of the bin like here, or how many bins you want (using an argument called `bins` ).
 :::
 
 ## Density
@@ -71,12 +102,12 @@ ggplot(data = diamonds) + geom_density(mapping = aes(x = price))
 ```
 
 ::: notes
-You see that you will pay most likely between a few hundred and 2,000 USD, but the probabilities are very low (around 0.035% the highest) because of the unit being one 1USD. Would you hazard picking a random diamond if you did not see the entire curve? Almost certainly not.
+You see that you will pay most likely between a few hundred and 2,000 USD, but the probabilities are very low (around 0.035% the highest) because of the unit being one dollar. Would you hazard picking a random diamond if you did not see the entire curve? Almost certainly not.
 
 You would probably want to know how likely you will pay at most a given price! That is what **cumulative density** is for.
 :::
 
-## Cumulative density
+## (Empirical) Cumulative Density (Function)
 
 -   shows you how likely you pay that and lower price for a random diamond
 
@@ -97,38 +128,244 @@ ggplot(data = diamonds) + geom_boxplot(mapping = aes( y = price))
 ```
 
 ::: notes
-This is a boxplot. The function sorts the observations and computes their percentiles. The box reaches from the first to the third quartile. That is, half of the observations seen in the data fit into the box. The vertical bar is the median value (50% of observations are lower than this or equal). The whiskers show the range of observations within 1.5 height of the box from each side. What is beyond that counts as **outliers**, that is, extreme values. The height of the box, the location of the vertical bar, as well as the presence of outliers and length of the whiskers give you an idea of how the values are distributed. Boxplots are very nicely described for instance here: [https://www.simplypsychology.org/boxplots.html](#0).
+This is a boxplot. The function sorts the observations and computes their percentiles. The box reaches from the first to the third quartile. That is, half of the observations seen in the data fit into the box. The vertical bar is the median value (50% of observations are lower than this or equal). The whiskers show the range of observations within 1.5 height of the box from each side. What is beyond counts as **outliers**, that is, extreme values. The height of the box, the location of the vertical bar, as well as the presence of outliers and length of the whiskers give you an idea of how the values are distributed. Boxplots are very nicely described for instance here: [https://www.simplypsychology.org/boxplots.html](#0).
 
-Note that the numbers on the x-axis do not have any meaning and ought to be removed for a presentation.
+Note that the numbers on the X-axis do not have any meaning and ought to be removed for a presentation.
+
+In this boxplot, we see that almost 75% of the diamonds are cheaper than 5,000 USD and prices above approx. 12,000 USD count as extreme (but you would still have a decent choice of the very premium pieces, judging by how crowded the outlier zone is).
 :::
 
 ## Boxplots compared {.smaller}
 
 -   You can break them by a discrete variable (categorical or ordinal)
 
--  for instance map cut on the x-axis ...
+-   for instance map `cut` on the x-axis ...
 
 ```{r}
+#| name: boxplots_compared1
 ggplot(data = diamonds) + geom_boxplot(mapping = aes(y = price,  x = cut)) 
 ```
 
 ## Boxplots compared {.smaller}
 
-- or map cut on fill or color
+-   or map `cut` on `fill` or `color`
 
 ```{r}
+#| name: boxplots_compared2
 ggplot(data = diamonds) + geom_boxplot(mapping = aes( y = price, fill = cut)) 
 ```
 
-## Bar plot
-- frequency counts of categorical/ordinal variables
-- each bar represents one variable category (value)
-- bar height means the frequency/count
+## Bar plot with counts (default) {.smaller}
+
+Each bar represents one variable category (value), height shows **count** (by default)
 
 ```{r}
+#| name: barplot_counts
+ggplot(data = diamonds) + geom_bar(mapping = aes(x = cut), stat = "count") 
+```
+
+## Override default stat on Y in a bar plot {.smaller}
+
+```{r}
+#| name: barplot_statsummary
+ggplot(data = diamonds) + geom_bar(mapping = aes(x = cut, y = price), 
+           stat = "summary", fun = mean) # note where to (not) write quotes 
 
 ```
 
+## Bar positions with another categorical variable: `stack`
 
-## Scatterplot
-- great to explore an association between 
+```{r}
+#| name: bar_stack
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "stack")
+# default
+```
+
+::: notes
+`geom_bar` can break the categorical variable on X by another variable. The default position of bars is **stack**. Absolute counts of the values of the second categorical variable are stacked on top of each other. The total height of the bar is the sum of all counts.
+:::
+
+## Bar positions with another categorical variable: `fill`
+
+```{r}
+#| name: bar_fill
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```
+
+::: notes
+Another option is **fill**. Do not confuse with the color fill aesthetic scale. This shows stacked **proportions** of the second categorical variable. The total height of the bar is always 1 (i.e. 100%). The Y- axis still says "count", but it is actually proportion.
+:::
+
+## Bar positions with another categorical variable: `dodge`
+
+```{r}
+#| name: bar_dodge
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+
+::: notes
+The last bar position option is `dodge`. It shows the absolute counts again, with each value of the second categorical variable in its own bar. The bars are grouped together by the first categorical variable represented by the X-axis.
+:::
+
+## Scatterplot {.smaller}
+
+-   best to explore the association between two continuous variables
+
+```{r}
+#| name: scatterplot
+biggest_diamonds <- slice_max(diamonds, order_by = depth, n = 40)
+ggplot(data = biggest_diamonds) + 
+  geom_point(mapping = aes(x = depth, y = table) )
+```
+
+::: notes
+A selection of forty diamonds with the largest depth. We cannot see much association, can we? Clearly there are diamonds with high depth and small table, as well as the other way round, as well as some very variable balance between both. At the same time, we see 37 of 40 points because of overlap which makes the dataset looks smaller than it is and would easily obscure trends for you. Too many overlapping points cause **overplotting**. The next slides show strategies to deal with overplotting.
+:::
+
+## Alleviate overplotting with alpha and jitter
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#|  name: alpha
+ggplot(biggest_diamonds) + 
+  geom_point(aes(x = depth, 
+                 y = table), 
+             alpha = 0.3)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| name: jitter
+set.seed(2525) # reproducible random numbers
+ggplot(biggest_diamonds) + 
+  geom_point(aes(x = depth, 
+                 y = table), position = "jitter")
+```
+:::
+:::
+
+::: columns
+alpha is one of the aesthetic scales, just like color, the X and Y axes, or shape. It controls the transparency. It takes values between 0 and 1. Alpha at 0.1 means that each point has only a 10%-visibility. Jittering is a technique that adds small random noise to each value. Without jittering, some points lie on a line. Jittering will scatter them a bit.
+
+`set.seed` is a function you use when you compute something with random numbers but want them to be reproducible; that is, you want the same random numbers every time you run this script. The function wants a random number. Here it makes sure that the jittered points will always be positioned like you see in the figure. You can set a seed, run a function with random numbers, and if you do not like the result, re-run it with a different seed. Iterate until you are happy with the result.
+:::
+
+## Overplotting reduction: Scatterplot with hexagonal bins
+
+```{r}
+#| name: hex
+ggplot(data = diamonds) + geom_hex(aes(x = depth, y = table),  binwidth = 2)
+```
+
+::: notes
+This plot automatically introduces color for the `count` variable it computes. The lighter the color, the more frequent the value. The points are no longer individual observations but observations within an interval, just like with histograms. You can adjust the number of bins or their width.
+:::
+
+## Overplotting reduction: regression models {.smaller}
+
+```{r}
+#| name: gam
+#| message: false
+set.seed(559900)
+diamonds_sample <- sample_n(tbl = diamonds, size = 1000) 
+ggplot(data = diamonds_sample) + 
+  geom_smooth(aes(x = depth, y = table), method = "gam", se = TRUE, formula = y~x )
+```
+
+::: notes
+When you want to see trends rather than individual points, use `geom_smooth`. It implements various regression models. These models use algorithms to draw a line (straight or curvy) among the data points so that the line is as close to each point as possible (they minimize the sum of distances between each data point and the line). You can have the line embedded in a ribbon controled by `se=TRUE/FALSE`. The ribbon width means: "With this amount of data, the line could be shaped anywhere within this span." The narrower the line, the stronger the trend (and the more reliable your model if you want to use it to make predictions).
+
+`gam` and `loess` make curves; the other algorithms make lines. `loess` can only be used with small data (small thousands of data points), otherwise it freezes your R session.
+
+This dataset consists of 1,000 random diamonds. The complete `diamonds` dataset is so huge that the models will be very well backed and you will hardly be able to see the ribbon.
+
+Models are built with formulas. The default formula in geom_smooth says `predicted values ~ observed values` . You do not need to write this. When you do not, ggplot2 will just throw a message that it is using this formula.
+:::
+
+## Linear regression model
+
+```{r}
+#| name: lm
+#| message: false
+ggplot(data = diamonds_sample) + 
+  geom_smooth(aes(x = depth, y = table), method = "lm", se = TRUE, formula = y~x )
+```
+
+## Scatterplots with discrete variables
+
+```{r}
+#| name: geom_count
+ggplot(data = diamonds, mapping = aes(x = clarity, y = color)) + 
+  geom_count( )
+```
+
+::: notes
+`geom_count` is a variant of `geom_point` that computes the count of each combination of X and Y values and maps it on point size.
+:::
+
+## Several geoms in one plot: smooth and scatterplot
+
+```{r}
+#| name: combine_geoms
+ggplot(data = diamonds_sample, mapping = aes(x = depth, y = table)) + 
+  geom_smooth( method = "lm", se = TRUE, formula = y~x ) +
+  geom_point(alpha = 0.2, position = "jitter")
+```
+
+::: notes
+You may still want to have a visual idea of how the amount of near data points corresponds to the width of the ribbon or so. Both geoms look inside the `ggplot` function to find the data and mapping aesthetics. Each geom first searches them inside itself and then in `ggplot`. So if you have one aesthetic mapping inside ggplot and another in a geom, that geom will work according to what it has inside itself. If you want several geoms to share something, put it into `ggplot`, never just in one of the geoms, because geoms cannot look inside each other.
+:::
+
+## Combination with `geom_text`
+
+-   `geom_text` is typically used like a scatterplot with labels instead of points.
+
+-   or to label bars in a bar plot:
+
+```{r}
+#| name: labels
+ggplot(diamonds, aes(x = cut)) +
+  geom_bar() +
+  geom_text(
+    aes(label = after_stat(count)),
+    stat = "count",
+    vjust = -0.1,# sligthly above the bar 
+    color = "seagreen"
+  ) 
+```
+
+## Facets (wrap)
+
+-   subgraphs: yet another way to break by a categorical variable
+
+```{r}
+#| name: facet_wrap
+ggplot(data = diamonds) + 
+  geom_smooth(mapping = aes(x = carat, y = price, color = color),
+              method = "lm", formula = y ~ x) + 
+  facet_wrap(~ clarity, ncol = 4)
+```
+
+::: notes
+Facets are a separate layer of graphics, although they act like another aesthetic scale. Two facet functions: `facet_wrap` and `facet_grid`. Use `facet_wrap` when you want to break the data by one such variable. The notation is `~ <that variable>`. You can also say how many rows or columns you want (here 4, it did 3 by default).
+:::
+
+## Facets (grid)
+
+```{r}
+#| name: facet_grid
+ggplot(data = diamonds) + geom_boxplot(aes(y = price, fill = cut)) +
+  facet_grid(color ~ clarity)
+  
+```
+
+::: notes
+::: notes
+When you want to break the data into subgraphs by two categorical variables, use `facet_grid`. The first-named variable will be described by rows, the second after `~` will be described by columns.
+:::
+:::
