@@ -29,12 +29,19 @@ format:
 
 ## Examine billionaires
 
+```{r}
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
+library(readr, warn.conflicts = FALSE, quietly = TRUE)
+```
+
 ```{r donotrunthis}
 #| echo: false
+#| eval: false
 # This joins several tables from Gapminder's billionaires data set 
-library(dplyr)
+
 billionaires_DailyIncome <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--datapoints--daily_income--by--person--time.csv", show_col_types = FALSE)
-billionaires_Persons <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--entities--person.csv", show_col_types = FALSE)
+billionaires_Persons <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--entities--person.csv", show_col_types = TRUE)
 countries <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--entities--geo--country.csv", show_col_types = FALSE) %>% 
   select(c("country", "name" ,"income_groups", "main_religion_2008", "world_6region", "west_and_rest"))
 colnames(billionaires_DailyIncome)
@@ -45,7 +52,11 @@ billionaires_df <- dplyr::inner_join(x = billionaires_DailyIncome,
                                      )  %>% 
   select(!c("image_uri", "birth", "birth_1", "birth_2", "birth_3", "names")) %>% inner_join(y = countries, by = c("countries" = "country")) 
 
-write_tsv(x = billionaires_df, file = "datasets_ATRIUM/billionaires_combined.tsv")
+write_tsv(x = billionaires_df, file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv", )
+```
+
+```{r}
+
 ```
 
 ## Create a report
@@ -60,7 +71,7 @@ write_tsv(x = billionaires_df, file = "datasets_ATRIUM/billionaires_combined.tsv
 
 ```{r dataset-01}
 #| echo: false
-billionaires_df <- read_tsv(file = "datasets_ATRIUM/billionaires_combined.tsv", show_col_types = FALSE)
+billionaires_df <- read_tsv(file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv", show_col_types = FALSE)
 ```
 
 ```{r dataset-02}
@@ -69,7 +80,7 @@ billionaires_2020 <- filter(billionaires_df, time == 2020)
 
 ```
 
-## Compare the count of males and female billionaires for each world region 
+## Compare the count of males and female billionaires for each world region
 
 Suggestion: barplot with dodged bars. But feel free to experiment and provide more than one solution inspired by the ggplot2 cheat sheet!
 
@@ -80,4 +91,4 @@ ggplot(data = billionaires_df) +
   geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-##  
+## sss
