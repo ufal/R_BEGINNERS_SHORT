@@ -59,30 +59,42 @@ write_tsv(x = billionaires_df, file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billi
 
 ```
 
-## Create a report
+## Motivation
 
--   a Quarto file named `<YOURLOGIN>_E_03_01_01.qmd`
+The purpose of this exercise is to motivate you to think about data as a trove of arguments for your imagined cause or insights in your imagined research question. This frame does not need to be very sophisticated; it's merely there to make you think and ask questions from the data and make meaningful and interpretable plots. Even if you do not see a trend, you could claim that you expected one and describe what you were expecting to see instead.
 
-## Dataset
+The data set lists global billionaires over a time span. You can be illustrating the consequences of a hypothetical global tax on individual continents, or demonstrate societal changes on billionaires throughout decades - whatever.
 
-1.  Read file `datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`.
+## Your file and data
 
-2.  Create `billionaires_2020` by filtering only year 2020.
+-   Create a Quarto file named `<YOURLOGIN>_E_03_01_01.qmd` and save it in `my_exercise_scripts`.
+-   Read file `~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`.
+-   Explore the dataset and keep noting what you are looking for and what you see. At least ten plots. Some suggestions with examples follow.
+
+## How to make a subset of the dataset
+
+Example: Create `billionaires_2020` by filtering only year 2020.
 
 ```{r dataset-01}
-#| echo: false
 billionaires_df <- read_tsv(file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv", show_col_types = FALSE)
 ```
 
 ```{r dataset-02}
-#| echo: false
 billionaires_2020 <- filter(billionaires_df, time == 2020) 
 
 ```
 
 ## Compare the count of males and female billionaires for each world region
 
-Suggestion: barplot with dodged bars. But feel free to experiment and provide more than one solution inspired by the ggplot2 cheat sheet!
+Suggestion: barplot with dodged bars.
+
+::: callout-tip
+## Tilt axis text to make it legible
+
+When axis labels overlap, add this code and fiddle with `angle`, `hjust` (or `vjust`):
+
+`+ theme(axis.text.x = element_text(angle = 60, hjust = 1))`
+:::
 
 ```{r}
 #| name: compare-sexes-regions-barplot
@@ -91,4 +103,15 @@ ggplot(data = billionaires_df) +
   geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-## sssvv
+# Sex, age, and residence in 2020 
+
+```{r}
+#| echo: false
+billionaires 
+```
+
+## West and rest
+
+```{r}
+
+```
