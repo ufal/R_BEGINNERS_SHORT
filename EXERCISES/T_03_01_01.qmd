@@ -1,6 +1,7 @@
 ---
 title: "Visualization exercise"
 echo: true
+shift-heading-level-by: -1
 format:
   revealjs:
     plugins: [notes]
@@ -39,7 +40,7 @@ library(readr, warn.conflicts = FALSE, quietly = TRUE)
 #| echo: false
 #| eval: false
 # This joins several tables from Gapminder's billionaires data set 
-
+library(stringr, warn.conflicts = FALSE, quietly = TRUE)
 billionaires_DailyIncome <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--datapoints--daily_income--by--person--time.csv", show_col_types = FALSE)
 billionaires_Persons <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--entities--person.csv", show_col_types = TRUE)
 countries <- read_csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--billionaires/refs/heads/master/ddf--entities--geo--country.csv", show_col_types = FALSE) %>% 
@@ -50,26 +51,80 @@ billionaires_df <- dplyr::inner_join(x = billionaires_DailyIncome,
                                      y = billionaires_Persons,
                                      by = "person"
                                      )  %>% 
-  select(!c("image_uri", "birth", "birth_1", "birth_2", "birth_3", "names")) %>% inner_join(y = countries, by = c("countries" = "country")) 
+  select(!c("image_uri", "birth", "birth_1", "birth_2", "birth_3", "names")) %>% inner_join(y = countries, by = c("countries" = "country")) %>% 
+  mutate(across(c(age, starts_with("birth")), 
+                  ~ str_remove_all(.x, ";.*"))) %>% 
+  mutate(across(c(age, starts_with("birth")), ~ as.numeric(.x)))
 
-write_tsv(x = billionaires_df, file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv", )
+  
+
+write_tsv(x = billionaires_df, file = "~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv" )
 ```
 
-```{r}
+## Your task for this session
 
-```
+Write a report about the presented dataset with **at least five plots** and formulate their messages in words (interpret each plot). It is not necessary that you use a lot of different geoms, but you should make sure that each plot answers a sensible question about the data.
 
-## Motivation
+The purpose of this exercise is to motivate you to think about data as a trove of arguments for your imagined cause or insights in your imagined research question. This frame does not need to be very sophisticated; it's merely there to make you think and ask questions from the data and make meaningful and interpretable plots.
 
-The purpose of this exercise is to motivate you to think about data as a trove of arguments for your imagined cause or insights in your imagined research question. This frame does not need to be very sophisticated; it's merely there to make you think and ask questions from the data and make meaningful and interpretable plots. Even if you do not see a trend, you could claim that you expected one and describe what you were expecting to see instead.
+The data set lists global billionaires over a time span. You can be illustrating the consequences of a hypothetical global tax on individual continents, or demonstrate societal changes on billionaires throughout decades - whatever. Negative results are fine (i.e. your plot does not prove a trend that you expected), but please describe what you were expecting to see instead, in terms of the variables rather than the visual elements (i.e., "I expected more billionaires to be under thirty" rather than "I thought the curve would begin at a lower value").
 
-The data set lists global billionaires over a time span. You can be illustrating the consequences of a hypothetical global tax on individual continents, or demonstrate societal changes on billionaires throughout decades - whatever.
+If you get really stuck, you can peek at the source of this file (the corresponding `.qmd` file) where you will see the code chunks that generated the example plots below.
+
+## Your task for the next session
+
+In this session, you are going to generate plenty of ideas and implement their visualizations. Note all questions to which you could not imagine (or implement) adequate plots. You are very welcome to sketch by hand plots you fancied. Together we will try to generalize your inputs and find principled solutions.
 
 ## Your file and data
 
 -   Create a Quarto file named `<YOURLOGIN>_E_03_01_01.qmd` and save it in `my_exercise_scripts`.
--   Read file `~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`.
+
+-   Read file `~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`
+
+    ```{r}
+    billionaires_df <- read_tsv("~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv")
+    ```
+
 -   Explore the dataset and keep noting what you are looking for and what you see. At least ten plots. Some suggestions with examples follow.
+
+-   Do not worry about warning messages from ggplot. They often mean that some observations were dropped because they contained empty values in the variables you wanted to plot or that there were not enough observations to compute a statistics.
+
+## Billionaires counts over time, broken by sex
+
+```{r}
+#| echo: false
+ggplot(billionaires_df) + geom_bar(aes(x = time, fill = sex))
+```
+
+## Daily income by age, sex and time
+
+```{r}
+#| echo: false
+ggplot(billionaires_df) + 
+  geom_smooth(mapping = aes(x = age, color = sex, y = daily_income)) + 
+  facet_wrap(~ time)
+```
+
+## Daily income by age and sex, any time
+
+```{r}
+#| echo: false
+ggplot(billionaires_df) + 
+  geom_smooth(mapping = aes(x = age, color = sex, y = daily_income)) 
+```
+
+It seems that female billionaires beyond ninety are much richer than male billionaires!
+
+Let us look at a linear model to get the most salient overall trend.
+
+```{r}
+#| echo: false
+ggplot(billionaires_df) + 
+  geom_smooth(mapping = aes(x = age, color = sex, y = daily_income),
+              method = "lm") 
+```
+
+The curvy smoothing displayed a drop in female billionaires around 80, but the overall trend is that generally, females surpass males around 75 (if we consider the confidence intervals in the ribbons).
 
 ## How to make a subset of the dataset
 
@@ -103,15 +158,41 @@ ggplot(data = billionaires_df) +
   geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-# Sex, age, and residence in 2020 
+## Sex, age, and residence in 2020 vs. in 2010
+
+residence/continents $\approx$ `world_6region`
+
+```{r}
+billionaires_2010vs2020 <- 
+  filter(billionaires_df, time %in% c("2020", "2010"))
+nrow(billionaires_2010vs2020)
+colnames(billionaires_2010vs2020)
+```
 
 ```{r}
 #| echo: false
-billionaires 
+ggplot(billionaires_2010vs2020) + 
+  geom_density(mapping = aes(x = age, color = sex), binwidth = 1) + facet_grid(world_6region ~ time)
 ```
 
-## West and rest
+```{r}
+#| echo: false
+ggplot(billionaires_2010vs2020) + 
+  geom_boxplot(mapping = aes(x = sex, y = age)) + facet_grid(world_6region ~ time)
+```
 
 ```{r}
+#| echo: false
+ggplot(billionaires_2010vs2020) + 
+  geom_violin(mapping = aes(x = sex, y = age), draw_quantiles = 0.5) + facet_grid(world_6region ~ time)
+```
 
+## West and rest over time
+
+Are Western billionaires richer than those from other regions? Is there any development?
+
+```{r}
+#| echo: false
+ggplot(billionaires_df) + 
+  geom_smooth(mapping = aes(x = time, color = west_and_rest, y = daily_income ) )
 ```
