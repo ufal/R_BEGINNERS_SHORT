@@ -79,6 +79,8 @@ In this session, you are going to generate plenty of ideas and implement their v
 
 -   Create a Quarto file named `<YOURLOGIN>_E_03_01_01.qmd` and save it in `my_exercise_scripts`.
 
+-   Replace the YAML header with the file `YAML_header_multiformat` in your ATRIUM resources folder. Mind to render an html file when you are done. Please do not use `#| echo: false` in your code chunks (leave all your code visible when rendered).
+
 -   Read file `~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`
 
     ```{r}
