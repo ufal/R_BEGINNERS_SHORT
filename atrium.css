@@ -3,6 +3,7 @@
   padding-left: 2vw !important;
   padding-right: 2vw !important;
   max-width: 100% !important;
+  max-height: 200% !important;
 }
 
 /* === Force soft-wrapping for all code and output blocks === */
@@ -75,4 +76,15 @@
 }
 
 
+.scrollable-slide {
+  max-height: 180vh;
+  overflow-y: auto;
+  padding-right: 1em;
+}
 
+
+/* Ensure slide sections can scroll */
+.reveal .slides section {
+  overflow-y: auto;
+  max-height: 100vh;
+}

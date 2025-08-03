@@ -1,6 +1,9 @@
 ---
-title: "Data Literacy with R for Students of Humanities"
+title: "   "
+author: " "
+date: 
 echo: true
+shift-heading-level-by: -1
 format:
   revealjs:
     plugins: [notes]
@@ -19,7 +22,6 @@ format:
     toc: true
     number-sections: true
     include-in-header: atrium.tex
-    shift-heading-level-by: -1
   html:
     toc: true
     number-sections: true
