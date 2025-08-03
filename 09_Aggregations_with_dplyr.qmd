@@ -1,0 +1,451 @@
+---
+title: "Subsetting and Aggregations with `dplyr`"
+author: "Silvie Cinková"
+date: 2025-08-01
+echo: true
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+    embed-resources: true
+    progress: true
+    output-location: fragment
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## `dplyr`: Operations on data frames
+
+-   on rows
+
+-   on columns
+
+::: notes
+**Select rows, select columns. According to which properties?**
+
+**Rows:**
+
+-   **Position:** first/last *n* rows, *n*th to *n+20*th row,
+-   **Condition(s)** on values in one or more variable columns (e.g. the row with the maximum population
+-   **Sampling:** random sample, fraction
+-   **Deduplication**
+-   **Sorting** according to values columns
+-   **Grouping:** divide rows into groups according to values of one or more discrete variables (this is not visible anywhere but you need to do it to get group-wise aggregations. For instance, you have a data frame of some physical measures of individual males and females and you want the mean height of males separately from the mean height of females separately.
+
+**Columns:**
+
+-   Column position: you want to address the column by its position rather than name
+
+-   Column name: you want to address the column by its name
+
+-   Column selection:
+
+    -   you want to select a column for an operation for dropping it from the data frame
+
+    -   you want to transform a column from one data type to another
+:::
+
+## Libraries
+
+```{r}
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(gapminder, warn.conflicts = FALSE, quietly = TRUE)
+library(magrittr, warn.conflicts = FALSE, quietly = TRUE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE) #for diamonds dataset
+```
+
+## `magrittr` pipe in `dplyr`: `%>%`
+
+::: columns
+::: {.column width="40%"}
+![](https://mymodernmet.com/wp/wp-content/uploads/2020/10/rene-magritte-1.jpg)
+:::
+
+::: {.column width="60%"}
+René Magritte 1898-1967: Belgian surrealist fascinated by semiotics
+:::
+:::
+
+::: columns
+::: {.column width="40%"}
+![](images_ATRIUM/wikimedia-pipes.jpg){fig-alt="https://commons.wikimedia.org/wiki/File:Duisburg,_Landschaftspark_Duisburg-Nord_--_2020_--_7824-6.jpg"}
+:::
+
+::: {.column width="60%"}
+... but the concept behind is rather the plumbing pipeline
+:::
+:::
+
+::: notes
+`dplyr` was designed for "rapid prototyping" in data manipulation. Often you just want to quickly try out a manipulation without saving every partial step. This is why most `dplyr` code is written in **pipes**. `%>%` is the most common pipe operator and `dplyr` adopted it from the `magrittr` library (which introduced various pipe operators to R).\
+R library of workflow pipes named to his tribute.
+:::
+
+## How to use a pipe `%>%`
+
+-   left is input to the right
+
+-   `.` is its placeholder
+
+```{r}
+c("h", "e", "l", "l", "o") %>% 
+  toupper(x = .) 
+```
+
+::: notes
+NEVER repeat the input in the argument of the following function. This would just throw an error. Instead, write the `.` placeholder. If the input is the first argument of the following function, you can leave it out like this:
+
+`c("h", "e", "l", "l", "o") %>% toupper()`
+
+This is a very common notation - the placeholder is only used when necessary.
+:::
+
+## A series of pipes
+
+```{r}
+paste0(c("H", "E", "L", "L", "O"),  collapse = "-" )
+```
+
+```{r}
+c("h", "e", "l", "l", "o") %>% toupper(x = .) %>% 
+  paste0(., sep = "", collapse = "-") %>%
+  paste0("Oh, ", ., "!")
+```
+
+## `gapminder` (R dataset) {.scrollable}
+
+```{r}
+glimpse(gapminder)
+```
+
+::: notes
+We will demonstrate `dplyr` on the `gapminder` dataset from the `gapminder` library. It is a cleaned dataset from [gapminder.org](#0). It presents the population size, life expectancy and GDP per capita in 142 countries each five years from 1952 to 2007 (that is 12 records per country). The countries are also associated with five continents: Asia, Europe, Africa, Americas, and Oceania.
+:::
+
+## Subset rows with `dplyr` {.smaller}
+
+-   `filter()` pick rows according to a condition
+
+-   `slice()` pick rows according to their position
+
+-   `distinct()` de-duplicate (pick the first/last occurring)
+
+-   `arrange()` sort rows according to values of a variable
+
+-   `group_by()` tell `dplyr` that you want the next operation to run separately on each group of rows with the same value of a categorical variable.
+
+::: notes
+The `dplyr` library is often explained as pivoted by five "big verbs". These are the functions `filter`, `arrange`, `mutate,` `select`, and `summarize`. We will proceed from rows to columns and list the other most common functions along.
+:::
+
+## `dplyr::filter`
+
+```{r}
+filter(.data = gapminder, year == 2007, country %in% c("Angola", "Bahrain")) 
+```
+
+```{r}
+filter(.data = gapminder, is.na(year) | is.na(pop)) 
+```
+
+::: notes
+This function wants the data set and conditions to test on its rows. Note the `is.na` function in the second example. The opposite would be `!is.na`. Both test rows on empty values (`NA`) in the variables. This example would return all rows that have an empty value either in `year` or in `pop`.
+:::
+
+## `dplyr::slice` {.smaller}
+
+```{r}
+slice(.data = gapminder, c(2:3, seq(from = 1600, to = nrow(gapminder), by = 50)))
+```
+
+::: notes
+In fact, this is a group of similarly named functions that all give you some rows from a data frame. Some are based on the position of the rows in the data frame, but some are based on values in a column.
+:::
+
+## `slice` with helper function `n()` {.smaller}
+
+-   `n()` returns the number of rows.
+
+-   `dplyr` helpers work only inside other functions
+
+    -   No arguments! `n(gapminder)` will not work
+
+```{r}
+slice(gapminder, 1, 2, n(), n()-1 ) #n: last, 2nd last row 
+```
+
+## `slice_head`, `slice_tail` {.smaller}
+
+::: columns
+::: {.column width="50%"}
+```{r}
+slice_head(gapminder, n = 2)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+dplyr::slice_tail(gapminder, n = 2)
+```
+:::
+:::
+
+::: notes
+first n rows, last n rows
+:::
+
+## slice_sample {.smaller}
+
+::: columns
+::: {.column width="50%"}
+```{r}
+slice_sample(gapminder, n = 3)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+slice_sample(gapminder, n = 3)
+```
+:::
+:::
+
+::: notes
+random sample of rows
+:::
+
+## `slice_max`, `slice_min` {.smaller}
+
+```{r}
+slice_max(gapminder, order_by = lifeExp, n = 2, with_ties = TRUE)
+```
+
+```{r}
+slice_min(gapminder, order_by = lifeExp, n = 2, with_ties = TRUE)
+```
+
+::: notes
+rows with the maximum/minimum values in the given variable
+:::
+
+## `arrange` {.smaller}
+
+```{r}
+arrange(gapminder, year) %>% slice(., 1, 2, n(), n()-1 )
+```
+
+```{r}
+gapminder %>% arrange(.data = ., year) %>% slice(., 1, 2, n(), n()-1 )
+```
+
+## `distinct`
+
+```{r}
+gapminder %>% distinct(continent)
+
+```
+
+::: notes
+Deduplicates rows according to values in columns that you select.
+
+::: callout-caution
+## You often want `.keep_all = TRUE`!
+
+It has default `.keep_all = FALSE`, which throws away all columns that were not mentioned in the deduplication!
+:::
+:::
+
+## Subset columns: `select` {.smaller}
+
+```{r}
+gapminder %>% select(c(country, pop, 6)) %>% colnames()
+```
+
+```{r}
+gapminder %>% select(!c(continent, lifeExp, gdpPercap)) %>% colnames()
+```
+
+```{r}
+gapminder %>% select(TIME = year, country, population = pop) %>% colnames()
+```
+
+::: notes
+`select` can do almost everything with columns: select by name or position positively and negatively, as well as rename columns on the fly. Peruse its Help and [https://dplyr.tidyverse.org/reference/select.html](#0) for more detail; it is a complex function.
+:::
+
+## `rename` and `relocate`
+
+-   keep all columns even if you do not mention them
+
+```{r}
+gapminder %>% rename(COUNTRY = country) %>% colnames()
+```
+
+```{r}
+gapminder %>% relocate(gdpPercap, pop) %>% colnames()
+```
+
+## Helpers select columns by names {.smaller}
+
+-   `contains`, `matches`, `starts_with`, `ends_with`
+
+```{r}
+gapminder %>% select(contains("co")) %>% colnames()
+```
+
+```{r}
+gapminder %>% select(matches("ou?n")) %>% colnames()
+```
+
+::: notes
+These are functions that only work with "big" `dplyr` functions like `select`, `rename`, `relocate`, and `mutate`. For more detail see <https://tidyselect.r-lib.org/reference/language.html>. `matches` even understands so-called [regular expressions](https://www.regular-expressions.info/quickstart.html) ($\approx$ more powerful wildcards).
+:::
+
+## Helpers select columns by position {.smaller}
+
+-   `everything`, `last_col`
+
+```{r}
+gapminder %>% select(c(pop, last_col(), everything())) %>% colnames()
+```
+
+## Helpers select columns by classes or values {.smaller}
+
+-   `where`
+
+```{r}
+gapminder %>% select(c(where(~ !is.numeric(.x)))) %>% colnames()
+```
+
+```{r}
+gapminder %>% slice_head(n = 2) %>% 
+  select(where(~ is.numeric(.x))) %>%
+  select(where(~ max(.x) > 100))
+```
+
+## Function notation
+
+-   on column values - typically you check vector class
+
+-   ***Formula notation:** \~ somefunction(.x, ...)*
+
+```{r}
+gapminder %>% slice_head(n = 2) %>% 
+  select(where(is.numeric))
+# short for this formula notation
+gapminder %>% slice_head(n = 2) %>% 
+  select(where(~ is.numeric(.x)))
+```
+
+rather just for fun: feed it almost any function that works for all columns (no error)
+
+```{r}
+gapminder %>% slice_head(n = 2) %>% 
+  select(where(~ is.numeric(.x))) %>%
+  select(where(~ max(.x) > 100))
+```
+
+::: notes
+Learn this notation as an idiom: starts with `~`, its first argument is `.x` (mind the dot!).
+
+You have already met something similar `ggplot2`, in two different contexts:
+
+1.  In `geom_smooth`: `dependent variable ~ independent variable`.
+
+2.  In `facet_wrap` and `facet_grid`: `facets in rows ~`, `~ facets in columns`, `facets in rows ~ facets in columns`.
+:::
+
+## `pull` : extract column to create a vector
+
+-   `pull` extracts one column as **vector/factor**
+
+```{r}
+gapminder %>% select(continent) %>% pull() %>% str()
+```
+
+```{r}
+gapminder %>% distinct(continent) %>% pull() %>% levels()
+```
+
+::: notes
+You quite often want to use it when a categorical variable is a character vector and you want to quickly list its categories.
+
+When it is a factor, you ask about its levels.
+
+And here we have finished selecting and filtering.
+:::
+
+## Aggregation with `summarize`
+
+-   categorical variables: count
+
+-   numeric variables: mean, median, etc.
+
+```{r}
+gapminder %>% filter(year == 2007, continent == "Europe") %>%
+  summarize(mean_pop = mean(pop),  mean_lifeExp = round(mean(lifeExp)))
+```
+
+::: notes
+So far, we have worked with raw observations. Now we switch to aggregating values to summary statistics. Imagine all rows with European countries in the year 2007. This would be a table of 30 rows (because the dataset contains data from thirty European countries. In the table above, we aggregated their population size and life expectancy to mean to end up with a table of one row and two columns. When you summarize, you always lose all columns you have not used. It is an entirely separate table from the one with the raw observations: it does not carry the initial information from the raw observations, and there is no way you could reconstruct the original one.
+:::
+
+## grouped aggregations (`group_by`) {.smaller}
+
+```{r}
+gap2000 <- gapminder %>% filter(year > 1997) %>% group_by(continent, year) %>% 
+  summarize(mean_pop = mean(pop), mean_lifeExp = mean(lifeExp) )
+gap2000
+```
+
+::: notes
+The most common aggregation is with a combination of numeric and categorical variables, where the categorical variables have more values. In the example in the previous slide, the data frame contained each country only once, so in fact `summarize` just dropped the irrelevant columns and computed both mean values on all rows together. But the original data frame contains data from twelve years and five continents, and the logical question to ask would be "What was the average population size and life expectancy for each continent in each year?" For this, we need a preparatory step where to tell `dplyr` which combinations of categories it should summarize, and this step uses a function called `group_by`. It takes the names of the variables by which it is supposed to break the statistics.
+:::
+
+## grouped data frame
+
+::: columns
+::: {.column width="35%"}
+```{r}
+groups(gap2000)
+```
+:::
+
+::: {.column width="65%"}
+![](images_ATRIUM/dplyr_01_GroupedDataframe.png){#dplyr_01_GroupedDataframe}
+:::
+:::
+
+```{r}
+gap2000 <- gap2000 %>% ungroup()
+groups(gap2000)
+```
+
+::: notes
+When you use `group_by`, the groups remain sticking with the data frame until you override them with a different grouping or `ungroup()`. This is particularly tricky when you work in a long pipe. You would better ungroup the data frame as soon as you are done with the operation for which you grouped it.
+
+::: callout-note
+## Sometimes you need to group with `rowwise` instead.
+
+::: notes
+Later on, you will also get acquainted with another grouping function, `rowwise`. It makes each row a separate group. It would be hard to find a sensible use case with summarizing `gapminder`. The need for `rowwise` mostly arises when computing new columns with `mutate` (also later) with functions that would always input the entire column, one of them being `sum`.
+:::
+:::
+:::

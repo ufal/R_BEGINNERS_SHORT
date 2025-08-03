@@ -1,0 +1,50 @@
+---
+title: "Summarize the billionaires data"
+author: "Silvie Cinková"
+date: 2025-08-03
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Libraries and data
+
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+billionaires_df <- read_tsv("~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv")
+```
+
+## Plot the mean daily income in each region over time. 
+
+```{r}
+#| echo: false
+billionaires_df %>% 
+  group_by(world_6region, time) %>% 
+  summarize(mean_daily_income = mean(daily_income)) %>% 
+  ungroup() %>%
+  ggplot() + geom_line(aes(x = time, y = mean_daily_income, color = world_6region))
+```
