@@ -38,7 +38,7 @@ library(ggplot2)
 billionaires_df <- read_tsv("~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv")
 ```
 
-## Plot the mean daily income in each region over time. 
+## Plot the mean daily income in each region over time.
 
 ```{r}
 #| echo: false

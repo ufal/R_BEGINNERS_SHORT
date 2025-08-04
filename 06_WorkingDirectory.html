@@ -3031,6 +3031,7 @@ vertical-align: -.125em;
 padding-left: 2vw !important;
 padding-right: 2vw !important;
 max-width: 100% !important;
+max-height: 200% !important;
 }
 
 .reveal pre,
@@ -3093,6 +3094,16 @@ padding: 0.5em;
 
 .reveal .notes {
 display: none !important;
+}
+.scrollable-slide {
+max-height: 180vh;
+overflow-y: auto;
+padding-right: 1em;
+}
+
+.reveal .slides section {
+overflow-y: auto;
+max-height: 100vh;
 }
 </style>
 </head>
@@ -3529,14 +3540,17 @@ dbl (2): time, hourly_labour_cost_constant_2017_usd
 <div class="cell" name="listfiles">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;~/R_BEGINNERS_SHORT&quot;</span>, <span class="at">recursive =</span> <span class="cn">FALSE</span>, <span class="at">include.dirs =</span> <span class="cn">FALSE</span>, <span class="at">pattern =</span> <span class="st">&quot;qmd&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;/home/cinkova/R_BEGINNERS_SHORT/01_Introduction.qmd&quot;                   
-[2] &quot;/home/cinkova/R_BEGINNERS_SHORT/02_HowToRStudio.qmd&quot;                   
-[3] &quot;/home/cinkova/R_BEGINNERS_SHORT/03_RStudioFileManagement.qmd&quot;          
-[4] &quot;/home/cinkova/R_BEGINNERS_SHORT/04_NavigatingRStudioForProgramming.qmd&quot;
-[5] &quot;/home/cinkova/R_BEGINNERS_SHORT/05_VariablesFunctions.qmd&quot;             
-[6] &quot;/home/cinkova/R_BEGINNERS_SHORT/06_WorkingDirectory.qmd&quot;               
-[7] &quot;/home/cinkova/R_BEGINNERS_SHORT/07_Exploring_dataframes.qmd&quot;           
-[8] &quot;/home/cinkova/R_BEGINNERS_SHORT/index.qmd&quot;                             </code></pre>
+<pre><code> [1] &quot;/home/cinkova/R_BEGINNERS_SHORT/01_Introduction.qmd&quot;                   
+ [2] &quot;/home/cinkova/R_BEGINNERS_SHORT/02_HowToRStudio.qmd&quot;                   
+ [3] &quot;/home/cinkova/R_BEGINNERS_SHORT/03_RStudioFileManagement.qmd&quot;          
+ [4] &quot;/home/cinkova/R_BEGINNERS_SHORT/04_NavigatingRStudioForProgramming.qmd&quot;
+ [5] &quot;/home/cinkova/R_BEGINNERS_SHORT/05_VariablesFunctions.qmd&quot;             
+ [6] &quot;/home/cinkova/R_BEGINNERS_SHORT/06_WorkingDirectory.qmd&quot;               
+ [7] &quot;/home/cinkova/R_BEGINNERS_SHORT/07_Exploring_dataframes.qmd&quot;           
+ [8] &quot;/home/cinkova/R_BEGINNERS_SHORT/08_DiversePlots.qmd&quot;                   
+ [9] &quot;/home/cinkova/R_BEGINNERS_SHORT/09_Aggregations_with_dplyr.qmd&quot;        
+[10] &quot;/home/cinkova/R_BEGINNERS_SHORT/10_ggplot2OtherLayers.qmd&quot;             
+[11] &quot;/home/cinkova/R_BEGINNERS_SHORT/index.qmd&quot;                             </code></pre>
 </div>
 </div></li>
 </ul></li>
