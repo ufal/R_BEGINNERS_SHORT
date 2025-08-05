@@ -136,7 +136,7 @@ glimpse(gapminder)
 ```
 
 ::: notes
-We will demonstrate `dplyr` on the `gapminder` dataset from the `gapminder` library. It is a cleaned dataset from [gapminder.org](#0). It presents the population size, life expectancy and GDP per capita in 142 countries each five years from 1952 to 2007 (that is 12 records per country). The countries are also associated with five continents: Asia, Europe, Africa, Americas, and Oceania.
+We will demonstrate `dplyr` on the `gapminder` dataset from the `gapminder` library. It is a cleaned dataset from [gapminder.org](https://gapminder.org). It presents the population size, life expectancy and GDP per capita in 142 countries each five years from 1952 to 2007 (that is 12 records per country). The countries are also associated with five continents: Asia, Europe, Africa, Americas, and Oceania.
 :::
 
 ## Subset rows with `dplyr` {.smaller}
@@ -272,6 +272,17 @@ It has default `.keep_all = FALSE`, which throws away all columns that were not 
 :::
 :::
 
+
+## Add rows to data frame
+- Row is never a vector!
+
+```{r}
+ad2002 <- gapminder %>% filter(country %in% c("Albania", "Denmark"), year == 2002)
+ad2007 <- gapminder %>% filter(country %in% c("Albania", "Denmark"), year == 2007)
+bind_rows(ad2002, ad2007) 
+```
+
+
 ## Subset columns: `select` {.smaller}
 
 ```{r}
@@ -372,6 +383,19 @@ You have already met something similar `ggplot2`, in two different contexts:
 2.  In `facet_wrap` and `facet_grid`: `facets in rows ~`, `~ facets in columns`, `facets in rows ~ facets in columns`.
 :::
 
+## Add new columns with `bind_cols`
+- add vectors or data frames 
+```{r}
+new_df <- select(gapminder, c(new_pop = pop, new_lifeExp = lifeExp))
+new_vec <- gapminder$country # base R column subset
+gapminder %>% bind_cols(new_df, new_country = new_vec) %>% glimpse()
+```
+
+::: notes
+This is a mock use case, obviously. You would normally not add a copy of an already existing column. A real use could be that you compute some new values from the existing data frame in a very complicated way, or in an external tool - simply that something would prevent you from computing the new column directly in the data frame with `mutate` (see later). You must be sure that the column to add is equally long as the columns in your existing data frame and that the values refer to the same year and country, in this particular case (there is no programmatic way to find out). With `bind_cols` you are not joining tables in the SQL sense. We will learn that in a separate session. 
+
+:::
+
 ## `pull` : extract column to create a vector
 
 -   `pull` extracts one column as **vector/factor**
@@ -449,3 +473,6 @@ Later on, you will also get acquainted with another grouping function, `rowwise`
 :::
 :::
 :::
+
+## Compute new columns with `mutate`
+

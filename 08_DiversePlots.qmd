@@ -85,7 +85,10 @@ str(diamonds)
 
 ```{r}
 #| name: histo-price
-ggplot(data = diamonds) + geom_histogram(mapping = aes(x = price), binwidth = 1000)
+ggplot(data = diamonds) + 
+  geom_histogram(mapping = aes(x = price), binwidth = 1000) + 
+  theme(axis.text = element_text(size = 24), 
+        axis.title = element_text(size = 24))
 ```
 
 ::: notes

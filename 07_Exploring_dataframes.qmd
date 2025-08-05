@@ -177,7 +177,7 @@ laborcost_plot
 ```
 
 ::: notes
-### Comment on the plot 
+### Comment on the plot
 
 How do you call plots with points and two axes?
 
@@ -238,7 +238,7 @@ Sometimes, especially when you run your scripts over and over in Quarto, somethi
 Feel free to add more insights or impressions.
 :::
 
-## `ggplot2` $\approx$ implemented *Grammar of Graphics* 
+## `ggplot2` $\approx$ implemented *Grammar of Graphics*
 
 <https://ggplot2.tidyverse.org/>
 
@@ -318,7 +318,7 @@ plot types, such as:
 Try and sketch these plots by hand (fake data). What are these plots good at telling? How many of which variables?
 :::
 
-## A neater example dataset: just Czechia and Germany  {.smaller}
+## A neater example dataset: just Czechia and Germany {.smaller}
 
 -   only two values of a categorical variable, under 50 rows
 
@@ -335,7 +335,7 @@ ggplot(data = cze_deu_df,
   geom_point(size = 7)
 ```
 
-## Syntax 
+## Syntax
 
 `ggplot(data, mappings) + geom_…( )`
 
