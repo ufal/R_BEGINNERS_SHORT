@@ -7,7 +7,7 @@ shift-heading-level-by: -1
 format:
   revealjs:
     plugins: [notes]
-    toc: true
+    toc: false
     slide-number: true
     notes: true
     pdf-export: true
@@ -19,11 +19,11 @@ format:
     #output-location: slide
     preview-links: auto
   pdf:
-    toc: true
+    toc: false
     number-sections: true
     include-in-header: atrium.tex
   html:
-    toc: true
+    toc: false
     number-sections: true
     css: atrium.css
     embed-resources: true
@@ -39,23 +39,174 @@ library(gapminder, warn.conflicts = FALSE, quietly = TRUE)
 gapminder_cz_deu2002007 <- gapminder %>% 
   filter(country %in% c("Czech Republic", "Germany"),
          year %in% c(2002, 2007)) %>% select(!c(continent, lifeExp))
-gapminder_cz_deu2002007 
+
+
 ```
 
-## Transformation 1
+![](images/quiz_01_original.png){#quiz_01_original}
+
+## Transformation 1 {.smaller}
 
 ::: columns
-::: {.column width="50%"}
-```{r}
-#| echo: false
-gapminder_cz_deu2002007 %>% kableExtra::kable()
-```
+::: {.column width="40%"}
+![](images/quiz_01_original.png){#quiz_02_original}
 :::
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 ```{r}
 #| echo: false
+# arranged by year
 gapminder_cz_deu2002007 %>% arrange(year) %>% kableExtra::kable()
 ```
 :::
 :::
+
+## Transformation 2 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# filtered to keep just Germany
+# or sliced the last two rows
+gapminder_cz_deu2002007 %>% filter(country == "Germany") %>% kableExtra::kable()
+gapminder_cz_deu2002007 %>% slice((n()-1):n()) %>% kableExtra::kable()
+```
+
+:::
+:::
+
+
+
+## Transformation 3 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# selected three columns, dropped one
+gapminder_cz_deu2002007 %>% select(c(country,year, pop)) %>% 
+  kableExtra::kable()
+# or 
+#gapminder_cz_deu2002007 %>% select(!c(gdpPercap)) %>% 
+#  kableExtra::kable()
+```
+
+:::
+:::
+
+
+
+## Transformation 4 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# change the order of columns
+gapminder_cz_deu2002007 %>% relocate(pop, gdpPercap, year) %>% 
+  kableExtra::kable()
+
+```
+
+:::
+:::
+
+
+## Transformation 5 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# renamed column pop to POPULATION
+gapminder_cz_deu2002007 %>% rename(POPULATION = pop) %>% 
+  kableExtra::kable()
+
+```
+
+:::
+:::
+
+
+## Transformation 6 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# aggregation: computed mean GDP per capita for each country over time
+gapminder_cz_deu2002007 %>% group_by(country) %>% 
+  summarize(meanGDPcap = mean(gdpPercap)) %>% 
+  kableExtra::kable()
+
+```
+
+:::
+:::
+
+
+
+## Transformation 6 {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+![](images/quiz_01_original.png){#quiz_02_original}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+# added one row from the original gapminder with one unintended result: columns were generated to all observations to fit the dataframe with more columns (which is the one row with Afghanistan 1952), with empty values.  
+gapminder %>% slice(1) %>% 
+  bind_rows(gapminder_cz_deu2002007, .) %>% 
+  kableExtra::kable()
+
+```
+
+:::
+:::
+
+
+
+
+
+
