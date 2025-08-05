@@ -1,0 +1,61 @@
+---
+title: "Data frame manipulations Quiz "
+author: "Silvie Cinková "
+date: "2025-08-05"
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: true
+    scrollable: false
+    code-block-height: 650px
+    echo: false
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Data
+
+```{r}
+#| name: arrange_year
+#| echo: false
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(gapminder, warn.conflicts = FALSE, quietly = TRUE)
+gapminder_cz_deu2002007 <- gapminder %>% 
+  filter(country %in% c("Czech Republic", "Germany"),
+         year %in% c(2002, 2007)) %>% select(!c(continent, lifeExp))
+gapminder_cz_deu2002007 
+```
+
+## Transformation 1
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: false
+gapminder_cz_deu2002007 %>% kableExtra::kable()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+gapminder_cz_deu2002007 %>% arrange(year) %>% kableExtra::kable()
+```
+:::
+:::
