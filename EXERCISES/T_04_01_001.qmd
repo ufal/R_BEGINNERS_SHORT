@@ -43,13 +43,13 @@ gapminder_cz_deu2002007 <- gapminder %>%
 
 ```
 
-![](images/quiz_01_original.png){#quiz_01_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 ## Transformation 1 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 :::
 
 ::: {.column width="60%"}
@@ -66,7 +66,7 @@ gapminder_cz_deu2002007 %>% arrange(year) %>% kableExtra::kable()
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
@@ -90,7 +90,7 @@ gapminder_cz_deu2002007 %>% slice((n()-1):n()) %>% kableExtra::kable()
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
@@ -116,7 +116,7 @@ gapminder_cz_deu2002007 %>% select(c(country,year, pop)) %>%
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
@@ -139,7 +139,7 @@ gapminder_cz_deu2002007 %>% relocate(pop, gdpPercap, year) %>%
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
@@ -162,7 +162,7 @@ gapminder_cz_deu2002007 %>% rename(POPULATION = pop) %>%
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
@@ -187,7 +187,7 @@ gapminder_cz_deu2002007 %>% group_by(country) %>%
 ::: columns
 ::: {.column width="40%"}
 
-![](images/quiz_01_original.png){#quiz_02_original}
+![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
 
 :::
 
