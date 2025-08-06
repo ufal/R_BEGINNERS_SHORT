@@ -277,7 +277,7 @@ This plot automatically introduces color for the `count` variable it computes. T
 set.seed(559900)
 diamonds_sample <- sample_n(tbl = diamonds, size = 1000) 
 ggplot(data = diamonds_sample) + 
-  geom_smooth(aes(x = depth, y = table), method = "gam", se = TRUE, formula = y~x )
+  geom_smooth(aes(x = depth, y = table), method = "gam", se = TRUE )
 ```
 
 ::: notes
