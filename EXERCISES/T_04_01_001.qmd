@@ -49,7 +49,7 @@ gapminder_cz_deu2002007 <- gapminder %>%
 
 ::: columns
 ::: {.column width="40%"}
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
@@ -65,63 +65,50 @@ gapminder_cz_deu2002007 %>% arrange(year) %>% kableExtra::kable()
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # filtered to keep just Germany
 # or sliced the last two rows
 gapminder_cz_deu2002007 %>% filter(country == "Germany") %>% kableExtra::kable()
-gapminder_cz_deu2002007 %>% slice((n()-1):n()) %>% kableExtra::kable()
+gapminder_cz_deu2002007 %>% slice(n()-1:n()) %>% kableExtra::kable()
+gapminder_cz_deu2002007 %>% slice_tail(n = 2)
 ```
-
 :::
 :::
-
-
 
 ## Transformation 3 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # selected three columns, dropped one
-gapminder_cz_deu2002007 %>% select(c(country,year, pop)) %>% 
+gapminder_cz_deu2002007 %>% select(c(1, year, pop)) %>% 
   kableExtra::kable()
 # or 
-#gapminder_cz_deu2002007 %>% select(!c(gdpPercap)) %>% 
-#  kableExtra::kable()
+gapminder_cz_deu2002007 %>% 
+  select(!c(gdpPercap)) %>% 
+  kableExtra::kable()
 ```
-
 :::
 :::
-
-
 
 ## Transformation 4 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # change the order of columns
@@ -129,84 +116,63 @@ gapminder_cz_deu2002007 %>% relocate(pop, gdpPercap, year) %>%
   kableExtra::kable()
 
 ```
-
 :::
 :::
-
 
 ## Transformation 5 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # renamed column pop to POPULATION
-gapminder_cz_deu2002007 %>% rename(POPULATION = pop) %>% 
+gapminder_cz_deu2002007 %>% 
+  rename(POPULATION = pop) %>% 
   kableExtra::kable()
 
 ```
-
 :::
 :::
-
 
 ## Transformation 6 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # aggregation: computed mean GDP per capita for each country over time
-gapminder_cz_deu2002007 %>% group_by(country) %>% 
-  summarize(meanGDPcap = mean(gdpPercap)) %>% 
+gapminder_cz_deu2002007 %>% 
+  group_by(country)  %>% 
+  summarize(meanGDPcap = mean(gdpPercap)) %>%
   kableExtra::kable()
 
 ```
-
 :::
 :::
-
-
 
 ## Transformation 6 {.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-
-![](../images_ATRIUM/quiz_01_original.png){#quiz_01_original}
-
+![](../images_ATRIUM/quiz_01_original.png)
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo: false
 # added one row from the original gapminder with one unintended result: columns were generated to all observations to fit the dataframe with more columns (which is the one row with Afghanistan 1952), with empty values.  
 gapminder %>% slice(1) %>% 
-  bind_rows(gapminder_cz_deu2002007, .) %>% 
-  kableExtra::kable()
+  bind_rows(gapminder_cz_deu2002007, .) #%>% 
+  #kableExtra::kable()
 
 ```
-
 :::
 :::
-
-
-
-
-
-
