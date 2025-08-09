@@ -15,13 +15,16 @@ format:
     echo: true
     #output-location: slide
     preview-links: auto
+    embed-resources: true
+    progress: true
+    output-location: fragment
   pdf:
     toc: true
     number-sections: true
     include-in-header: atrium.tex
     shift-heading-level-by: -1
   html:
-    toc: true
+    toc: false
     number-sections: true
     css: atrium.css
     embed-resources: true

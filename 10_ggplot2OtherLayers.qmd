@@ -1,5 +1,5 @@
 ---
-title: "`ggplot2` continued"
+title: "`Tackling common plotting issues in ggplot2` and `knitr`"
 author: "Silvie Cinková"
 date: 2025-08-01
 echo: true
@@ -7,7 +7,7 @@ shift-heading-level-by: -1
 format:
   revealjs:
     plugins: [notes]
-    toc: true
+    toc: false
     slide-number: true
     notes: true
     pdf-export: true
@@ -22,6 +22,7 @@ format:
     toc: true
     number-sections: true
     include-in-header: atrium.tex
+    fig-pos: h!
   html:
     toc: true
     number-sections: true
@@ -29,21 +30,317 @@ format:
     embed-resources: true
 ---
 
-## Quarto
+## How to use this file
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+Open the qmd source and view it in the Visual editor. Open the html rendering nearby and compare the outcomes.
 
-## Bullets
+## Common issues
 
-When you click the **Render** button a document will be generated that includes:
+-   Plot renders too small/narrow/low.
 
--   Content authored with markdown
--   Output from executable code
+-   Axis tick labels overlap.
 
-## Code
+-   Axis ticks should be denser.
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+-   Texts render too small.
+
+-   Overlap in text labels.
+
+-   The publisher wants it black and white.
+
+## Setup
 
 ```{r}
-1 + 1
+#| message: false
+#| warning: false 
+library(tidyverse, warn.conflicts = FALSE, quietly = TRUE, logical.return = FALSE )
+library(glue, warn.conflicts = FALSE, quietly = TRUE)
+library(grDevices, warn.conflicts = FALSE, quietly = TRUE) # mostly unnecesary 
+billionaires_df <- read_tsv(glue("~/R_BEGINNERS_SHORT/",  
+                                 "datasets_ATRIUM/billionaires_combined.tsv"),
+                            show_col_types = FALSE)
+```
+
+When you load `tidyverse` , it loads some of them together, definitely `dplyr` and `ggplot`.
+
+## Problem: Plot too small
+
+-   mostly just pre-rendering and rendered OK, saved OK
+
+-   default: 178 x 178 mm (or equivalent in other units)
+
+```{r}
+#| warning: false
+#| message: false 
+billionaires_df %>% 
+  ggplot() + 
+  geom_smooth(mapping = aes(x = age, 
+                            color = sex, 
+                            y = daily_income)) + 
+  facet_wrap(~ time)
+```
+
+## Control dimensions when saving
+
+```{r}
+#| eval: false
+#### Erase #| eval: false when you want this script to run on Run or Render
+ggsave(glue("my_output_files", "/10_ggplotOther_plot_too_small.png"), 
+       device = grDevices::png, units = "mm")
+
+```
+
+```         
+Saving 178 x 178 mm image
+```
+
+These are the dimensions of the file:
+
+![](my_output_files/10_ggplotOther_plot_too_small.png)
+
+```{r}
+#| eval: false 
+ggsave("my_output_files/10_ggplotOther_plot_too_small_height270.png", 
+       units = "mm", height = 270, device = grDevices::png)
+
+```
+
+```         
+Saving 178 x 270 mm image
+```
+
+True dimensions in the file:
+
+![height increased to 270, units = mm](my_output_files/10_ggplotOther_plot_too_small_height270.png)
+
+or you can multiply both directions with something. Below is a very disproportionate plot just to make the effects very visible:
+
+```{r}
+#| eval: false
+ggsave("my_output_files/10_ggplotOther_plot_too_small_scaleboth.png", 
+       units = "mm", height = 178 * 1.1, width = 178 * 0.7, device = grDevices::png)
+```
+
+![A monstrous plot produced by manual scaling of width and height](my_output_files/10_ggplotOther_plot_too_small_scaleboth.png)
+
+## You want to **render** it better
+
+Sometimes you need to render a document with plots for sharing. One solution could be like the one above: you generate the plots and save them. Then you insert the files as images and prevent the code from running again. The cleaner option is that you fiddle with the dimensions in the `knitr` *chunk options.*
+
+`knitr` is one of the libraries that allow Quarto to render markdown documents in HTML, PDF, and doc. It pays to have an idea about the existence of `knitr` *chunk options* - be it merely as key words for AI prompts!
+
+Below you see activated a few of them: `fig.width`, etc. , if you look at this file in Quarto. You will not see them in the rendered documents of any format! They belong to the start of the chunk, and the code to control the rendered width and height would look like this:
+
+```{{r}}
+#| fig.width: 7
+#| fig.height: 10
+# your code or comments follow
+```
+
+The units are probably inches. The options are spelled in an older way using dots, but Help lists them with dashes instead (i.e., `fig-weight` instead of `fig.weight`. Our platform currently uses a slightly outdated version of RStudio from 2023 that ignores the new spelling (2023.06.1+524 "Mountain Hydrangea" Release (547dcf861cac0253a8abb52c135e44e02ba407a1, 2023-07-07) for Ubuntu Jammy), so I stick to the old spelling, but chances are that you will get a newer one to your computer that has switched the spelling to dash.
+
+```{r}
+#| fig.width: 7
+#| fig.height: 10
+#| warning: false
+#| message: false 
+# above are knitr chunk options invisible in html
+billionaires_df %>% ggplot() + 
+  geom_smooth(mapping = aes(x = age, color = sex, y = daily_income)) + 
+  facet_wrap(~ time)
+
+```
+
+## You want axis ticks labeled denser
+
+This is the default.
+
+```{r}
+billionaires_df %>% ggplot() + geom_bar(aes(x = time, fill = sex))
+```
+
+You want ticks on the Y axis to mark each 500.
+
+First, you need to know the right base R function to generate the sequence of the labels:
+
+```{r}
+seq(from = 0, to = 3500, by = 500)
+```
+
+Then you tell ggplot2 that you want to modify the ticks on the Y-axis by calling the appropriate `scale_….` function. Each aesthetic scale has its own `scale_…` function with arguments that modify its behavior. Note that the `scale_` functions are divided into \_discreet, \_continuous, and sometimes \_manual. You have to pick the type that corresponds to the type of the variable that you mapped on that aesthetic scale. The rule of the thumb is that categorical variables are always discrete and numeric variables are continuous. When you want a numeric variable to plot as discrete, you make it a factor before you pick the scale. In the plot, I also modify the X-axis.
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_y_continuous(breaks = seq(from = 0, to = 3500, by = 500)) +
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 2 ))
+```
+
+Years are conceptually a discrete variable, but they are numbers, so it is a continuous scale.
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1))
+```
+
+## Axis tick labels overlap
+
+When axis tick labels overlap, the easiest workaround is to tilt the plot by 90 degrees with `coord_flip()`. This function belongs to the coordinates layer in `ggplot2`.
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) + 
+  coord_flip()
+```
+
+Sometimes this is all you have to do, but when you can't do it, you must delve into the `theme` layer, calling the appropriate `axis.text_…` argument (for X, for Y, or for both). This wants that you call a function called `element_text.` This function has arguments with which you can tilt the labels, adjust their size and their position around the corresponding axis tick, etc.
+
+What often helps is tilting the labels:
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60))
+```
+
+Sometimes the labels bleed into the plot. This you can adjust with the vertical adjustment argument `vjust`. Experiment with the values. Normally you should need a small value like 0.1 or -0.1. Try `vjust = 0` to get a reference point.
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7))
+```
+
+When you need to let the tick labels disappear, you do it like so:
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_boxplot(aes(y = time)) + 
+  scale_x_continuous(breaks = NULL) 
+```
+
+## Change the titles of aesthetic scales, e.g. axes
+
+Two ways to access the axis titles
+
+-   `scale_`...
+
+-   `xlab`, `ylab`
+
+### `scale_…` to change the title of any aesthetic scale
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1),
+                     name = "year") +
+  scale_y_continuous(name = "number of billionaires listed in Forbes\n and other popular charts") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) +
+  scale_fill_discrete(name = "gender", labels = c("women", "men", "diverse", "NA"))
+```
+
+### `xlab`, `ylab` to change titles of the X, Y axes
+
+These are shortcuts - probably written because these tasks are extremely common.
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) + 
+  xlab(label = "year") + 
+  ylab(label = "number of billionaires listed in Forbes\n and other popular charts")
+# Notice the \n to enforce a new line
+```
+
+## Change things in color/fill with `scale_…`
+
+-   Stick to ready-made options whenever you can, it can easily get too complicated.
+
+-   Prefer to combine colors from color palettes designed by professionals. Some look awful but all guarantee enough contrast. Some of them even work for color-blind audience.
+
+-   Important things to consider
+
+```         
+-   Discrete/ordinal or continuous variable? Some palettes work even only for binned variables (e.g. in `geom_hex`)
+
+-   Can values be distributed on a scale?
+
+    -   diverging scale: two extremes (e.g., *totally agree - agree - don't know - disagree - totally disagree* or *-100 ....0 ....+100*)?
+
+    -   sequential: zero to extreme (e.g., *beginner - intermediate - advanced - expert* or *0....100*)
+
+    -   qualitative: no scale, just contrast (e.g., *bugs, beetles, butterflies*)
+```
+
+### `scale_fill_brewer`
+
+-   for discrete variables
+
+-   color palettes designed by cartographer Cynthia Brewer <https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3>
+
+-   The palettes are divided into three types: diverging (`div`), qualitative (`qual`) and sequential (`seq`)
+
+```{r}
+# run repeatedly and explore the fill options with Help
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) + 
+  scale_fill_brewer(name = "gender", type = "qual", palette = 8)
+```
+
+### `scale_fill_manual`
+
+-   your manually picked colors in a character vector
+
+-   use either their names or HEX codes
+
+-   easy to pick here <https://r-charts.com/colors/>
+
+```{r}
+# run repeatedly and explore the fill options with Help
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) + 
+  #scale_fill_discrete(type = c("red", "blue", "grey", "grey34"))
+  scale_fill_discrete(type = c("#A52A2A", "#4F94CD", "snow3", "#8B5A2B"))
+```
+
+## To become a fill/color guru
+
+-   read <https://ggplot2-book.org/scales-colour#sec-colour-theory>
+
+-   ggplot2 functions implement color theory
+
+    -   which colors match/contrast
+
+    -   how they are rendered in computers
+
+## Add title to the entire plot
+
+-   with `labs`
+
+-   with `ggtitle`
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) + 
+  labs(title = "Count of world's billionaires over 2002-2022",
+       subtitle = "broken by sex")
+```
+
+```{r}
+billionaires_df %>% ggplot() + 
+  geom_bar(aes(x = time, fill = sex)) + 
+  scale_x_continuous(breaks = seq(from = 2002, to = 2022, by = 1)) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.7)) + 
+  ggtitle(label = "Count of world's billionaires over 2002-2022", 
+          subtitle = "broken by sex")
 ```

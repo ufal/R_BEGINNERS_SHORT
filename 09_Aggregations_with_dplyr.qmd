@@ -272,16 +272,15 @@ It has default `.keep_all = FALSE`, which throws away all columns that were not 
 :::
 :::
 
-
 ## Add rows to data frame
-- Row is never a vector!
+
+-   Row is never a vector!
 
 ```{r}
 ad2002 <- gapminder %>% filter(country %in% c("Albania", "Denmark"), year == 2002)
 ad2007 <- gapminder %>% filter(country %in% c("Albania", "Denmark"), year == 2007)
 bind_rows(ad2002, ad2007) 
 ```
-
 
 ## Subset columns: `select` {.smaller}
 
@@ -384,7 +383,9 @@ You have already met something similar `ggplot2`, in two different contexts:
 :::
 
 ## Add new columns with `bind_cols`
-- add vectors or data frames 
+
+-   add vectors or data frames
+
 ```{r}
 new_df <- select(gapminder, c(new_pop = pop, new_lifeExp = lifeExp))
 new_vec <- gapminder$country # base R column subset
@@ -392,8 +393,7 @@ gapminder %>% bind_cols(new_df, new_country = new_vec) %>% glimpse()
 ```
 
 ::: notes
-This is a mock use case, obviously. You would normally not add a copy of an already existing column. A real use could be that you compute some new values from the existing data frame in a very complicated way, or in an external tool - simply that something would prevent you from computing the new column directly in the data frame with `mutate` (see later). You must be sure that the column to add is equally long as the columns in your existing data frame and that the values refer to the same year and country, in this particular case (there is no programmatic way to find out). With `bind_cols` you are not joining tables in the SQL sense. We will learn that in a separate session. 
-
+This is a mock use case, obviously. You would normally not add a copy of an already existing column. A real use could be that you compute some new values from the existing data frame in a very complicated way, or in an external tool - simply that something would prevent you from computing the new column directly in the data frame with `mutate` (see later). You must be sure that the column to add is equally long as the columns in your existing data frame and that the values refer to the same year and country, in this particular case (there is no programmatic way to find out). With `bind_cols` you are not joining tables in the SQL sense. We will learn that in a separate session.
 :::
 
 ## `pull` : extract column to create a vector
@@ -401,7 +401,8 @@ This is a mock use case, obviously. You would normally not add a copy of an alre
 -   `pull` extracts one column as **vector/factor**
 
 ```{r}
-gapminder %>% select(continent) %>% pull() %>% str()
+gapminder %>% select(continent) %>% 
+  pull() %>% str()
 ```
 
 ```{r}
@@ -423,8 +424,10 @@ And here we have finished selecting and filtering.
 -   numeric variables: mean, median, etc.
 
 ```{r}
-gapminder %>% filter(year == 2007, continent == "Europe") %>%
-  summarize(mean_pop = mean(pop),  mean_lifeExp = round(mean(lifeExp)))
+gapminder %>% filter(year == 2007, 
+                     continent == "Europe") %>%
+  summarize(mean_pop = mean(pop),  
+            mean_lifeExp = round(mean(lifeExp)))
 ```
 
 ::: notes
@@ -434,8 +437,10 @@ So far, we have worked with raw observations. Now we switch to aggregating value
 ## grouped aggregations (`group_by`) {.smaller}
 
 ```{r}
-gap2000 <- gapminder %>% filter(year > 1997) %>% group_by(continent, year) %>% 
-  summarize(mean_pop = mean(pop), mean_lifeExp = mean(lifeExp) )
+gap2000 <- gapminder %>% filter(year > 1997) %>% 
+  group_by(continent, year) %>% 
+  summarize(mean_pop = mean(pop), 
+            mean_lifeExp = mean(lifeExp) )
 gap2000
 ```
 
@@ -474,5 +479,4 @@ Later on, you will also get acquainted with another grouping function, `rowwise`
 :::
 :::
 
-## Compute new columns with `mutate`
-
+## 

@@ -1,0 +1,191 @@
+---
+title: "Computations with `dplyr::mutate`"
+author: "Silvie Cinková "
+date: "2025-08-07"
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    output-location: default
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Libraries and data
+
+```{r}
+library(gapminder)
+library(dplyr)
+library(magrittr)
+americas_2002 <- gapminder %>% filter(continent == "Americas", year == 2002)
+gapminder_2002 <- gapminder %>% filter(year == 2002) %>% select(!c(year))
+```
+
+## `mutate` {.smaller}
+
+-   works in two contexts:
+
+    -   adds a new column
+
+    -   edits an already existing column
+
+-   can add/edit several columns at once
+
+-   uses its dedicated helper functions
+
+    -   `across(), c_across()`
+
+-   one more grouping function: `rowwise()`
+
+## Adding a new column with `mutate` {.smaller}
+
+```{r}
+americas_2002 %>% 
+  mutate(GDP_millions = pop * gdpPercap/1000000 ) %>% 
+  slice(1:10)
+
+```
+
+## Adding a new column
+
+```{r}
+americas_2002 %>% 
+  mutate(richest = max(gdpPercap), 
+         perc_richest = round(gdpPercap/richest, 2)) 
+ 
+  
+```
+
+::: notes
+Notice how you can concatenate new columns in one `mutate` action and that the second uses the result of the first within the same command. But I am not sure whether this is always granted.
+:::
+
+## Adding a new column computed on groups
+
+```{r}
+gapminder_2002 %>%
+  group_by(continent) %>% 
+  mutate(richest = max(gdpPercap), 
+         perc_richest = round(gdpPercap/richest, 2)) %>% 
+  ungroup()
+```
+
+::: notes
+Here we do the same operation as with Americas, but this time for each continent. The `richest` column has identical values for countries on one continent.
+
+Note the difference in the behavior of `max()` and division (`/`). The `max` function always looks at the entire group whereas division operates on each row independently.
+:::
+
+## Adding a value on a condition: `if_else`
+
+```{r}
+gapminder_2002 %>%
+  mutate(is_Asia = if_else(
+    condition = continent == "Asia", 
+    true = "Asian country",
+    false = "Not in Asia"))
+```
+
+## Adding a value on a condition: `case_when` {.smaller}
+
+```{r}
+gapminder %>% filter(year == 2002) %>% 
+  mutate(is_Asia = case_when(
+    continent == "Asia" ~  "Asian country",
+    continent == "Africa" ~ "African country",
+    continent == "Europe" ~ "European country",
+    continent == "Americas" ~ "American country",
+    continent == "Oceania" ~ "Oceanian country",
+    .default = NA
+    ))
+```
+
+::: notes
+Note the specific syntax of `case_when`!
+:::
+
+## `mutate` an existing column with `across`
+
+-   convert pop to millions and round to 3 decimal points
+
+```{r}
+gapminder_2002 %>%
+  mutate(across(pop, ~ round(.x/1000000, 3)))
+```
+
+::: notes
+`across` lists the columns on which you want to perform the same transformation. Note its peculiar syntax: it is inside `mutate` and incorporates both the enumeration of the columns to transform and the transformation, which is written in the formula notation with tilde and `.x` for the first argument.
+:::
+
+## `mutate` an existing column on a selection of columns
+
+```{r}
+gapminder_2002 %>% select(!c(continent)) %>%
+  mutate(across(
+    where(~ is.numeric(.x)),
+          ~ round(.x, digits = 0)
+    )    )
+```
+
+::: notes
+`across` works well with all column-selecting helper functions, such as `where` or `starts_with`.
+:::
+
+## Compute summary stats across columns {.smaller}
+
+-   `sum` , `mean` and many other functions collapse all values in a column.
+
+-   Override with `rowwise() %>% mutate(c_across(….)`
+
+```{r}
+iris %>% slice(1:3) %>% rowwise() %>%
+  mutate(sum_leafmeasure = sum(c_across(where(~ is.numeric(.x))))) %>%   ungroup()
+```
+
+## Without `rowwise` and `c_across` 😐 {.smaller}
+
+```{r}
+iris %>% slice(1:3) %>% 
+  mutate(sum_leafmeasure = sum(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)) 
+```
+
+## The same with `mean`
+
+```{r}
+iris %>% slice(1:3) %>% rowwise() %>%
+  mutate(mean_leafmeasure = mean(c_across(!c(Species)))) %>%   ungroup()
+```
+
+## Common stat. functions requiring `rowwise` {.smaller}
+
+-   `sum()` -- sums values across columns
+
+-   `mean()` -- computes average across columns
+
+-   `sd()` -- standard deviation
+
+-   `var()` -- variance
+
+-   `min()` / `max()` -- minimum / maximum
+
+-   `median()` -- median value
+
+-   `IQR()` -- interquartile range

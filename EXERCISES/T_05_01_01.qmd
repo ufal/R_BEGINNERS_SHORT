@@ -1,24 +1,127 @@
 ---
-title: "Untitled"
-format: revealjs
+title: "Read someone else's code"
+format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
-
-## Bullets
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+```{r}
+library(tidyverse)
+```
 
 ```{r}
-1 + 1
+billionaires_df <- read_tsv("../datasets_ATRIUM/billionaires_combined.tsv")
+billionaires_2020 <- billionaires_df %>% 
+  filter(time == 2020) %>% select(daily_income, person, world_6region)
 ```
+
+
+### The task performed by the code
+
+The data set compiles charts of world's billionaires between 2002 and 2020. This means that the same person can occur more than one time, but their details may differ. Plot billionaires in each world region (column `world_6region`). Use boxplots to plot the distribution of `daily_income` among all billionaires in the given world region and text labels with values from the column `person` for outliers.
+You may have to plot each region separately, that is, not break one plot into facets but run the/a plotting script individually for each world region.  
+
+
+## Solution
+
+```{r}
+#| fig-width: 20
+#| fig.height: 20
+library(ggrepel)
+billionaires_outliers <- billionaires_2020 %>% 
+  group_by(world_6region) %>%
+  mutate(Q3 = quantile(daily_income, 0.75), IQR_col = IQR(daily_income), outliers_above = Q3 + 1.5 * IQR_col) %>%
+  mutate(is_outlier = if_else(condition = daily_income > outliers_above,
+                              true = TRUE, 
+                              false = FALSE
+                              )) %>% arrange(desc(daily_income),world_6region)
+world_6region_vec <- distinct(billionaires_outliers, world_6region) %>% arrange(world_6region) %>% pull()  
+outliers_above <- distinct(billionaires_outliers, world_6region, outliers_above) %>% arrange(world_6region) %>% pull() 
+
+for (i in seq_along(world_6region_vec)) {
+  all_oneregion <- billionaires_outliers %>% filter(world_6region == world_6region_vec[i])
+  outliers_oneregion <- all_oneregion %>% filter(is_outlier == TRUE)
+  y_axis_offset_for_outlier_label <- range(all_oneregion$daily_income) %>% diff()
+  y_axis_offset_for_outlier_label <- y_axis_offset_for_outlier_label * 0.05
+  if (nrow(outliers_oneregion) == 0){
+    cat(world_6region_vec[i], "has no outliers. I will plot all names.\n")
+  p <- ggplot() + geom_boxplot(data = all_oneregion,
+                          mapping = aes(y = daily_income, x = 1),
+                         color = "purple")   +
+    geom_text_repel(mapping = aes(y = daily_income, 
+                                  x = 1,
+                                  label = person,
+                            #alpha = daily_income, 
+                            size = daily_income
+                            ), 
+                    data = all_oneregion,
+              #size = 8, 
+               # position = position_jitter(width = 10.4, 
+               #                                 height = 50),
+              max.overlaps = 100,  force = 7,
+              alpha = 0.7,
+              segment.alpha = 0.2,
+              segment.size = 0.1
+                ) + 
+    scale_x_continuous(breaks = NULL, name = world_6region_vec[i]) +
+    scale_y_continuous(breaks =      seq(from = 10^6, 
+                                      to = ceiling(round(
+                                        max(all_oneregion$daily_income) * 10^(-6)) * 10^6), 
+                                        by = 10^7
+                                    
+                                    ),
+                        labels = as.character(seq(from = 10^6, 
+                                      to = ceiling(round(
+                                        max(all_oneregion$daily_income) * 10^(-6)) * 10^6), 
+                                        by = 10^7)
+                       )) 
+  ggsave(plot = p, filename = paste0("../my_output_files/outliers_billionaires_", world_6region_vec[i], ".pdf"),
+         width = 7 * 2)
+    
+  } else {
+  set.seed(155)
+  p <- ggplot() + geom_boxplot(data = all_oneregion,
+                          mapping = aes(y = daily_income, x = 1),
+                         color = "purple", outlier.shape = "." )  +
+    geom_text_repel(mapping = aes(y = daily_income, 
+                                  x = 1,
+                                  label = person,
+                            #alpha = daily_income, 
+                            size = daily_income
+                            ), 
+                    data = outliers_oneregion,
+              #size = 8, 
+               # position = position_jitter(width = 10.4, 
+               #                                 height = 50),
+              max.overlaps = 100,  force = 7,
+              alpha = 0.7,
+              segment.alpha = 0.2,
+              segment.size = 0.1
+                ) + 
+    scale_x_continuous(breaks = NULL, name = world_6region_vec[i]) +
+    scale_size_continuous(range = c(2,4), 
+                          breaks = seq(
+                            from = round(min(outliers_oneregion$daily_income)),
+                             to = round(max(outliers_oneregion$daily_income)),
+                            by = round(max(outliers_oneregion$daily_income) * 0.4))) +
+    scale_y_continuous(breaks =      seq(from = 10^6, 
+                                      to = ceiling(round(
+                                        max(all_oneregion$daily_income) * 10^(-6)) * 10^6), 
+                                        by = 10^7
+                                    
+                                    ),
+                        labels = as.character(seq(from = 10^6, 
+                                      to = ceiling(round(
+                                        max(all_oneregion$daily_income) * 10^(-6)) * 10^6), 
+                                        by = 10^7)
+                       )) +
+    geom_hline(yintercept = outliers_above[i], color = "seagreen", linewidth = 1, linetype=3, alpha = 0.4) + annotate(geom = "text", x = 0.6, y =  outliers_above[i] + y_axis_offset_for_outlier_label, label = outliers_above[i], color = "seagreen", size = 5)
+  cat(world_6region_vec[i], "\n")
+  print(p)
+  ggsave(plot = p, filename = paste0("../my_output_files/outliers_billionaires_", world_6region_vec[i], ".pdf"),
+         width = 7 * 2)
+    
+  }
+}
+
+```
+
