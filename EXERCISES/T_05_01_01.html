@@ -134,104 +134,112 @@ dbl  (4): time, daily_income, age, birth_comb
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>billionaires_outliers <span class="ot">&lt;-</span> billionaires_2020 <span class="sc">%&gt;%</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(world_6region) <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Q3 =</span> <span class="fu">quantile</span>(daily_income, <span class="fl">0.75</span>), <span class="at">IQR_col =</span> <span class="fu">IQR</span>(daily_income), <span class="at">outliers_above =</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_col) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_outlier =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> daily_income <span class="sc">&gt;</span> outliers_above,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">true =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">false =</span> <span class="cn">FALSE</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                              )) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_income),world_6region)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>world_6region_vec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(billionaires_outliers, world_6region) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(world_6region) <span class="sc">%&gt;%</span> <span class="fu">pull</span>()  </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>outliers_above <span class="ot">&lt;-</span> <span class="fu">distinct</span>(billionaires_outliers, world_6region, outliers_above) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(world_6region) <span class="sc">%&gt;%</span> <span class="fu">pull</span>() </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(world_6region_vec)) {</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  all_oneregion <span class="ot">&lt;-</span> billionaires_outliers <span class="sc">%&gt;%</span> <span class="fu">filter</span>(world_6region <span class="sc">==</span> world_6region_vec[i])</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  outliers_oneregion <span class="ot">&lt;-</span> all_oneregion <span class="sc">%&gt;%</span> <span class="fu">filter</span>(is_outlier <span class="sc">==</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  y_axis_offset_for_outlier_label <span class="ot">&lt;-</span> <span class="fu">range</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">%&gt;%</span> <span class="fu">diff</span>()</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  y_axis_offset_for_outlier_label <span class="ot">&lt;-</span> y_axis_offset_for_outlier_label <span class="sc">*</span> <span class="fl">0.05</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(outliers_oneregion) <span class="sc">==</span> <span class="dv">0</span>){</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(world_6region_vec[i], <span class="st">"has no outliers. I will plot all names.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">data =</span> all_oneregion,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, <span class="at">x =</span> <span class="dv">1</span>),</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"purple"</span>)   <span class="sc">+</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, </span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">x =</span> <span class="dv">1</span>,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> person,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#alpha = daily_income, </span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                            <span class="at">size =</span> daily_income</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                            ), </span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> all_oneregion,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>              <span class="co">#size = 8, </span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>               <span class="co"># position = position_jitter(width = 10.4, </span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>               <span class="co">#                                 height = 50),</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">max.overlaps =</span> <span class="dv">100</span>,  <span class="at">force =</span> <span class="dv">7</span>,</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">segment.alpha =</span> <span class="fl">0.2</span>,</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>              <span class="at">segment.size =</span> <span class="fl">0.1</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">name =</span> world_6region_vec[i]) <span class="sc">+</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span>      <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                                    </span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                                    ),</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>)</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                       )) </span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">plot =</span> p, <span class="at">filename =</span> <span class="fu">paste0</span>(<span class="st">"../my_output_files/outliers_billionaires_"</span>, world_6region_vec[i], <span class="st">".pdf"</span>),</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>         <span class="at">width =</span> <span class="dv">7</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">155</span>)</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">data =</span> all_oneregion,</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, <span class="at">x =</span> <span class="dv">1</span>),</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">outlier.shape =</span> <span class="st">"."</span> )  <span class="sc">+</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, </span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">x =</span> <span class="dv">1</span>,</span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> person,</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                            <span class="co">#alpha = daily_income, </span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                            <span class="at">size =</span> daily_income</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                            ), </span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> outliers_oneregion,</span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>              <span class="co">#size = 8, </span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>               <span class="co"># position = position_jitter(width = 10.4, </span></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>               <span class="co">#                                 height = 50),</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>              <span class="at">max.overlaps =</span> <span class="dv">100</span>,  <span class="at">force =</span> <span class="dv">7</span>,</span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>              <span class="at">segment.alpha =</span> <span class="fl">0.2</span>,</span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>              <span class="at">segment.size =</span> <span class="fl">0.1</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">name =</span> world_6region_vec[i]) <span class="sc">+</span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), </span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>                          <span class="at">breaks =</span> <span class="fu">seq</span>(</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>                            <span class="at">from =</span> <span class="fu">round</span>(<span class="fu">min</span>(outliers_oneregion<span class="sc">$</span>daily_income)),</span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>                             <span class="at">to =</span> <span class="fu">round</span>(<span class="fu">max</span>(outliers_oneregion<span class="sc">$</span>daily_income)),</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>                            <span class="at">by =</span> <span class="fu">round</span>(<span class="fu">max</span>(outliers_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="fl">0.4</span>))) <span class="sc">+</span></span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span>      <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>                                    </span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>                                    ),</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>)</span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>                       )) <span class="sc">+</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> outliers_above[i], <span class="at">color =</span> <span class="st">"seagreen"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype=</span><span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.6</span>, <span class="at">y =</span>  outliers_above[i] <span class="sc">+</span> y_axis_offset_for_outlier_label, <span class="at">label =</span> outliers_above[i], <span class="at">color =</span> <span class="st">"seagreen"</span>, <span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(world_6region_vec[i], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">plot =</span> p, <span class="at">filename =</span> <span class="fu">paste0</span>(<span class="st">"../my_output_files/outliers_billionaires_"</span>, world_6region_vec[i], <span class="st">".pdf"</span>),</span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">width =</span> <span class="dv">7</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Q3 =</span> <span class="fu">quantile</span>(daily_income, <span class="fl">0.75</span>), </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">IQR_col =</span> <span class="fu">IQR</span>(daily_income), </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">outliers_above =</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR_col) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_outlier =</span> <span class="fu">if_else</span>(<span class="at">condition =</span> daily_income <span class="sc">&gt;</span> outliers_above,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                              <span class="at">true =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">false =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_income), world_6region)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>world_6region_vec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(billionaires_outliers, world_6region) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(world_6region) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()  </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>outliers_above <span class="ot">&lt;-</span> <span class="fu">distinct</span>(billionaires_outliers, world_6region, outliers_above) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(world_6region) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(world_6region_vec)) {</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  all_oneregion <span class="ot">&lt;-</span> billionaires_outliers <span class="sc">%&gt;%</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(world_6region <span class="sc">==</span> world_6region_vec[i])</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  outliers_oneregion <span class="ot">&lt;-</span> all_oneregion <span class="sc">%&gt;%</span> </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(is_outlier <span class="sc">==</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  y_axis_offset_for_outlier_label <span class="ot">&lt;-</span> <span class="fu">range</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  y_axis_offset_for_outlier_label <span class="ot">&lt;-</span> y_axis_offset_for_outlier_label <span class="sc">*</span> <span class="fl">0.05</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(outliers_oneregion) <span class="sc">==</span> <span class="dv">0</span>){</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(world_6region_vec[i], <span class="st">"has no outliers. I will plot all names.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">data =</span> all_oneregion,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, <span class="at">x =</span> <span class="dv">1</span>),</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"purple"</span>)   <span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, </span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">x =</span> <span class="dv">1</span>,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> person,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>                            <span class="at">size =</span> daily_income), </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> all_oneregion,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.overlaps =</span> <span class="dv">100</span>,  </span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                    <span class="at">force =</span> <span class="dv">7</span>,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">segment.alpha =</span> <span class="fl">0.2</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                    <span class="at">segment.size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, </span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> world_6region_vec[i]) <span class="sc">+</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>),</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">as.character</span>(</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                                             <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(<span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>                                   )</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>                       ) </span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">plot =</span> p, <span class="at">filename =</span> <span class="fu">paste0</span>(<span class="st">"../my_output_files/outliers_billionaires_"</span>, world_6region_vec[i], <span class="st">".pdf"</span>),</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>         <span class="at">width =</span> <span class="dv">7</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">155</span>)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">data =</span> all_oneregion,</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, <span class="at">x =</span> <span class="dv">1</span>),</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>)  <span class="sc">+</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> daily_income, </span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">x =</span> <span class="dv">1</span>,</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> person,</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> daily_income), </span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> outliers_oneregion,</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.overlaps =</span> <span class="dv">100</span>,  <span class="at">force =</span> <span class="dv">7</span>,</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>                    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>                    <span class="at">segment.alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>                    <span class="at">segment.size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, </span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> world_6region_vec[i]) <span class="sc">+</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">10</span>), </span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>                          <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">round</span>(<span class="fu">min</span>(outliers_oneregion<span class="sc">$</span>daily_income)),</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">to =</span> <span class="fu">round</span>(<span class="fu">max</span>(outliers_oneregion<span class="sc">$</span>daily_income)),</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">by =</span> <span class="fu">round</span>(<span class="fu">max</span>(outliers_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="fl">0.4</span>))) <span class="sc">+</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>),</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, </span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">to =</span> <span class="fu">ceiling</span>(<span class="fu">round</span>(</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>                                                    <span class="fu">max</span>(all_oneregion<span class="sc">$</span>daily_income) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">6</span>)) <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>), </span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">by =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span>))) <span class="sc">+</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> outliers_above[i], </span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"seagreen"</span>, </span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="dv">1</span>, </span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype=</span><span class="dv">3</span>, </span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> </span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, </span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.6</span>, </span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> outliers_above[i] <span class="sc">+</span> y_axis_offset_for_outlier_label, </span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> outliers_above[i], </span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"seagreen"</span>, </span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(world_6region_vec[i], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) </span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">plot =</span> p, <span class="at">filename =</span> <span class="fu">paste0</span>(<span class="st">"../my_output_files/outliers_billionaires_"</span>, world_6region_vec[i], <span class="st">".pdf"</span>),</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>         <span class="at">width =</span> <span class="dv">7</span> <span class="sc">*</span> <span class="fl">2.2</span>)</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>america </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Saving 14 x 20 in image</code></pre>
+<pre><code>Saving 15.4 x 20 in image</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="T_05_01_01_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="1920"></p>
@@ -240,7 +248,7 @@ dbl  (4): time, daily_income, age, birth_comb
 <pre><code>east_asia_pacific </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Saving 14 x 20 in image</code></pre>
+<pre><code>Saving 15.4 x 20 in image</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="T_05_01_01_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="1920"></p>
@@ -249,7 +257,7 @@ dbl  (4): time, daily_income, age, birth_comb
 <pre><code>europe_central_asia </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Saving 14 x 20 in image</code></pre>
+<pre><code>Saving 15.4 x 20 in image</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="T_05_01_01_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="1920"></p>
@@ -258,7 +266,7 @@ dbl  (4): time, daily_income, age, birth_comb
 <pre><code>middle_east_north_africa </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Saving 14 x 20 in image</code></pre>
+<pre><code>Saving 15.4 x 20 in image</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="T_05_01_01_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="1920"></p>
@@ -267,7 +275,7 @@ dbl  (4): time, daily_income, age, birth_comb
 <pre><code>south_asia </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Saving 14 x 20 in image</code></pre>
+<pre><code>Saving 15.4 x 20 in image</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sub_saharan_africa has no outliers. I will plot all names.</code></pre>
