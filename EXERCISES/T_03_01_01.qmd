@@ -34,6 +34,7 @@ format:
 library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
 library(readr, warn.conflicts = FALSE, quietly = TRUE)
+library(glue, warn.conflicts = FALSE, quietly = TRUE)
 ```
 
 ```{r donotrunthis}
@@ -84,7 +85,8 @@ In this session, you are going to generate plenty of ideas and implement their v
 -   Read file `~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv` and save it in a variable `billionaires_df`
 
     ```{r}
-    billionaires_df <- read_tsv("~/R_BEGINNERS_SHORT/datasets_ATRIUM/billionaires_combined.tsv")
+    billionaires_df <- read_tsv(glue("~/R_BEGINNERS_SHORT/",  
+                                     "datasets_ATRIUM/billionaires_combined.tsv"))
     ```
 
 -   Explore the dataset and keep noting what you are looking for and what you see. At least ten plots. Some suggestions with examples follow.
@@ -143,7 +145,7 @@ billionaires_2020 <- filter(billionaires_df, time == 2020)
 
 ## Compare the count of males and female billionaires for each world region
 
-Suggestion: barplot with dodged bars.
+Suggestion: barplot with dodged bars, faceted by years.
 
 ::: callout-tip
 ## Tilt axis text to make it legible
@@ -153,11 +155,12 @@ When axis labels overlap, add this code and fiddle with `angle`, `hjust` (or `vj
 `+ theme(axis.text.x = element_text(angle = 60, hjust = 1))`
 :::
 
-```{r}
+```{r }
 #| name: compare-sexes-regions-barplot
 #| echo: false
+#| fig.height: 8
 ggplot(data = billionaires_df) + 
-  geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  geom_bar(mapping = aes(x = world_6region, fill = sex), position = "dodge") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + facet_wrap(~ time)
 ```
 
 ## Sex, age, and residence in 2020 vs. in 2010
