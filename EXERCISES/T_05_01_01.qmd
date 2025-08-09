@@ -1,7 +1,34 @@
 ---
 title: "Read someone else's code"
-format: html
-editor: visual
+author: "Silvie Cinková "
+date: 2025-08-9
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    shift-heading-level-by: -2
+    number-sections: true
+    include-in-header: atrium.tex
+    geometry: landscape,margin=1cm
+    highlight-style: tango
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
 ---
 
 ```{r}
@@ -19,6 +46,7 @@ billionaires_2020 <- billionaires_df %>%
 The data set compiles charts of world's billionaires between 2002 and 2020. This means that the same person can occur more than one time, but their details may differ. Plot billionaires in each world region (column `world_6region`). Use boxplots to plot the distribution of `daily_income` among all billionaires in the given world region and text labels with values from the column `person` for outliers. You may have to plot each region separately, that is, not break one plot into facets but run the/a plotting script individually for each world region.
 
 ## Solution
+
 
 ```{r}
 #| fig-width: 20
@@ -119,13 +147,17 @@ for (i in seq_along(world_6region_vec)) {
              label = outliers_above[i], 
              color = "seagreen", 
              size = 6) +
-    theme(axis.text = element_text(size = 12), axis.title = element_text(size = 14))
+    theme(axis.text = element_text(size = 12), 
+          axis.title = element_text(size = 14))
   cat(world_6region_vec[i], "\n") 
   print(p)
-  ggsave(plot = p, filename = paste0("../my_output_files/outliers_billionaires_", world_6region_vec[i], ".pdf"),
+  ggsave(plot = p, filename = paste0(
+    "../my_output_files/outliers_billionaires_", 
+    world_6region_vec[i], ".pdf"),
          width = 7 * 2.2)
     
   }
 }
 
 ```
+

@@ -1,3 +1,18 @@
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines=true,
+  breakanywhere=true,
+  commandchars=\\\{\},
+  codes={\catcode`\_=12}, % Treat underscore as a regular character
+  xleftmargin=1em,
+  %frame=single,
+  framesep=0.5em,
+  fontsize=\small,
+  baselinestretch=1,
+  numbersep=1em,
+  breakindent=0pt,
+  breakautoindent=false
+}
 \usepackage{xurl}
 \def\UrlBreaks{\do\/\do-}
 \usepackage{tcolorbox}
@@ -23,4 +38,25 @@
   sharp corners,
   boxrule=0.5pt,
   left=1mm, right=1mm, top=1mm, bottom=1mm
+}
+
+\usepackage{etoolbox}
+\usepackage{fancyvrb}
+\makeatletter
+\pretocmd{\FV@BeginVerbatim}{\leftskip=1em \rightskip=0pt plus 1fil \spaceskip=.5em}{}{}
+\makeatother
+\pretocmd{\Highlighting}{\leftskip=1em \rightskip=0pt plus 1fil \spaceskip=.5em}{}{}
+\makeatother
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  breaklines=true,
+  breakatwhitespace=false,
+  postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+  basicstyle=\ttfamily\small,
+  columns=flexible,
+  keepspaces=true,
+  showstringspaces=false,
+  literate={-}{{\-}}1 {/}{{/}}1
 }
