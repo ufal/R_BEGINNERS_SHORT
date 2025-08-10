@@ -410,24 +410,33 @@ Silvie Cinková
 <ul>
 <li><a href="#/join-tables-by-a-shared-column" id="/toc-join-tables-by-a-shared-column">Join tables by a shared column</a></li>
 <li><a href="#/revision-performed-by-a-user" id="/toc-revision-performed-by-a-user">Revision performed by a user</a></li>
-<li><a href="#/revision-performed-on-a-wiki-page" id="/toc-revision-performed-on-a-wiki-page">Revision performed on a wiki page</a></li>
-<li><a href="#/connecting-tables" id="/toc-connecting-tables">Connecting tables</a></li>
 <li><a href="#/gapminder" id="/toc-gapminder"><code>gapminder</code></a></li>
 <li><a href="#/geo" id="/toc-geo"><code>geo</code></a></li>
 <li><a href="#/countries-in-geo-vs.-gapminder" id="/toc-countries-in-geo-vs.-gapminder">Countries in <code>geo</code> vs.&nbsp;<code>gapminder</code></a></li>
-<li><a href="#/overlap-in-key-column-values-not-full" id="/toc-overlap-in-key-column-values-not-full">Overlap in key column values not full?</a></li>
-<li><a href="#/control-key-values-selection" id="/toc-control-key-values-selection">Control key values selection</a></li>
-<li><a href="#/age-at-first-marriage-women" id="/toc-age-at-first-marriage-women">Age at first marriage women</a></li>
-<li><a href="#/age-at-first-marriage-women-1" id="/toc-age-at-first-marriage-women-1">Age at first marriage women</a></li>
-<li><a href="#/gapminder-datasets-in-csv" id="/toc-gapminder-datasets-in-csv">Gapminder datasets in CSV</a></li>
+<li><a href="#/little-overlap-in-key-column-values" id="/toc-little-overlap-in-key-column-values">Little overlap in key column values?</a></li>
+<li><a href="#/control-key-selection" id="/toc-control-key-selection">Control key selection</a></li>
+<li><a href="#/gapminder-europe-2007" id="/toc-gapminder-europe-2007"><code>gapminder</code> Europe 2007</a></li>
+<li><a href="#/european-subset-of-geo" id="/toc-european-subset-of-geo">European subset of <code>geo</code></a></li>
+<li><a href="#/preferred-gapminder-intersection" id="/toc-preferred-gapminder-intersection">Preferred <code>gapminder</code>, intersection</a></li>
+<li><a href="#/keep-gapminder-intact-no-matter-what." id="/toc-keep-gapminder-intact-no-matter-what.">Keep <code>gapminder</code> intact, no matter what.</a></li>
+<li><a href="#/which-is-missing" id="/toc-which-is-missing">Which is missing?</a></li>
+<li><a href="#/focus-on-geo_europe" id="/toc-focus-on-geo_europe">Focus on <code>geo_europe</code></a></li>
+<li><a href="#/mismatches-in-geo_europe" id="/toc-mismatches-in-geo_europe">Mismatches in <code>geo_europe</code></a></li>
+<li><a href="#/get-what-you-can" id="/toc-get-what-you-can">Get what you can</a></li>
+<li><a href="#/anti_join-detects-mismatches-instantly" id="/toc-anti_join-detects-mismatches-instantly"><code>anti_join</code> detects mismatches instantly</a></li>
+<li><a href="#/anti_join-the-other-way-round" id="/toc-anti_join-the-other-way-round"><code>anti_join</code> the other way round</a></li>
+<li><a href="#/semi_join-detects-matches" id="/toc-semi_join-detects-matches"><code>semi_join</code> detects matches</a></li>
 <li><a href="#/when-your-observations-are-not-unique" id="/toc-when-your-observations-are-not-unique">When your observations are not unique</a></li>
+<li><a href="#/the-two-tibbles-math" id="/toc-the-two-tibbles-math">The two tibbles: math</a></li>
+<li><a href="#/the-two-tibbles-social-sciences" id="/toc-the-two-tibbles-social-sciences">The two tibbles: social sciences</a></li>
 <li><a href="#/possible-rescue-unique-by-several-columns" id="/toc-possible-rescue-unique-by-several-columns">Possible rescue: unique by several columns</a></li>
 <li><a href="#/no-chance-to-join" id="/toc-no-chance-to-join">No chance to join</a></li>
 <li><a href="#/dplyrjoin-help" id="/toc-dplyrjoin-help"><code>dplyr::join</code> help</a></li>
 <li><a href="#/data-with-typos-in-the-key-columns" id="/toc-data-with-typos-in-the-key-columns">Data with typos in the key column(s)</a></li>
 <li><a href="#/jrc-names" id="/toc-jrc-names">JRC Names</a></li>
+<li><a href="#/jrc-person-names" id="/toc-jrc-person-names">JRC Person Names</a></li>
+<li><a href="#/jrc-each-table" id="/toc-jrc-each-table">JRC each table</a></li>
 <li><a href="#/matching-on-levenschtein-distance" id="/toc-matching-on-levenschtein-distance">Matching on Levenschtein Distance</a></li>
-<li><a href="#/matching-on-qgrams" id="/toc-matching-on-qgrams">Matching on qgrams</a></li>
 <li><a href="#/matching-on-cosine-distance-between-qgrams" id="/toc-matching-on-cosine-distance-between-qgrams">Matching on cosine distance between qgrams</a></li>
 <li><a href="#/matching-on-jaccard-distance" id="/toc-matching-on-jaccard-distance">Matching on Jaccard distance</a></li>
 </ul>
@@ -438,17 +447,17 @@ Silvie Cinková
 
 <img data-src="images_ATRIUM/SQL-table-schema-showing-the-relations-between-the-tables-in-the-complete-editing_W640.jpg" class="r-stretch"><aside class="notes">
 <ul>
-<li>Relational databases: tables connected by shared columns. Useful with big datasets evolving in time, in separate places, etc. Two main assets:
+<li><p>Relational databases: tables connected by shared columns. Useful with big datasets evolving in time, in separate places, etc. Two main assets:</p>
 <ol type="1">
 <li>A change propagates automatically to all places where relevant</li>
-<li>On-demand tables generated by queries (variability depends on how smart the connections between tables are).<br>
-</li>
+<li>On-demand tables generated by queries (variability depends on how smart the connections between tables are).</li>
 </ol></li>
-<li>Each table = <strong>entity</strong> (<em>wiki page</em>, <em>user</em>), <strong>category</strong> (lists of categories of users and categories of pages) or <strong>event</strong>/<strong>state</strong> (<em>revision</em>, <em>userincategory</em>) in the domain described. Intelligible table names!!!, distinction of type not important.<br>
-</li>
-<li>Relations between tables: tables are joined by <em>key columns</em> (<em>primary key</em> unique id of each row vs.&nbsp;<em>foreign key</em> - corresponding primary key of a different table)</li>
-<li>image by Marian-Andrei Rizoiu, article <em>Evolution of Privacy Loss in Wikipedia</em>, 2015, about Revision history versioning in Wikipedia.</li>
+<li><p>The figure models how Wikipedia administrators record the history of edits in a relational database. Each of the squares represents one table. The rows represents columns with their names. So, the top right table named <code>page</code> lists one Wikipedia page in each row. Its columns are called <code>id</code>, <code>title</code>, <code>namespace</code>, <code>creation\_date</code>, <code>last\_edit\_date</code>, and <code>total\_edits</code>. In the <code>pagecategory</code> table, each observation is a combination of the ID of a page and a Wikipedia category. These two tables are connected with a red arrow. It matters which table columns (which look as rows here in this scheme) these arrows exactly connect.</p></li>
+<li><p>The rows at the start and end of the arrows form a pair. They can have different names, but they describe the same thing in the data. Here these are page IDs. In the <code>pages</code> table, the <code>id</code> column is unique for each observation. It is the <strong>primary key</strong> of this table. Whenever I want to relate another table to this one, I must include a column with the page IDs. In each of these tables, the column of the related page IDs is called <strong>foreign key</strong>. The foreign key values need not bee unique. In our context, each page can be in multiple Wikipedia categories at the same time (e.g.&nbsp;“capitals”, “cities”, and “administration units”). If the page were about Prague, which is a capital and hence a city and administration unit, the ID of the Prague page would occur three times in the <code>pageincategory</code> table. The relation holds also the other way round: one category can describe many pages. In real database schemes, you would see different types of arrows that would tell you exactly how many source items can connect to how many target items. This figure does not quite follow this notation, so we can only tell by common sense.</p></li>
 </ul>
+<p>When you want to get a table of titles of the pages and the names of the categories they belong to, you call a function that connects matching rows from the both tables by matching together the values of the primary key and the foreign key. By this way, you do not need to worry about how the rows are arranged in either table.</p>
+<p>Designing the architecture of a relational database is a skill in its own right. You need not know exactly how to design a relational database, but you will often need to connect tables from sources that are formed so.</p>
+<p>I have adopted this image from this academic paper: <a href="https://arxiv.org/pdf/1512.03523" class="uri">https://arxiv.org/pdf/1512.03523</a>. I have corrected the yellow arrow from <code>userincategory</code> to <code>category</code> to point from <code>category_id</code> instead of from <code>user_id</code>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -466,57 +475,15 @@ Silvie Cinková
 <h1>Revision performed by a user</h1>
 
 <img data-src="images_ATRIUM/SQL-revision-user.jpg" class="r-stretch"><aside class="notes">
+<p>You can even look up things within one single table: look at the <code>revision</code> table: <code>parentid</code>: the id of the previous revision - to look up on a different row in the same table. I guess that a parent revision is simply the revision event immediately preceding in time.</p>
 <ul>
 <li>Revision table with columns <code>id</code>, <code>page_id</code>, <code>user_id</code>,<code>timestamp</code>, , <code>parentid</code>,<code>text</code>.</li>
 <li>primary key: unique <code>id</code> of each revision.</li>
 <li><code>page_id</code> foreign key - turquoise arrow leads to a <em>page</em> table, to its primary key (probably called <code>id</code> but potentially anything else)</li>
 <li><code>user_id</code> foreign key - purple arrow leads to a <em>user</em> table</li>
-<li><code>timestamp</code>:when the revision took place</li>
-<li><code>parentid</code>: the id of the previous revision - to look up on a different row in the same table</li>
+<li><code>timestamp</code>: when the revision took place</li>
 </ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="revision-performed-on-a-wiki-page" class="title-slide slide level1 center">
-<h1>Revision performed on a wiki page</h1>
-
-<img data-src="images_ATRIUM/SQL_revision-page.jpg" class="r-stretch"><p>You can e.g.&nbsp;easily generate a table with revisions of one particular page.</p>
-<aside class="notes">
-<ul>
-<li>start with the <code>revision</code> table : <code>page_id</code> is foreign key, arrow leads to the page table, column <code>id</code>. Other columns: <code>title</code>, <code>namespace</code>, <code>creation_date</code>, <code>last_edit_date</code> (possibly fills in automatically from the revision table, but that’s not important now), etc.</li>
-<li>to the <code>page</code> table leads an arrow from the <code>pageincategory</code> table, which is just a hub connecting the pages table with the categories table.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="connecting-tables" class="title-slide slide level1 center">
-<h1>Connecting tables</h1>
-
-<img data-src="images_ATRIUM/SQL-table-schema-showing-the-relations-between-the-tables-in-the-complete-editing_W640.jpg" class="r-stretch"><aside class="notes">
-<ul>
-<li>Tables <code>userincategory</code> and <code>pageincategory</code> assign users and pages to categories. The lime arrow from usercategory ought to start in <code>category_id</code>, not <code>user_id</code></li>
-<li>Pagecategories and usercategories have hierarchies among themselves, described by the <code>subcategory</code> table. So the category names are all in one table and changes to their hierarchy are made in the <code>subcategory</code> table. Again, the <code>level</code> column in <code>xxcategory</code> probably fills out automatically with a change in the <code>subcategory</code> table.</li>
-</ul>
+<p>The scheme does not say whether the parent revision must be one on the same Wikipedia page or rather one performed by the same user. This would also be a design decision: whether you want to be able to track revision of pages or rather the activities of the users, or both. Anyway, from this table, you can connect to both users and pages, so you can generate a table with titles and names of both for each revision.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -534,211 +501,42 @@ Silvie Cinková
 <h1><code>gapminder</code></h1>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,704
-Columns: 6
-$ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", …
-$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
-$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
-$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
-$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
-$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</code></pre>
+<pre><code># A tibble: 3 × 6
+  country     continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8  8425333      779.
+2 Afghanistan Asia       1957    30.3  9240934      821.
+3 Afghanistan Asia       1962    32.0 10267083      853.</code></pre>
 </div>
 </div>
-</section>
-
-<section id="geo" class="title-slide slide level1 center">
-<h1><code>geo</code></h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>geo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/ddf--entities--geo--country.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>geo <span class="ot">&lt;-</span> geo <span class="sc">%&gt;%</span> <span class="fu">select</span>(country, name, main_religion_2008, income_3groups)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">glimpse</span>(geo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 273
-Columns: 4
-$ country            &lt;chr&gt; "abkh", "abw", "afg", "ago", "aia", "akr_a_dhe", "a…
-$ name               &lt;chr&gt; "Abkhazia", "Aruba", "Afghanistan", "Angola", "Angu…
-$ main_religion_2008 &lt;chr&gt; NA, "christian", "muslim", "christian", "christian"…
-$ income_3groups     &lt;chr&gt; NA, "high_income", "low_income", "middle_income", N…</code></pre>
-</div>
-</div>
-</section>
-
-<section id="countries-in-geo-vs.-gapminder" class="title-slide slide level1 center">
-<h1>Countries in <code>geo</code> vs.&nbsp;<code>gapminder</code></h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">unique</span>(geo<span class="sc">$</span>name) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 273</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">unique</span>(gapminder<span class="sc">$</span>country) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 142</code></pre>
-</div>
-</div>
-</section>
-
-<section id="overlap-in-key-column-values-not-full" class="title-slide slide level1 center">
-<h1>Overlap in key column values not full?</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">setdiff</span>(gapminder<span class="sc">$</span>country, geo<span class="sc">$</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Korea, Dem. Rep."   "Korea, Rep."        "Swaziland"         
-[4] "United Kingdom"     "United States"      "West Bank and Gaza"
-[7] "Yemen, Rep."       </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">setdiff</span>(geo<span class="sc">$</span>name, gapminder<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1] "Abkhazia"                                    
-  [2] "Aruba"                                       
-  [3] "Anguilla"                                    
-  [4] "Akrotiri and Dhekelia"                       
-  [5] "Åland"                                       
-  [6] "Andorra"                                     
-  [7] "Netherlands Antilles"                        
-  [8] "UAE"                                         
-  [9] "Armenia"                                     
- [10] "American Samoa"                              
- [11] "Antarctica"                                  
- [12] "Antigua and Barbuda"                         
- [13] "Azerbaijan"                                  
- [14] "Bahamas"                                     
- [15] "Belarus"                                     
- [16] "Belize"                                      
- [17] "Bermuda"                                     
- [18] "Bouvet Island"                               
- [19] "Barbados"                                    
- [20] "Brunei"                                      
- [21] "Bhutan"                                      
- [22] "Cocos Island"                                
- [23] "Channel Islands"                             
- [24] "Czechoslovakia"                              
- [25] "Cook Is"                                     
- [26] "Cape Verde"                                  
- [27] "Christmas Island"                            
- [28] "Cayman Islands"                              
- [29] "Cyprus"                                      
- [30] "Northern Cyprus"                             
- [31] "East Germany"                                
- [32] "West Germany"                                
- [33] "Dominica"                                    
- [34] "Eritrea and Ethiopia"                        
- [35] "Western Sahara"                              
- [36] "Estonia"                                     
- [37] "Fiji"                                        
- [38] "Falkland Is (Malvinas)"                      
- [39] "French Southern and Antarctic Lands"         
- [40] "Clipperton"                                  
- [41] "Faeroe Islands"                              
- [42] "Micronesia, Fed. Sts."                       
- [43] "Guernsey"                                    
- [44] "Isle of Man"                                 
- [45] "UK"                                          
- [46] "Georgia"                                     
- [47] "Gibraltar"                                   
- [48] "Guadeloupe"                                  
- [49] "Grenada"                                     
- [50] "Greenland"                                   
- [51] "French Guiana"                               
- [52] "Guam"                                        
- [53] "Guyana"                                      
- [54] "Heard and McDonald Islands"                  
- [55] "Holy See"                                    
- [56] "British Indian Ocean Territory"              
- [57] "Jersey"                                      
- [58] "Kazakhstan"                                  
- [59] "Kyrgyz Republic"                             
- [60] "Kiribati"                                    
- [61] "St. Kitts and Nevis"                         
- [62] "South Korea"                                 
- [63] "United Korea (former)"                       
- [64] "Kosovo"                                      
- [65] "Lao"                                         
- [66] "St. Lucia"                                   
- [67] "Liechtenstein"                               
- [68] "Lithuania"                                   
- [69] "Luxembourg"                                  
- [70] "Latvia"                                      
- [71] "Macao, China"                                
- [72] "St. Martin (French part)"                    
- [73] "Monaco"                                      
- [74] "Moldova"                                     
- [75] "Maldives"                                    
- [76] "Marshall Islands"                            
- [77] "North Macedonia"                             
- [78] "Malta"                                       
- [79] "Northern Mariana Islands"                    
- [80] "Montserrat"                                  
- [81] "Martinique"                                  
- [82] "Mayotte"                                     
- [83] "New Caledonia"                               
- [84] "Norfolk Island"                              
- [85] "Ngorno-Karabakh"                             
- [86] "Niue"                                        
- [87] "Curaçao"                                     
- [88] "Nauru"                                       
- [89] "Pitcairn"                                    
- [90] "Palau"                                       
- [91] "Papua New Guinea"                            
- [92] "North Korea"                                 
- [93] "Palestine"                                   
- [94] "Gaza Strip"                                  
- [95] "West Bank"                                   
- [96] "French Polynesia"                            
- [97] "Qatar"                                       
- [98] "Russia"                                      
- [99] "Serbia and Montenegro"                       
-[100] "Serbia excluding Kosovo"                     
-[101] "South Georgia and the South Sandwich Islands"
-[102] "St. Helena"                                  
-[103] "Svalbard"                                    
-[104] "Solomon Islands"                             
-[105] "San Marino"                                  
-[106] "Somaliland"                                  
-[107] "South Ossetia"                               
-[108] "St.-Pierre-et-Miquelon"                      
-[109] "South Sudan"                                 
-[110] "St. Barthélemy"                              
-[111] "St. Martin"                                  
-[112] "Suriname"                                    
-[113] "Eswatini"                                    
-[114] "Sint Maarten (Dutch part)"                   
-[115] "Seychelles"                                  
-[116] "Turks and Caicos Islands"                    
-[117] "Tajikistan"                                  
-[118] "Tokelau"                                     
-[119] "Turkmenistan"                                
-[120] "Timor-Leste"                                 
-[121] "Tonga"                                       
-[122] "Transnistria"                                
-[123] "Tuvalu"                                      
-[124] "Ukraine"                                     
-[125] "USA"                                         
-[126] "US Minor Outlying Islands"                   
-[127] "USSR"                                        
-[128] "Uzbekistan"                                  
-[129] "St. Vincent and the Grenadines"              
-[130] "British Virgin Islands"                      
-[131] "Virgin Islands (U.S.)"                       
-[132] "Vanuatu"                                     
-[133] "Wallis et Futuna"                            
-[134] "Samoa"                                       
-[135] "Yemen"                                       
-[136] "North Yemen (former)"                        
-[137] "South Yemen (former)"                        
-[138] "Yugoslavia"                                  </code></pre>
-</div>
-</div>
-</section>
-
-<section id="control-key-values-selection" class="title-slide slide level1 center">
-<h1>Control key values selection</h1>
-<p><img data-src="images_ATRIUM/joins.png" style="width:120.0%;height:200.0%"></p>
 <aside class="notes">
-<p>Imagine two data sets: <code>gapminder</code> extract of year 2007 and <code>geo</code>. Both contain a column with country names, but <code>gapminder</code> lists fewer countries. It is up to you whether you want to have just <code>gapminder</code> countries or just <code>geo</code> countries or just complete cases with values in both tables or all countries including those with values from either table missing.</p>
+<p>You can join tables with <code>dplyr</code>. So far, we have worked quite a lot with diverse tables from Gapminder.org. You correctly anticipate that Gapminder.org stores its data in relational databases. Their tables are made for you to freely combine information across different tables.</p>
+<p>In this session, we will enrich our familiar <code>gapminder</code> dataset with additional information from a table of unique countries. We will call that other table <code>geo</code>. This table contains many columns, so we will only select a few to keep this demonstration overseeable.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<aside class="notes">
+<p>Did you know that <code>readr</code> allows you to select columns before you even load the data? When you know their names, that is.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</div>
+</div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -752,163 +550,497 @@ $ income_3groups     &lt;chr&gt; NA, "high_income", "low_income", "middle_income
       }</style></aside>
 </section>
 
-<section id="age-at-first-marriage-women" class="title-slide slide level1 center">
-<h1>Age at first marriage women</h1>
-<p>“https://www.gapminder.org/data/”</p>
-<iframe width="780" height="500" src="https://www.gapminder.org/data/" title="Data from Gapminder.org"></iframe>
+<section id="geo" class="title-slide slide level1 smaller center">
+<h1><code>geo</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>geo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">glue</span>(<span class="st">"https://raw.githubusercontent.com/open-numbers/"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2"></a>                     <span class="st">"ddf--gapminder--fasttrack/master/"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>                     <span class="st">"ddf--entities--geo--country.csv"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4"></a>geo <span class="ot">&lt;-</span> geo <span class="sc">%&gt;%</span> <span class="fu">select</span>(country, name, main_religion_2008, income_3groups, world_4region)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">glimpse</span>(geo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 273
+Columns: 5
+$ country            &lt;chr&gt; "abkh", "abw", "afg", "ago", "aia", "akr_a_dhe", "a…
+$ name               &lt;chr&gt; "Abkhazia", "Aruba", "Afghanistan", "Angola", "Angu…
+$ main_religion_2008 &lt;chr&gt; NA, "christian", "muslim", "christian", "christian"…
+$ income_3groups     &lt;chr&gt; NA, "high_income", "low_income", "middle_income", N…
+$ world_4region      &lt;chr&gt; "europe", "americas", "asia", "africa", "americas",…</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Now we have a data frame called <code>geo</code>. It lists 273 countries, each only once, and for each country it gives us its dominant religion (snapshot taken in 2008) and to which income group it belongs. The income groups are Gapminder’s own design and obviously refer to the time of creating this dataset. The countries are encoded by their names (column <code>name</code>) and by the abbreviations of these names (column <code>country</code>).</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The <code>gapminder</code> data frame does not use abbreviations for country names. But even more importantly, its <code>country</code> column does not correspond to <code>country</code> but to <code>name</code> in the <code>geo</code> data frame. This is something to keep in mind when we try to join these two tables!</p>
+</div>
+</div>
+</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
-<section id="age-at-first-marriage-women-1" class="title-slide slide level1 center">
-<h1>Age at first marriage women</h1>
+<section id="countries-in-geo-vs.-gapminder" class="title-slide slide level1 smaller center">
+<h1>Countries in <code>geo</code> vs.&nbsp;<code>gapminder</code></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(gsheet)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>a <span class="ot">&lt;-</span> gsheet<span class="sc">::</span><span class="fu">construct_download_url</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1xYQ08p5llwPR3ZK6h900LDd-J7WuXCv_FoPlksrj-eA/pub#"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3"></a>firstmarriage <span class="ot">&lt;-</span> gsheet<span class="sc">::</span><span class="fu">gsheet2tbl</span>(a)</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">glimpse</span>(firstmarriage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">unique</span>(geo<span class="sc">$</span>name) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 185
-Columns: 117
-$ ...1   &lt;chr&gt; "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Ar…
-$ `1616` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1666` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1685` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1710` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1716` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1735` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1760` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1766` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1775` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1780` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 24.9, N…
-$ `1785` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1791` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1800` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1810` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1815` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 12.6, NA, NA, NA, N…
-$ `1825` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1835` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1840` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1845` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1855` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1860` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1865` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1866` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1870` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1875` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1879` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1880` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1885` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1887` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1890` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1895` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1897` &lt;dbl&gt; NA, NA, NA, NA, NA, 17.0, NA, NA, 16.2, NA, NA, NA, NA, 22.7, N…
-$ `1900` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1901` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1903` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1905` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1906` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1907` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1910` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1911` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1915` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.5, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1920` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.4, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1921` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1925` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.5, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1928` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1930` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.501, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1931` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 12.6, NA, NA, NA, N…
-$ `1935` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.5, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1937` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1939` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1940` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 24.2, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1941` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 13.7, NA, NA, NA, N…
-$ `1942` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1943` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1944` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1945` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 23.3, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1946` &lt;dbl&gt; NA, 21.52, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-$ `1947` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 25.9, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1948` &lt;dbl&gt; NA, NA, 20, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1949` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1950` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 22.6, 25.3, NA, NA, NA, NA, NA, NA, NA,…
-$ `1951` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 14.4, NA, NA, NA, N…
-$ `1952` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1953` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1954` &lt;dbl&gt; NA, NA, 19.60, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 23.3…
-$ `1955` &lt;dbl&gt; NA, 21.0, NA, NA, NA, NA, 22.1, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1956` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1957` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1958` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1959` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1960` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 21.60, 24.01, NA, NA, NA, NA, NA, NA, 2…
-$ `1961` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 13.9, NA, NA, NA, N…
-$ `1962` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1963` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1964` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1965` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 21.2, NA, NA, NA, NA, 14.8, NA, NA, NA,…
-$ `1966` &lt;dbl&gt; NA, NA, 18, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1967` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1968` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1969` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1970` &lt;dbl&gt; NA, 21.50000, 19.30000, 19.38657, 23.10862, NA, 21.10000, 22.88…
-$ `1971` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1972` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1973` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1974` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 16.6, NA, NA, NA, N…
-$ `1975` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 16.40000, NA, NA, N…
-$ `1976` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1977` &lt;dbl&gt; NA, NA, 20.9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1978` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1979` &lt;dbl&gt; 17.83968, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1980` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 23.15, NA, NA, NA, 16.40, NA, NA, 2…
-$ `1981` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1982` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 17.7, NA, NA, NA, N…
-$ `1983` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1984` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1985` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1986` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1987` &lt;dbl&gt; NA, NA, 23.8, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1988` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1989` &lt;dbl&gt; NA, 22.47, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 23.6…
-$ `1990` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 24.9, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1991` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1992` &lt;dbl&gt; NA, NA, 25.5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1993` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1994` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1995` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1996` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1997` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `1998` &lt;dbl&gt; NA, NA, 27.6, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ `1999` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2000` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2001` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2002` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2003` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2004` &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ `2005` &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.93126,…</code></pre>
+<pre><code>[1] 273</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>firstmarriage <span class="ot">&lt;-</span> firstmarriage <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">2005</span><span class="st">`</span>) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">country =</span> <span class="st">`</span><span class="at">...1</span><span class="st">`</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">glimpse</span>(firstmarriage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">unique</span>(gapminder<span class="sc">$</span>country) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 185
-Columns: 2
-$ country &lt;chr&gt; "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "A…
-$ `2005`  &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.93126…</code></pre>
+<pre><code>[1] 142</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>When we want to join <code>geo</code> and <code>gapminder</code>, we can apparently use <code>geo</code>’s <code>name</code> and <code>gapminder</code>’s <code>country</code> as the <em>primary key - foreign key</em> pair.</p>
+<p>The first question you must ask when you want to join two tables by a pair of keys is how much overlap they have at all. <code>geo</code> contains many more countries than <code>gapminder</code>, so much is clear. But it is not given that all of its countries are listed in <code>geo</code>! Therefore we do this quick check.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<aside class="notes">
+<p>You could as well call <code>distinct</code> and <code>pull</code> on each, but this base-R way is shorter. It accesses a data frame column as a vector and calls the <code>unique</code> function, which acts on vectors like <code>dplyr::distinct</code> on data frames.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</div>
+</div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="little-overlap-in-key-column-values" class="title-slide slide level1 smaller center">
+<h1>Little overlap in key column values?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">setdiff</span>(gapminder<span class="sc">$</span>country, geo<span class="sc">$</span>name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Korea, Dem. Rep."   "Korea, Rep."        "Swaziland"         
+[4] "United Kingdom"     "United States"      "West Bank and Gaza"
+[7] "Yemen, Rep."       </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">setdiff</span>(geo<span class="sc">$</span>name, gapminder<span class="sc">$</span>country) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 138</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p><code>setdiff</code> tells you which elements of the first vectors are not in the second vector. We see that the <code>gapminder</code> data frame is not a full subset of the <code>geo</code> data frame. When we enrich <code>gapminder</code> with the information from <code>geo</code>, some values will be missing. This has no programmatic solution. This is your design decision. Drop these seven countries from <code>gapminder</code> because you don’t get the additional information, or live with <code>NA</code>s in the new columns? Or you even find the <code>geo</code> table more important and only want to enrich with <code>gapminder</code>’s <code>pop</code>, <code>lifeExp</code>, and <code>gdpPercap</code> in a given year? For each of your possible decisions, <code>dplyr</code> comes with a dedicated <code>_join</code> function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="control-key-selection" class="title-slide slide level1 center">
+<h1>Control key selection</h1>
+
+<img data-src="images_ATRIUM/joins.png" style="width:50.0%" class="r-stretch"><aside class="notes">
+<p>When blue and yellow mix, they give green. This scheme depicts the possible joining outcomes. The yellow area represents the <code>gapminder</code> data, the blue the <code>geo</code> data, and the green area the resulting new table.</p>
+<ol type="1">
+<li>With <code>inner_join</code> you join just the rows that match in both tables. So you will not have any new empty values.</li>
+<li>The <code>left_join</code> and <code>right_join</code> functions are two different perspectives of the same thing, what exactly each does obviously depends on the order in which you feed in the tables. If we always feed <code>gapminder</code> as first (the <code>x</code> argument) and <code>geo</code> second (<code>y</code>), left join will keep all rows in <code>gapminder</code> and match them to <code>geo</code>. We know that seven countries will not be matched, which will result in 7 times 12 rows with <code>NA</code> values in the new columns containing the abbreviation, main religion in 2008, and the income group. The twelve comes from the number of observations (remember, 1952 to 2007, in five-year intervals).</li>
+<li>With <code>right_join</code>, we will get a monstrous table of all <code>geo's countries</code>, and the ones that match <code>gapminder</code>, will be matched twelve times each, with a warning for “many-to-many” relations occurring. The new table is going to have four new columns: <code>year</code>, <code>pop</code>, <code>lifeExp</code>, and <code>gdpPercap</code>. They will be filled with <code>NA</code> except in the rows with countries whose names matched across both tables, and the seven countries from <code>gapminder</code> will not appear in the new table.</li>
+<li>With <code>full_join</code>, no row will be deleted, but there will be <code>NA</code> in all mismatched rows.</li>
+<li>All these tables are going to have the same columns.</li>
+</ol>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="gapminder-europe-2007" class="title-slide slide level1 smaller center">
+<h1><code>gapminder</code> Europe 2007</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>gapminder_europe <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Europe"</span>, year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(continent, year))</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">glimpse</span>(gapminder_europe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 30
+Columns: 4
+$ country   &lt;fct&gt; "Albania", "Austria", "Belgium", "Bosnia and Herzegovina", "…
+$ lifeExp   &lt;dbl&gt; 76.423, 79.829, 79.441, 74.852, 73.005, 75.748, 76.486, 78.3…
+$ pop       &lt;int&gt; 3600523, 8199783, 10392226, 4552198, 7322858, 4493312, 10228…
+$ gdpPercap &lt;dbl&gt; 5937.030, 36126.493, 33692.605, 7446.299, 10680.793, 14619.2…</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>We make a subset of <code>gapminder</code> to keep the data small. Just European countries in 2007 and we drop the columns <code>continent</code> and <code>year</code> because they are all equal.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="european-subset-of-geo" class="title-slide slide level1 smaller center">
+<h1>European subset of <code>geo</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>geo_europe <span class="ot">&lt;-</span> geo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(world_4region <span class="sc">==</span> <span class="st">"europe"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">select</span>(<span class="sc">!</span>world_4region)</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">glimpse</span>(geo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 273
+Columns: 5
+$ country            &lt;chr&gt; "abkh", "abw", "afg", "ago", "aia", "akr_a_dhe", "a…
+$ name               &lt;chr&gt; "Abkhazia", "Aruba", "Afghanistan", "Angola", "Angu…
+$ main_religion_2008 &lt;chr&gt; NA, "christian", "muslim", "christian", "christian"…
+$ income_3groups     &lt;chr&gt; NA, "high_income", "low_income", "middle_income", N…
+$ world_4region      &lt;chr&gt; "europe", "americas", "asia", "africa", "americas",…</code></pre>
 </div>
 </div>
 </section>
 
-<section id="gapminder-datasets-in-csv" class="title-slide slide level1 center">
-<h1>Gapminder datasets in CSV</h1>
-<p>https://github.com/open-numbers/ddf–gapminder–systema_globalis/tree/master/countries-etc-datapoints</p>
+<section id="preferred-gapminder-intersection" class="title-slide slide level1 center">
+<h1>Preferred <code>gapminder</code>, intersection</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dplyr<span class="sc">::</span><span class="fu">inner_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>                  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 29 × 7
+   country  lifeExp    pop gdpPercap country.y main_religion_2008 income_3groups
+   &lt;chr&gt;      &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+ 1 Albania     76.4 3.60e6     5937. alb       muslim             middle_income 
+ 2 Austria     79.8 8.20e6    36126. aut       christian          high_income   
+ 3 Belgium     79.4 1.04e7    33693. bel       christian          high_income   
+ 4 Bosnia …    74.9 4.55e6     7446. bih       &lt;NA&gt;               middle_income 
+ 5 Bulgaria    73.0 7.32e6    10681. bgr       christian          middle_income 
+ 6 Croatia     75.7 4.49e6    14619. hrv       christian          high_income   
+ 7 Czech R…    76.5 1.02e7    22833. cze       christian          high_income   
+ 8 Denmark     78.3 5.47e6    35278. dnk       christian          high_income   
+ 9 Finland     79.3 5.24e6    33207. fin       christian          high_income   
+10 France      80.7 6.11e7    30470. fra       christian          high_income   
+# ℹ 19 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>We would like to add information from <code>geo</code> to <code>gapminder_europe</code>.</p>
+<p>The resulting data frame is going to inherit only the rows with matching country names from both.</p>
+<p>The <code>_join</code> functions in <code>dplyr</code> always need a first data frame (<code>x</code>), a second data frame (<code>y</code>), and a vector of column names that provide the key pair(s) in the argument called <code>by</code>. The whole thing reads: “Join <code>x</code> with <code>y</code> by this vector of key pairs.” Each pair contains the name of the key column in <code>x</code> and the name of the corresponding column in <code>y</code>, in exactly this order. Relational databases are designed to answer most queries with just one pair, but sometimes you need several to uniquely identify observations in at least one of the data frames.</p>
+<p>Mind the quotes in the column names in <code>by</code>. This time they are mandatory.</p>
+<p>There were 30 countries in <code>gapminder_europe</code>, but the resulting data frame has only 29 rows. One country was missing in <code>geo_europe</code>, although it is so much longer than <code>gapminder_europe</code>. We will find out later which. You can see an <code>NA</code> in the fourth row, 6th column. This has nothing to do with joining; it was like this in the original <code>geo_europe</code> data frame.</p>
+<p>Look closely at the names of the columns. Can you see <code>country</code> and <code>country.y</code>? The former is from <code>gapminder</code>, the latter from <code>geo_europe</code>. Column names must remain unique, therefore <code>dplyr</code> adds suffixes to duplicate names. Typically, the duplicate column name from the <code>x</code> data frame gets the suffix <code>.x</code> and the other one <code>.y</code>. You can replace them with your own suffixes in the <code>suffix</code> argument. In this case, only the one from the <code>y</code> data frame got the suffix. This is because it was used as a <code>by</code> column. By default, the key column from <code>y</code> disappears and only the <code>x</code> key column stays. You can also fiddle with this in a dedicated argument <code>keep</code>. So, in this case, the <code>x</code> <code>country</code> column stayed, the paired <code>name</code> column from <code>y</code> vanished, and then <code>dplyr</code> spotted another <code>country</code> column among the columns inherited from <code>y</code>. The function is just written in such a way that it does only put the suffix on one, when the other one was used as key. Do not ponder on it, just remember.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 
-<img data-src="images_ATRIUM/Screenshot_githubgapminder.png" class="r-stretch"></section>
+<section id="keep-gapminder-intact-no-matter-what." class="title-slide slide level1 smaller center">
+<h1>Keep <code>gapminder</code> intact, no matter what.</h1>
+<p>One country gets <code>NA</code> in <code>geo_europe</code> columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb18-2"><a href="#cb18-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 7
+   country  lifeExp    pop gdpPercap country.y main_religion_2008 income_3groups
+   &lt;chr&gt;      &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+ 1 Albania     76.4 3.60e6     5937. alb       muslim             middle_income 
+ 2 Austria     79.8 8.20e6    36126. aut       christian          high_income   
+ 3 Belgium     79.4 1.04e7    33693. bel       christian          high_income   
+ 4 Bosnia …    74.9 4.55e6     7446. bih       &lt;NA&gt;               middle_income 
+ 5 Bulgaria    73.0 7.32e6    10681. bgr       christian          middle_income 
+ 6 Croatia     75.7 4.49e6    14619. hrv       christian          high_income   
+ 7 Czech R…    76.5 1.02e7    22833. cze       christian          high_income   
+ 8 Denmark     78.3 5.47e6    35278. dnk       christian          high_income   
+ 9 Finland     79.3 5.24e6    33207. fin       christian          high_income   
+10 France      80.7 6.11e7    30470. fra       christian          high_income   
+# ℹ 20 more rows</code></pre>
+</div>
+</div>
+</section>
 
-<section id="when-your-observations-are-not-unique" class="title-slide slide level1 center">
+<section id="which-is-missing" class="title-slide slide level1 smaller center">
+<h1>Which is missing?</h1>
+<ul>
+<li>country mismatch <span class="math inline">\(\rightarrow\)</span> <code>is.na(country.y)</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb20-2"><a href="#cb20-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(country.y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  country   lifeExp    pop gdpPercap country.y main_religion_2008 income_3groups
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+1 United K…    79.4 6.08e7    33203. &lt;NA&gt;      &lt;NA&gt;               &lt;NA&gt;          </code></pre>
+</div>
+</div>
+</section>
+
+<section id="focus-on-geo_europe" class="title-slide slide level1 smaller center">
+<h1>Focus on <code>geo_europe</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dplyr<span class="sc">::</span><span class="fu">right_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb22-2"><a href="#cb22-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 73 × 7
+   country  lifeExp    pop gdpPercap country.y main_religion_2008 income_3groups
+   &lt;chr&gt;      &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+ 1 Albania     76.4 3.60e6     5937. alb       muslim             middle_income 
+ 2 Austria     79.8 8.20e6    36126. aut       christian          high_income   
+ 3 Belgium     79.4 1.04e7    33693. bel       christian          high_income   
+ 4 Bosnia …    74.9 4.55e6     7446. bih       &lt;NA&gt;               middle_income 
+ 5 Bulgaria    73.0 7.32e6    10681. bgr       christian          middle_income 
+ 6 Croatia     75.7 4.49e6    14619. hrv       christian          high_income   
+ 7 Czech R…    76.5 1.02e7    22833. cze       christian          high_income   
+ 8 Denmark     78.3 5.47e6    35278. dnk       christian          high_income   
+ 9 Finland     79.3 5.24e6    33207. fin       christian          high_income   
+10 France      80.7 6.11e7    30470. fra       christian          high_income   
+# ℹ 63 more rows</code></pre>
+</div>
+</div>
+</section>
+
+<section id="mismatches-in-geo_europe" class="title-slide slide level1 smaller center">
+<h1>Mismatches in <code>geo_europe</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dplyr<span class="sc">::</span><span class="fu">right_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb24-2"><a href="#cb24-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(lifeExp) <span class="sc">|</span> <span class="fu">is.na</span>(pop) <span class="sc">|</span> <span class="fu">is.na</span>(gdpPercap))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 7
+   country   lifeExp   pop gdpPercap country.y main_religion_2008 income_3groups
+   &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+ 1 Abkhazia       NA    NA        NA abkh      &lt;NA&gt;               &lt;NA&gt;          
+ 2 Akrotiri…      NA    NA        NA akr_a_dhe &lt;NA&gt;               &lt;NA&gt;          
+ 3 Åland          NA    NA        NA ala       &lt;NA&gt;               &lt;NA&gt;          
+ 4 Andorra        NA    NA        NA and       christian          high_income   
+ 5 Armenia        NA    NA        NA arm       christian          middle_income 
+ 6 Antarcti…      NA    NA        NA ata       &lt;NA&gt;               &lt;NA&gt;          
+ 7 Azerbaij…      NA    NA        NA aze       muslim             middle_income 
+ 8 Belarus        NA    NA        NA blr       christian          middle_income 
+ 9 Channel …      NA    NA        NA chanisl   christian          high_income   
+10 Czechosl…      NA    NA        NA cheslo    &lt;NA&gt;               &lt;NA&gt;          
+# ℹ 34 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>We must look for a column that was not in <code>geo_europe</code>. The country column now is the result of <code>country</code> and <code>name</code>, so it will contain all countries from <code>geo_europe</code> but will have dropped <code>United Kingdom</code>, which was only in <code>gapminder_europe</code>. Any of the numeric columns from <code>gapminder</code> will help us though.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="get-what-you-can" class="title-slide slide level1 smaller center">
+<h1>Get what you can</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb26-2"><a href="#cb26-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 74 × 7
+   country  lifeExp    pop gdpPercap country.y main_religion_2008 income_3groups
+   &lt;chr&gt;      &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;         
+ 1 Albania     76.4 3.60e6     5937. alb       muslim             middle_income 
+ 2 Austria     79.8 8.20e6    36126. aut       christian          high_income   
+ 3 Belgium     79.4 1.04e7    33693. bel       christian          high_income   
+ 4 Bosnia …    74.9 4.55e6     7446. bih       &lt;NA&gt;               middle_income 
+ 5 Bulgaria    73.0 7.32e6    10681. bgr       christian          middle_income 
+ 6 Croatia     75.7 4.49e6    14619. hrv       christian          high_income   
+ 7 Czech R…    76.5 1.02e7    22833. cze       christian          high_income   
+ 8 Denmark     78.3 5.47e6    35278. dnk       christian          high_income   
+ 9 Finland     79.3 5.24e6    33207. fin       christian          high_income   
+10 France      80.7 6.11e7    30470. fra       christian          high_income   
+# ℹ 64 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>The full join is going to contain all country names from both data frames, with NA where they mismatched.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="anti_join-detects-mismatches-instantly" class="title-slide slide level1 smaller center">
+<h1><code>anti_join</code> detects mismatches instantly</h1>
+<ul>
+<li>like <code>setdiff</code> in vectors</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">anti_join</span>(<span class="at">x =</span> gapminder_europe, <span class="at">y =</span> geo_europe,</span>
+<span id="cb28-2"><a href="#cb28-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  country        lifeExp      pop gdpPercap
+  &lt;fct&gt;            &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 United Kingdom    79.4 60776238    33203.</code></pre>
+</div>
+</div>
+</section>
+
+<section id="anti_join-the-other-way-round" class="title-slide slide level1 smaller center">
+<h1><code>anti_join</code> the other way round</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">anti_join</span>( <span class="at">x =</span> geo_europe, <span class="at">y =</span> gapminder_europe,</span>
+<span id="cb30-2"><a href="#cb30-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>( <span class="st">"name"</span> <span class="ot">=</span> <span class="st">"country"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 4
+   country   name                  main_religion_2008 income_3groups
+   &lt;chr&gt;     &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;         
+ 1 abkh      Abkhazia              &lt;NA&gt;               &lt;NA&gt;          
+ 2 akr_a_dhe Akrotiri and Dhekelia &lt;NA&gt;               &lt;NA&gt;          
+ 3 ala       Åland                 &lt;NA&gt;               &lt;NA&gt;          
+ 4 and       Andorra               christian          high_income   
+ 5 arm       Armenia               christian          middle_income 
+ 6 ata       Antarctica            &lt;NA&gt;               &lt;NA&gt;          
+ 7 aze       Azerbaijan            muslim             middle_income 
+ 8 blr       Belarus               christian          middle_income 
+ 9 chanisl   Channel Islands       christian          high_income   
+10 cheslo    Czechoslovakia        &lt;NA&gt;               &lt;NA&gt;          
+# ℹ 34 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p><code>anti_join</code>: Filter rows of <code>x</code> that are not matched in <code>y</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="semi_join-detects-matches" class="title-slide slide level1 smaller center">
+<h1><code>semi_join</code> detects matches</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">semi_join</span>( <span class="at">x =</span> geo_europe, <span class="at">y =</span> gapminder_europe,</span>
+<span id="cb32-2"><a href="#cb32-2"></a>                 <span class="at">by =</span> <span class="fu">c</span>( <span class="st">"name"</span> <span class="ot">=</span> <span class="st">"country"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 29 × 4
+   country name                   main_religion_2008 income_3groups
+   &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt;         
+ 1 alb     Albania                muslim             middle_income 
+ 2 aut     Austria                christian          high_income   
+ 3 bel     Belgium                christian          high_income   
+ 4 bgr     Bulgaria               christian          middle_income 
+ 5 bih     Bosnia and Herzegovina &lt;NA&gt;               middle_income 
+ 6 che     Switzerland            christian          high_income   
+ 7 cze     Czech Republic         christian          high_income   
+ 8 deu     Germany                christian          high_income   
+ 9 dnk     Denmark                christian          high_income   
+10 esp     Spain                  christian          high_income   
+# ℹ 19 more rows</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Filter rows of <code>x</code> that are matched by <code>y</code>. In this context, the countries are going to be the same, no matter in which order you name the data frames, but you will of course get the rows of the one you fed in as <code>x</code>. It can be helpful to look at both sides, especially when you know that you have a lot of <code>NA</code> across the columns of both. If you have to opt for either left or right join, you can at least choose that with less missing data.<br>
+</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="when-your-observations-are-not-unique" class="title-slide slide level1 smaller center">
 <h1>When your observations are not unique</h1>
+
+</section>
+
+<section id="the-two-tibbles-math" class="title-slide slide level1 smaller center">
+<h1>The two tibbles: math</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>maths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>maths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name         birthplace math_test
@@ -919,8 +1051,12 @@ $ `2005`  &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.9
 4 Helene Field Beijing           91</code></pre>
 </div>
 </div>
+</section>
+
+<section id="the-two-tibbles-social-sciences" class="title-slide slide level1 smaller center">
+<h1>The two tibbles: social sciences</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>social_sciences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>social_sciences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name         birthplace soc_test
@@ -946,10 +1082,10 @@ $ `2005`  &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.9
       }</style></aside>
 </section>
 
-<section id="possible-rescue-unique-by-several-columns" class="title-slide slide level1 center">
+<section id="possible-rescue-unique-by-several-columns" class="title-slide slide level1 smaller center">
 <h1>Possible rescue: unique by several columns</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">left_join</span>(maths, social_sciences, <span class="at">by =</span> (<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"birthplace"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">left_join</span>(maths, social_sciences, <span class="at">by =</span> (<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"birthplace"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   name         birthplace math_test soc_test
@@ -962,13 +1098,13 @@ $ `2005`  &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.9
 </div>
 </section>
 
-<section id="no-chance-to-join" class="title-slide slide level1 center">
+<section id="no-chance-to-join" class="title-slide slide level1 smaller center">
 <h1>No chance to join</h1>
 <p>If you cannot find anything that makes them unique.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>maths2 <span class="ot">&lt;-</span> <span class="fu">select</span>(maths, <span class="sc">-</span>birthplace)</span>
-<span id="cb22-2"><a href="#cb22-2"></a>social_sciences2 <span class="ot">&lt;-</span> <span class="fu">select</span>(social_sciences, <span class="sc">!</span>birthplace)</span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">left_join</span>(maths2, social_sciences2, <span class="at">by =</span> <span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>maths2 <span class="ot">&lt;-</span> <span class="fu">select</span>(maths, <span class="sc">-</span>birthplace)</span>
+<span id="cb40-2"><a href="#cb40-2"></a>social_sciences2 <span class="ot">&lt;-</span> <span class="fu">select</span>(social_sciences, <span class="sc">!</span>birthplace)</span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">left_join</span>(maths2, social_sciences2, <span class="at">by =</span> <span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in left_join(maths2, social_sciences2, by = "name"): Detected an unexpected many-to-many relationship between `x` and `y`.
 ℹ Row 1 of `x` matches multiple rows in `y`.
@@ -1019,158 +1155,187 @@ $ `2005`  &lt;dbl&gt; 17.83968, 23.32651, 29.60000, NA, 23.26396, 22.98603, 28.9
 <li><p>libraries <code>fuzzyjoin</code> along with <code>stringdist</code> (used by <code>fuzzyjoin</code>)</p></li>
 <li><p>DataCamp course <strong>Intermediate Regular Expressions in R &gt; Similarities Between Strings</strong></p></li>
 </ul>
+<aside class="notes">
+<p>You should only know that there are ways to cope with strings in columns that do not match completely. Only read further if you are particularly interested.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="jrc-names" class="title-slide slide level1 center">
 <h1>JRC Names</h1>
 <p>Steinberger Ralf, Bruno Pouliquen, Mijail Kabadjov, Jenya Belyaeva &amp; Erik van der Goot (2011).<strong>JRC-Names: A freely available, highly multilingual named entity resource</strong>. Proceedings of the 8th International Conference Recent Advances in Natural Language Processing (RANLP). Hissar, Bulgaria, 12-14 September 2011.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>jrc_1 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"datasets_ATRIUM/JRC_Names/jrc_1.tsv"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2"></a>jrc_2 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"datasets_ATRIUM/JRC_Names/jrc_2.tsv"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3"></a>jrc_3 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"datasets_ATRIUM/JRC_Names/jrc_3.tsv"</span>)</span>
+<span id="cb43-4"><a href="#cb43-4"></a>jrc_4 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"datasets_ATRIUM/JRC_Names/jrc_4.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 
-<section id="matching-on-levenschtein-distance" class="title-slide slide level1 center">
+<section id="jrc-person-names" class="title-slide slide level1 center">
+<h1>JRC Person Names</h1>
+<ul>
+<li>persons with 4 spellings of their names</li>
+<li>2 tables, 20 rows,
+<ul>
+<li>equal pers IDs, different spelling</li>
+</ul></li>
+<li>test different fuzzy join metrics</li>
+</ul>
+<aside class="notes">
+<p>Watch the number of rows in inner join. Sensitivity (recall): how many it catches of those to catch: the longer table the better Specificity (precision): how many of those caught were correct (how much noise): check that their ids match.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="jrc-each-table" class="title-slide slide level1 smaller center">
+<h1>JRC each table</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>jrc_1 <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>( n, index_id, <span class="fu">starts_with</span>(<span class="st">"PersOrg"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+     id name           
+  &lt;dbl&gt; &lt;chr&gt;          
+1    41 John+Ashcroft  
+2    46 Richard+Boucher
+3    56 Adam+Ereli     
+4    92 Chris+Patten   
+5   123 Dan+Senor      </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>jrc_2 <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(n, index_id, <span class="fu">starts_with</span>(<span class="st">"PersOrg"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+     id name        
+  &lt;dbl&gt; &lt;chr&gt;       
+1    41 John+Ascroft
+2    46 Rick+Boucher
+3    56 Adam+J+Ereli
+4    92 CHRIS+PATTEN
+5   123 Daniel+Senor</code></pre>
+</div>
+</div>
+</section>
+
+<section id="matching-on-levenschtein-distance" class="title-slide slide level1 smaller center">
 <h1>Matching on Levenschtein Distance</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>joinJRC_lv <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_left_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, </span>
-<span id="cb25-2"><a href="#cb25-2"></a>                                         <span class="at">distance_col =</span> <span class="st">"distance"</span>, </span>
-<span id="cb25-3"><a href="#cb25-3"></a>                                         <span class="at">by =</span> <span class="st">"name"</span>, </span>
-<span id="cb25-4"><a href="#cb25-4"></a>                                         <span class="at">ignore_case =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>                                         <span class="at">method =</span> <span class="st">"lv"</span>,</span>
-<span id="cb25-6"><a href="#cb25-6"></a>                                         <span class="co">#q = 1,</span></span>
-<span id="cb25-7"><a href="#cb25-7"></a>                                         <span class="at">max_dist =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-8"><a href="#cb25-8"></a>  <span class="fu">relocate</span>(name.x, name.y, distance) </span>
-<span id="cb25-9"><a href="#cb25-9"></a>joinJRC_lv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>joinJRC_lv <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, </span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="at">distance_col =</span> <span class="st">"distance"</span>, <span class="at">by =</span> <span class="st">"name"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="at">method =</span> <span class="st">"lv"</span>,  <span class="at">max_dist =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">relocate</span>(name.x, name.y, distance) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(n.x, n.y, index_id.x, <span class="fu">starts_with</span>(<span class="st">"PersOrg"</span>)))</span>
+<span id="cb48-5"><a href="#cb48-5"></a>joinJRC_lv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 11
-   name.x name.y distance  id.x PersOrg.x   n.x index_id.x  id.y PersOrg.y   n.y
-   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;int&gt;
- 1 John+… John+…        1    41 P             4          1    41 P             4
- 2 Richa… &lt;NA&gt;         NA    46 P             4          1    NA &lt;NA&gt;         NA
- 3 Adam+… Adam+…        2    56 P             4          1    56 P             4
- 4 Chris… CHRIS…        0    92 P             4          1    92 P             4
- 5 Dan+S… &lt;NA&gt;         NA   123 P             4          1    NA &lt;NA&gt;         NA
- 6 Peter… PETER…        0   159 P             4          1   159 P             4
- 7 Rober… Rober…        1   173 P             4          1   173 P             4
- 8 Shauk… Shauk…        1   174 P             4          1   174 P             4
- 9 Gerha… Gerha…        1   196 P             4          1   196 P             4
-10 Johan… JOHAN…        0   202 P             4          1   202 P             4
-11 Rolan… ROLAN…        0   215 P             4          1   215 P             4
-12 Jesus… Jesús…        1   231 P             4          1   231 P             4
-13 Marti… Marti…        1   241 P             4          1   241 P             4
-14 Klaus… Klaus…        1   252 P             4          1   252 P             4
-15 Phili… Phill…        1   253 P             4          1   253 P             4
-16 Umber… UMBER…        0   259 P             4          1   259 P             4
-17 Thoma… &lt;NA&gt;         NA   274 P             4          1    NA &lt;NA&gt;         NA
-18 Marco… MARCO…        0   284 P             4          1   284 P             4
-19 Berna… BERNA…        0   292 P             4          1   292 P             4
-20 Seamu… Séamu…        1   339 P             4          1   339 P             4
-# ℹ 1 more variable: index_id.y &lt;int&gt;</code></pre>
+<pre><code># A tibble: 17 × 6
+   name.x                  name.y                distance  id.x  id.y index_id.y
+   &lt;chr&gt;                   &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 John+Ashcroft           John+Ascroft                 1    41    41          2
+ 2 Adam+Ereli              Adam+J+Ereli                 2    56    56          2
+ 3 Chris+Patten            CHRIS+PATTEN                 0    92    92          2
+ 4 Peter+Hain              PETER+HAIN                   0   159   159          2
+ 5 Roberto+Castelli        Robero+Castelli              1   173   173          2
+ 6 Shaukat+Sultan          Shaukat+Sultán               1   174   174          2
+ 7 Gerhard+Mayer+Vorfelder Gerhard+Mayer-Vorfel…        1   196   196          2
+ 8 Johannes+Rau            JOHANNES+RAU                 0   202   202          2
+ 9 Roland+Koch             ROLAND+KOCH                  0   215   215          2
+10 Jesus+Caldera           Jesús+Caldera                1   231   231          2
+11 Martin+Bartenstein      Martin+Barteinstein          1   241   241          2
+12 Klaus+Zumwinkel         Klaus+Zumwinckel             1   252   252          2
+13 Philip+Green            Phillip+Green                1   253   253          2
+14 Umberto+Agnelli         UMBERTO+AGNELLI              0   259   259          2
+15 Marco+Follini           MARCO+FOLLINI                0   284   284          2
+16 Bernard+Thibault        BERNARD+THIBAULT             0   292   292          2
+17 Seamus+Brennan          Séamus+Brennan               1   339   339          2</code></pre>
 </div>
 </div>
 </section>
 
-<section id="matching-on-qgrams" class="title-slide slide level1 center">
-<h1>Matching on qgrams</h1>
-<ul>
-<li><p>q-grams aka n-grams: rolling substrings of a given length</p></li>
-<li><p>bigrams (2-grams) of <strong>fish:</strong> <em>fi - is - sh</em></p></li>
-<li><p>trigrams (3-grams) of <strong>fish</strong>: <em>fis - ish</em></p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">stringdist_semi_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, </span>
-<span id="cb27-2"><a href="#cb27-2"></a>                                         <span class="at">distance_col =</span> <span class="st">"distance"</span>, </span>
-<span id="cb27-3"><a href="#cb27-3"></a>                                         <span class="at">by =</span> <span class="st">"name"</span>, </span>
-<span id="cb27-4"><a href="#cb27-4"></a>                                         <span class="at">ignore_case =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-5"><a href="#cb27-5"></a>                                         <span class="at">method =</span> <span class="st">"qgram"</span>,</span>
-<span id="cb27-6"><a href="#cb27-6"></a>                                         <span class="at">q =</span> <span class="dv">3</span>,</span>
-<span id="cb27-7"><a href="#cb27-7"></a>                                         <span class="at">max_dist =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 5
-      id PersOrg name                   n index_id
-   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;              &lt;int&gt;    &lt;int&gt;
- 1    41 P       John+Ashcroft          4        1
- 2    56 P       Adam+Ereli             4        1
- 3    92 P       Chris+Patten           4        1
- 4   159 P       Peter+Hain             4        1
- 5   173 P       Roberto+Castelli       4        1
- 6   174 P       Shaukat+Sultan         4        1
- 7   202 P       Johannes+Rau           4        1
- 8   215 P       Roland+Koch            4        1
- 9   241 P       Martin+Bartenstein     4        1
-10   252 P       Klaus+Zumwinkel        4        1
-11   253 P       Philip+Green           4        1
-12   259 P       Umberto+Agnelli        4        1
-13   284 P       Marco+Follini          4        1
-14   292 P       Bernard+Thibault       4        1
-15   339 P       Seamus+Brennan         4        1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">stringdist_anti_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, </span>
-<span id="cb29-2"><a href="#cb29-2"></a>                                         <span class="at">distance_col =</span> <span class="st">"distance"</span>, </span>
-<span id="cb29-3"><a href="#cb29-3"></a>                                         <span class="at">by =</span> <span class="st">"name"</span>, </span>
-<span id="cb29-4"><a href="#cb29-4"></a>                                         <span class="at">ignore_case =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb29-5"><a href="#cb29-5"></a>                                         <span class="at">method =</span> <span class="st">"qgram"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6"></a>                                         <span class="at">q =</span> <span class="dv">3</span>,</span>
-<span id="cb29-7"><a href="#cb29-7"></a>                                         <span class="at">max_dist =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-     id PersOrg name                        n index_id
-  &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;                   &lt;int&gt;    &lt;int&gt;
-1    46 P       Richard+Boucher             4        1
-2   123 P       Dan+Senor                   4        1
-3   196 P       Gerhard+Mayer+Vorfelder     4        1
-4   231 P       Jesus+Caldera               4        1
-5   274 P       Thomas+Kean                 4        1</code></pre>
-</div>
-</div>
-</section>
-
-<section id="matching-on-cosine-distance-between-qgrams" class="title-slide slide level1 center">
+<section id="matching-on-cosine-distance-between-qgrams" class="title-slide slide level1 smaller center">
 <h1>Matching on cosine distance between qgrams</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>joinJRC12_cosine <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, <span class="at">distance_col =</span> <span class="st">"distance"</span>,</span>
-<span id="cb31-2"><a href="#cb31-2"></a>          <span class="at">by =</span> <span class="st">"name"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb31-3"><a href="#cb31-3"></a>           <span class="at">method =</span> <span class="st">"cosine"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4"></a>          <span class="at">q =</span> <span class="dv">1</span>,</span>
-<span id="cb31-5"><a href="#cb31-5"></a>          <span class="at">max_dist =</span> <span class="fl">0.15</span>,</span>
-<span id="cb31-6"><a href="#cb31-6"></a>          ) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(name.x, name.y, distance) </span>
-<span id="cb31-7"><a href="#cb31-7"></a>joinJRC12_cosine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>joinJRC12_cosine <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, <span class="at">distance_col =</span> <span class="st">"distance"</span>,</span>
+<span id="cb50-2"><a href="#cb50-2"></a>          <span class="at">by =</span> <span class="st">"name"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb50-3"><a href="#cb50-3"></a>           <span class="at">method =</span> <span class="st">"cosine"</span>,</span>
+<span id="cb50-4"><a href="#cb50-4"></a>          <span class="at">q =</span> <span class="dv">1</span>,</span>
+<span id="cb50-5"><a href="#cb50-5"></a>          <span class="at">max_dist =</span> <span class="fl">0.15</span>,</span>
+<span id="cb50-6"><a href="#cb50-6"></a>          ) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(name.x, name.y, distance) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(n.x, n.y, index_id.x, <span class="fu">starts_with</span>(<span class="st">"PersOrg"</span>)))</span>
+<span id="cb50-7"><a href="#cb50-7"></a>joinJRC12_cosine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 11
-   name.x name.y distance  id.x PersOrg.x   n.x index_id.x  id.y PersOrg.y   n.y
-   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;     &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;int&gt;
- 1 John+… John+…   0.0277    41 P             4          1    41 P             4
- 2 Richa… Rick+…   0.1       46 P             4          1    46 P             4
- 3 Adam+… Adam+…   0.0551    56 P             4          1    56 P             4
- 4 Chris… CHRIS…   0         92 P             4          1    92 P             4
- 5 Dan+S… Danie…   0.0955   123 P             4          1   123 P             4
- 6 Peter… PETER…   0        159 P             4          1   159 P             4
- 7 Rober… Rober…   0.0186   173 P             4          1   173 P             4
- 8 Shauk… Shauk…   0.0383   174 P             4          1   174 P             4
- 9 Gerha… Gerha…   0.0165   196 P             4          1   196 P             4
-10 Johan… JOHAN…   0        202 P             4          1   202 P             4
-11 Rolan… ROLAN…   0        215 P             4          1   215 P             4
-12 Jesus… Jesús…   0.0526   231 P             4          1   231 P             4
-13 Marti… Marti…   0.0105   241 P             4          1   241 P             4
-14 Klaus… Klaus…   0.0230   252 P             4          1   252 P             4
-15 Phili… Phill…   0.0227   253 P             4          1   253 P             4
-16 Umber… UMBER…   0        259 P             4          1   259 P             4
-17 Thoma… Tom+K…   0.117    274 P             4          1   274 P             4
-18 Marco… MARCO…   0        284 P             4          1   284 P             4
-19 Berna… BERNA…   0        292 P             4          1   292 P             4
-20 Seamu… Séamu…   0.0392   339 P             4          1   339 P             4
-# ℹ 1 more variable: index_id.y &lt;int&gt;</code></pre>
+<pre><code># A tibble: 20 × 6
+   name.x                  name.y                distance  id.x  id.y index_id.y
+   &lt;chr&gt;                   &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 John+Ashcroft           John+Ascroft            0.0277    41    41          2
+ 2 Richard+Boucher         Rick+Boucher            0.1       46    46          2
+ 3 Adam+Ereli              Adam+J+Ereli            0.0551    56    56          2
+ 4 Chris+Patten            CHRIS+PATTEN            0         92    92          2
+ 5 Dan+Senor               Daniel+Senor            0.0955   123   123          2
+ 6 Peter+Hain              PETER+HAIN              0        159   159          2
+ 7 Roberto+Castelli        Robero+Castelli         0.0186   173   173          2
+ 8 Shaukat+Sultan          Shaukat+Sultán          0.0383   174   174          2
+ 9 Gerhard+Mayer+Vorfelder Gerhard+Mayer-Vorfel…   0.0165   196   196          2
+10 Johannes+Rau            JOHANNES+RAU            0        202   202          2
+11 Roland+Koch             ROLAND+KOCH             0        215   215          2
+12 Jesus+Caldera           Jesús+Caldera           0.0526   231   231          2
+13 Martin+Bartenstein      Martin+Barteinstein     0.0105   241   241          2
+14 Klaus+Zumwinkel         Klaus+Zumwinckel        0.0230   252   252          2
+15 Philip+Green            Phillip+Green           0.0227   253   253          2
+16 Umberto+Agnelli         UMBERTO+AGNELLI         0        259   259          2
+17 Thomas+Kean             Tom+Kean                0.117    274   274          2
+18 Marco+Follini           MARCO+FOLLINI           0        284   284          2
+19 Bernard+Thibault        BERNARD+THIBAULT        0        292   292          2
+20 Seamus+Brennan          Séamus+Brennan          0.0392   339   339          2</code></pre>
 </div>
 </div>
 </section>
 
-<section id="matching-on-jaccard-distance" class="title-slide slide level1 center">
+<section id="matching-on-jaccard-distance" class="title-slide slide level1 smaller center">
 <h1>Matching on Jaccard distance</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>joinJRC12_jaccard <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2, <span class="at">distance_col =</span> <span class="st">"distance"</span>,</span>
-<span id="cb33-2"><a href="#cb33-2"></a>          <span class="at">by =</span> <span class="st">"name"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb33-3"><a href="#cb33-3"></a>           <span class="at">method =</span> <span class="st">"jaccard"</span>,</span>
-<span id="cb33-4"><a href="#cb33-4"></a>          <span class="at">q =</span> <span class="dv">1</span>,</span>
-<span id="cb33-5"><a href="#cb33-5"></a>          <span class="at">max_dist =</span> <span class="fl">0.18</span>,</span>
-<span id="cb33-6"><a href="#cb33-6"></a>          ) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(name.x, name.y, distance) </span>
-<span id="cb33-7"><a href="#cb33-7"></a>joinJRC12_jaccard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>joinJRC12_jaccard <span class="ot">&lt;-</span> fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(<span class="at">x =</span> jrc_1, <span class="at">y =</span> jrc_2,</span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="at">distance_col =</span> <span class="st">"distance"</span>,  <span class="at">by =</span> <span class="st">"name"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">"jaccard"</span>,</span>
+<span id="cb52-3"><a href="#cb52-3"></a>          <span class="at">q =</span> <span class="dv">1</span>, <span class="at">max_dist =</span> <span class="fl">0.18</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="#cb52-4"></a>  <span class="fu">relocate</span>(name.x, name.y, distance) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(n.x, n.y, index_id.x, <span class="fu">starts_with</span>(<span class="st">"PersOrg"</span>)))</span>
+<span id="cb52-5"><a href="#cb52-5"></a>joinJRC12_jaccard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 6
+   name.x                  name.y                distance  id.x  id.y index_id.y
+   &lt;chr&gt;                   &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 John+Ashcroft           John+Ascroft            0         41    41          2
+ 2 Adam+Ereli              Adam+J+Ereli            0.111     56    56          2
+ 3 Chris+Patten            CHRIS+PATTEN            0         92    92          2
+ 4 Peter+Hain              PETER+HAIN              0        159   159          2
+ 5 Roberto+Castelli        Robero+Castelli         0        173   173          2
+ 6 Shaukat+Sultan          Shaukat+Sultán          0.1      174   174          2
+ 7 Gerhard+Mayer+Vorfelder Gerhard+Mayer-Vorfel…   0.0714   196   196          2
+ 8 Johannes+Rau            JOHANNES+RAU            0        202   202          2
+ 9 Roland+Koch             ROLAND+KOCH             0        215   215          2
+10 Martin+Bartenstein      Martin+Barteinstein     0        241   241          2
+11 Klaus+Zumwinkel         Klaus+Zumwinckel        0.0769   252   252          2
+12 Philip+Green            Phillip+Green           0        253   253          2
+13 Umberto+Agnelli         UMBERTO+AGNELLI         0        259   259          2
+14 Marco+Follini           MARCO+FOLLINI           0        284   284          2
+15 Bernard+Thibault        BERNARD+THIBAULT        0        292   292          2
+16 Seamus+Brennan          Séamus+Brennan          0.1      339   339          2</code></pre>
+</div>
 </div>
 <div class="footer footer-default">
 

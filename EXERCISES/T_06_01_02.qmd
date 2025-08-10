@@ -1,0 +1,65 @@
+---
+title: "Join tables with dplyr"
+format: html
+editor: visual
+---
+
+## Data and libraries
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gapminder)
+library(glue)
+
+```
+
+```{r}
+marriage_df <- read_csv(file = glue("/lnet/aic/personal/cinkova/",
+"R_BEGINNERS_SHORT/datasets_ATRIUM/gapminder_firstmarriage.csv"))
+# or copy it to your location and read from there
+str(marriage_df)
+```
+
+## Task
+
+1.  Read the file as above and rename the column `2005` to "marriage". Retype this. Mind the quotes in "2005". Try without. They are very important when you get a column with an ambiguous name. With even weirder names you may even need backticks (\`2005\`).
+
+    ```{r}
+
+    ```
+
+2.  Filter `gapminder` for year 2007.
+
+3.  Join it with `marriage_df` (only matching countries).
+
+4.  Plot linear models of the association between the age of the first marriage in women and `gdpPercap`, `pop`, and `lifeExp` (each in a separate plot).
+
+5.  Plot the same three models but this time map continent on color.
+
+Write a short interpretation of the models.
+
+### Linear model of the association between the age of the first marriage in women and lifeExp
+
+```{r}
+
+```
+
+### Linear model of the association between the age of the first marriage in women and gdpPercap
+
+```{r}
+
+```
+
+### Linear model of the association between the age of the first marriage in women and pop
+
+```{r}
+
+```
+
+### Linear model of the association between the age of the first marriage in women and lifeExp, by continents
+
+### Linear model of the association between the age of the first marriage in women and gdpPercap, by continents
+
+### Linear model of the association between the age of the first marriage in women and pop, by continents
