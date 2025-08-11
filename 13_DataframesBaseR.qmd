@@ -1,0 +1,186 @@
+---
+title: "Data frames. The base-R way."
+author: "Silvie Cinková"
+date: 2025-08-11
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Libraries and data
+
+```{r}
+library(gapminder)
+library(dplyr)
+```
+
+## Quick orientation {.smaller}
+
+```{r}
+str(gapminder)
+```
+
+```{r}
+summary(gapminder)
+```
+
+```{r}
+nrow(gapminder)
+```
+
+```{r}
+ncol(gapminder)
+```
+
+```{r}
+colnames(gapminder)
+```
+
+```{r}
+str(colnames(gapminder))
+```
+
+## Subset rows and columns {.smaller}
+
+-   a single step, unlike `dplyr`
+
+like a vector, but 2 positions:
+
+-   `[rows_vector, columns vector ]`
+
+-   this always gives you a data frame, not vectors
+
+## Subset rows and columns {.smaller}
+
+```{r}
+colnames(gapminder)
+```
+
+```{r}
+gapminder[c(1:2, 13), c(1:3)] 
+```
+
+## ☠️ **Either** col names **or** positions
+
+```{r}
+#| error: true
+gapminder[, c(1, "year")]
+```
+
+::: notes
+This is possible in `dplyr`, but not in base R:
+
+```{r}
+select(gapminder, c(1, "year", pop)) %>%
+  slice(1)
+```
+
+In `dplyr::select` you can freely combine position indices with column names with or without quotes. This is impossible in base R, where the column vector is a regular vector: when you combine numbers and strings, it interprets the numbers as strings and hence tries to select columns that are named with numbers (e.g. "3"), while you refer to the third column without mentioning its name. A column name without quotes is considered a name of a variable (i.e. not a data frame column), so R starts looking for one outside the data frame.
+
+-   combination of column names and position indices only in `dplyr`.
+:::
+
+## Subset only rows (all columns)
+
+-   mind the comma!!!
+
+-   one position without comma $\approx$ **columns** vector!
+
+```{r}
+gapminder[c(1, 175), ] %>%
+  slice(1)
+```
+
+
+## Subset only columns (all rows)
+
+-   preceded by the comma or without
+
+```{r}
+#gapminder[c(1,3)] # equivalent
+gapminder[,c(1,3)] %>%
+  slice(1)
+```
+
+## `dplyr::pull` in base R
+
+-   access a column as a vector
+
+    ```{r}
+    gapminder$country %>% str()
+    gapminder$year %>% str()
+    ```
+
+## Filter rows by tests on column values {.smaller}
+
+```{r}
+gapminder[gapminder$year > 2002,] %>% slice(1:2)
+# gapminder["year" > 2002] # same, mind quotes!
+```
+## Renaming columns
+
+```{r}
+colnames(gapminder)[c(4, 6)]
+```
+
+```{r}
+colnames(gapminder)[c(4, 6)] <- toupper(colnames(gapminder)[c(4, 6)])
+colnames(gapminder)
+```
+
+::: notes
+Column names of a data frame are a character vector. You can overwrite elements inside a vector by subsetting the vector to expose them and then you assign to these positions the new values. You can think of it as of a *Find* and *Replace* procedure on a vector. This really changes the positions inside the vector.
+
+```{r}
+a <- c("apple", "banana")
+a[1] <- "CARROT"
+a
+```
+:::
+
+
+## Restore the original `gapminder`
+
+```{r}
+gapminder <- gapminder::gapminder
+```
+
+::: notes
+Otherwise we would stick with its version with renamed columns. 
+
+:::
+
+
+## The `subset` function
+
+```{r}
+subset(gapminder, subset = year < 1957, select = c(year, country, pop))
+```
+
+::: notes
+
+This is a regular base-R function. Note that you must access the column names without quotes. You can use both the arguments `subset` (rows) and `select` (columns), or either.  
+
+::: 
