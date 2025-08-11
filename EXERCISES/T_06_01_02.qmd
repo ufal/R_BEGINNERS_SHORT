@@ -26,15 +26,35 @@ str(marriage_df)
 
 1.  Read the file as above and rename the column `2005` to "marriage". Retype this. Mind the quotes in "2005". Try without. They are very important when you get a column with an ambiguous name. With even weirder names you may even need backticks (\`2005\`).
 
-    ```{r}
-
-    ```
+```{r}
+marriage_df <- marriage_df %>%
+  rename("marriage" = "2005")
+colnames(marriage_df)
+```
 
 2.  Filter `gapminder` for year 2007.
 
 3.  Join it with `marriage_df` (only matching countries).
 
+```{r}
+joined <- gapminder %>% 
+  inner_join(x = .,  y = marriage_df, by = "country")
+glimpse(joined)
+```
+
+
 4.  Plot linear models of the association between the age of the first marriage in women and `gdpPercap`, `pop`, and `lifeExp` (each in a separate plot).
+
+```{r}
+joined %>% ggplot() +
+geom_smooth(mapping = aes(x = marriage , y = gdpPercap), method = "lm")
+```
+
+```{r}
+joined %>% ggplot(mapping = aes(y = marriage , x = gdpPercap, color = continent)) +
+geom_smooth( method = "lm") +
+  geom_point()
+```
 
 5.  Plot the same three models but this time map continent on color.
 
@@ -43,7 +63,9 @@ Write a short interpretation of the models.
 ### Linear model of the association between the age of the first marriage in women and lifeExp
 
 ```{r}
-
+joined %>% ggplot(mapping = aes(y = marriage , x = lifeExp, color = continent)) +
+geom_smooth( method = "lm") +
+  geom_point()
 ```
 
 ### Linear model of the association between the age of the first marriage in women and gdpPercap

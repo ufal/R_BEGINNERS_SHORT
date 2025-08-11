@@ -22,7 +22,7 @@ format:
     shift-heading-level-by: -2
     number-sections: true
     include-in-header: atrium.tex
-    geometry: portrait,margin=1cm
+    geometry: landscape,margin=1cm
     highlight-style: tango
   html:
     toc: true
