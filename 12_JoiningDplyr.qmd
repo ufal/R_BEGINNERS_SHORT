@@ -29,7 +29,7 @@ format:
     embed-resources: true
 ---
 
-## Join tables by a shared column
+## Join tables by a shared column 
 
 ![](images_ATRIUM/SQL-table-schema-showing-the-relations-between-the-tables-in-the-complete-editing_W640.jpg)
 
