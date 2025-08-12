@@ -61,6 +61,8 @@ billionaires_outliers <- billionaires_2020 %>%
                               true = TRUE, 
                               false = FALSE)) %>% 
   arrange(desc(daily_income), world_6region)
+
+
 world_6region_vec <- distinct(billionaires_outliers, world_6region) %>% 
   arrange(world_6region) %>% 
   pull()  
