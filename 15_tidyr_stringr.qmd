@@ -1,0 +1,198 @@
+---
+title: "`tidyr` and `stringr`"
+author: "Silvie Cinková"
+date: 2025-08-13
+echo: true
+shift-heading-level-by: -1
+format:
+  revealjs:
+    plugins: [notes]
+    toc: true
+    slide-number: true
+    notes: true
+    pdf-export: true
+    css: atrium.css
+    chalkboard: false
+    scrollable: true
+    code-block-height: 650px
+    echo: true
+    #output-location: slide
+    preview-links: auto
+  pdf:
+    toc: true
+    number-sections: true
+    include-in-header: atrium.tex
+  html:
+    toc: true
+    number-sections: true
+    css: atrium.css
+    embed-resources: true
+---
+
+## Libraries 
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(gapminder)
+library(ggplot2)
+library(tidytext)
+```
+
+## Data
+
+```{r}
+billionaires_df <- read_tsv("datasets_ATRIUM/billionaires_combined.tsv", show_col_types = FALSE)
+bil_unite <- billionaires_df %>% distinct(name.x, birth_comb) %>% drop_na(birth_comb)
+bil_separate <- billionaires_df %>% distinct(name.x, person) %>% drop_na(name.x)
+gap_cze_ger_gdp <- gapminder %>% 
+  filter(country %in% c("Czech Republic", "Germany")) %>% 
+  select(country, year, gdpPercap)
+```
+
+## `tidyr`
+
+-   lumps and splits column values into new columns
+
+-   transforms several variable columns into categories of a new variable and the other way round
+
+-   completes observations with **missing values**
+
+-   manages **nested columns** (vector/list inside column!)
+
+::: notes
+This library is a "heavy-duty" assistant to `dplyr`. You use it when you need to make your data tidy for your purposes. Remember, tidy means that each row represents an observation and each column represents one variable. Sometimes it is a matter of perspective. Maybe we could say that the data is tidy when you can map all relevant variable to ggplot aesthetic scales.
+
+The original four big verbs of tidyr were two pairs of twins: `unite` and `separate`, and `pivot_longer` (formerly `gather`) and `pivot_wider` (formerly `spread`)
+:::
+
+## `tidyr::unite` (before)
+
+```{r}
+bil_unite %>% slice(1:10)
+```
+
+## `tidyr::unite` (after)
+
+```{r}
+bil_unite %>% slice(1:10) %>%
+  unite(col = ID, name.x, birth_comb,                     sep = "***", remove = FALSE) %>% 
+  kableExtra::kable()
+```
+
+## `tidyr::separate`
+
+-   splits values into two or more new columns
+
+```{r}
+bil_separate %>% slice(1:2) %>%
+  separate(col = name.x, into = c("firstnames", "middlenames", "lastnames" ), sep = " ", fill = "left")
+```
+
+```{r}
+set.seed(15)
+bil_separate %>% slice_sample(n = 10) %>% 
+  separate(col = name.x, 
+           into = c("firstnames",  "lastnames" ), 
+           sep = " ", fill = "left", remove = FALSE)
+```
+
+::: notes
+In some functions in `tidyr`, but also in `dplyr`, you will benefit of a good command of string operations. That is, when you can find general patterns in strings, mainly with Regular Expressions. When your data is structured very well, it can be easy; such as separate first names from surnames, when they are all in the same order and separated by comma. Most often this is not the case, but you can at least approximate a good result with a more advanced pattern. The current version of `tidyr` even has a separate function that works with regular expressions, but I was not able to get with it smarter results than with the ordinary one that only works with the delimiter.
+
+At any rate, R has a wonderful library for work with strings: `stringr`. I will include `stringr` functions wherever relevant.
+:::
+
+## `tidyr::pivot_wider` {.smaller}
+
+```{r}
+gap_czger_gdp_wide <- gap_cze_ger_gdp %>% 
+  pivot_wider(names_from = country, values_from = gdpPercap)
+gap_czger_gdp_wide %>% slice(1:3) %>% kableExtra::kable()
+```
+
+```{r}
+gap_czger_gdp_wide %$% 
+  cor(x = `Czech Republic`, y = Germany, method = "pearson")
+```
+
+::: notes
+Imagine you want to compute a correlation of the temporal development between two countries, considering an indicator, such as GDP per capita. To compute the correlation, you must have the data in two separate variables. This is how you would prepare `gapminder` to correlate GDP per capita 1952 - 2007 between Czechia and Germany.
+
+Format changes in data frames: wider = fewer rows and more columns, longer = (sometimes) fewer columns but definitely more rows, both compared to the state before the manipulation.
+:::
+
+## `tidyr::pivot_longer`
+
+```{r}
+gap_czger_gdp_wide %>% slice(1:10) %>% 
+  pivot_longer(cols = c(`Czech Republic`, Germany), names_to = "COUNTRY", values_to = "GDPperCap") 
+```
+
+::: notes
+... but you definitely prefer the GDP in one column and countries in the other column when you want to plot the development comparison. Wider tables are often considered to be more human-readable, and therefore you typically get them from sources that were primarily designed for print.
+:::
+
+## Separating into rows
+
+```{r}
+industry_terms <- billionaires_df %>% 
+  select(c(person, time, countries, industry, income_groups, world_6region)) %>%
+  separate_longer_delim(cols = c("industry"), delim = ";") 
+set.seed(33)
+industry_terms %>% slice_sample(n = 10)
+```
+
+## continuation
+
+```{r}
+industry_terms %<>%  
+  separate_longer_delim(cols = c("industry"), delim = "&") %>%
+  separate_longer_delim(cols = c("industry"), delim = "and") %>%
+  separate_longer_delim(cols = c("industry"), delim = ",")
+set.seed(10)
+industry_terms %>% slice_sample(n = 10)
+```
+
+```{r}
+industry_tf_idf <- industry_terms %>% filter(nchar(industry) > 1) %>% 
+  group_by(industry, countries, world_6region) %>% 
+  count(name = "freq") %>% ungroup() %>%
+  tidytext::bind_tf_idf(term = industry, 
+                        document = countries, 
+                        n = freq) %>% 
+  group_by(countries, world_6region) %>% 
+  slice_max(order_by = tf_idf, n = 3) %>% ungroup()
+
+```
+
+```{r}
+library(dplyr)
+library(tidygraph)
+library(ggraph)
+
+# Prepare edge list
+edges <- industry_tf_idf %>%
+  select(countries, industry, tf_idf)
+
+# Create node list
+nodes <- tibble(name = unique(c(edges$countries, edges$industry))) %>%
+  mutate(type = if_else(name %in% edges$countries, "country", "industry"))
+
+# Create graph object
+graph <- tbl_graph(nodes = nodes, edges = edges, directed = FALSE)
+graph
+
+# Plot with ggraph
+ggraph(graph, layout = "auto") +
+  geom_edge_link(aes(edge_width = tf_idf), alpha = 0.6) +
+  geom_node_point(aes(color = type), size = 0.3) +
+  geom_node_text(aes(label = name, color = type), repel = TRUE, size = 2, max.overlaps = 100) +
+  scale_edge_width(range = c(0.2, 2)) +
+  theme_void() +
+  labs(title = "Bipartite Network: Countries and Industries")
+ggsave(filename = "my_output_files/billionairs_industry_country_ggraph.pdf", width = 7 * 2, height = 7 * 2.2)
+
+```
