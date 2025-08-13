@@ -3130,6 +3130,8 @@ font-size:calc(1.5em / 0.7)
   <li><a href="#add-them-to-the-data-frame" id="toc-add-them-to-the-data-frame" class="nav-link" data-scroll-target="#add-them-to-the-data-frame"><span class="header-section-number">19</span> Add them to the data frame</a></li>
   <li><a href="#without-loop-use-purrrmap" id="toc-without-loop-use-purrrmap" class="nav-link" data-scroll-target="#without-loop-use-purrrmap"><span class="header-section-number">20</span> Without loop, use <code>purrr::map</code></a></li>
   <li><a href="#metadata-explored" id="toc-metadata-explored" class="nav-link" data-scroll-target="#metadata-explored"><span class="header-section-number">21</span> Metadata explored</a></li>
+  <li><a href="#try-out-mutate" id="toc-try-out-mutate" class="nav-link" data-scroll-target="#try-out-mutate"><span class="header-section-number">22</span> Try out <code>mutate</code></a></li>
+  <li><a href="#we-cannot-extract-the-info-from-str-nor-summary" id="toc-we-cannot-extract-the-info-from-str-nor-summary" class="nav-link" data-scroll-target="#we-cannot-extract-the-info-from-str-nor-summary"><span class="header-section-number">23</span> We cannot extract the info from <code>str</code> nor <code>summary</code></a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="14z_loops_lists.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="14z_loops_lists.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -3287,8 +3289,9 @@ Note
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">&quot;https://api.github.com/repos/open-numbers&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;/ddf--gapminder--systema_globalis/&quot;</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;contents/countries-etc-datapoints&quot;</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the GET request</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(url) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.github.com/repos/open-numbers/ddf--gapminder--systema_globalis/contents/countries-etc-datapoints&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the GET request</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(url) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="notes">
 <p>The API sends back a machine-readable version of what you see in the web GUI. Mind that it is not the raw html with the typesetting you would see if you viewed the source code of a website, but a structure that holds just the content of the website as the designers of this API defined it: the metadata of the files in this folder. Usually APIs give you a JSON file.</p>
@@ -3705,6 +3708,227 @@ See help(&quot;Deprecated&quot;)</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</section>
+<section id="try-out-mutate" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> Try out <code>mutate</code></h1>
+<ul>
+<li><p>still with my function but create a list</p></li>
+<li><p><code>rowwise</code> is the clue</p></li>
+<li><p>use <code>list</code> before the function even if it returns a list</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>get_details_list <span class="ot">&lt;-</span> <span class="cf">function</span>(url) {</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  my_filecolnames <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url, <span class="at">n_max =</span> <span class="dv">1</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>()</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  geo_column <span class="ot">&lt;-</span> <span class="st">&quot;geo&quot;</span> <span class="sc">%in%</span> my_filecolnames</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  time_column <span class="ot">&lt;-</span> <span class="st">&quot;time&quot;</span> <span class="sc">%in%</span> my_filecolnames</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  colnames_length <span class="ot">&lt;-</span> <span class="fu">length</span>(my_filecolnames)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">list</span>(</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;url&quot;</span> <span class="ot">=</span> url,</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;has_geo&quot;</span> <span class="ot">=</span> geo_column,</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;has_time&quot;</span> <span class="ot">=</span> time_column,</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;colnames_length&quot;</span> <span class="ot">=</span> colnames_length,</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;file_colnames&quot;</span> <span class="ot">=</span> my_filecolnames )</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>filenames_df <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">newcol =</span> <span class="fu">list</span>(<span class="fu">get_details_list</span>(download_url))) <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(newcol, <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(newcol_file_colnames, <span class="at">names_sep =</span> <span class="st">&quot;__&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> kableExtra<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in attr(x, &quot;align&quot;): &#39;xfun::attr()&#39; is deprecated.
+Use &#39;xfun::attr2()&#39; instead.
+See help(&quot;Deprecated&quot;)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in attr(x, &quot;format&quot;): &#39;xfun::attr()&#39; is deprecated.
+Use &#39;xfun::attr2()&#39; instead.
+See help(&quot;Deprecated&quot;)</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 30%">
+<col style="width: 0%">
+<col style="width: 30%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">download_url</th>
+<th style="text-align: right;">size</th>
+<th style="text-align: left;">newcol_url</th>
+<th style="text-align: left;">newcol_has_geo</th>
+<th style="text-align: left;">newcol_has_time</th>
+<th style="text-align: right;">newcol_colnames_length</th>
+<th style="text-align: left;">newcol_file_colnames__1</th>
+<th style="text-align: left;">newcol_file_colnames__2</th>
+<th style="text-align: left;">newcol_file_colnames__3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ddf–datapoints–adults_with_hiv_percent_age_15_49–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–adults_with_hiv_percent_age_15_49–by–geo–time.csv</td>
+<td style="text-align: right;">43902</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–adults_with_hiv_percent_age_15_49–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">adults_with_hiv_percent_age_15_49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ddf–datapoints–age_at_1st_marriage_women–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–age_at_1st_marriage_women–by–geo–time.csv</td>
+<td style="text-align: right;">9839</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–age_at_1st_marriage_women–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">age_at_1st_marriage_women</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ddf–datapoints–aged_15_24_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_24_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">81653</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_24_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15_24_employment_rate_percent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ddf–datapoints–aged_15_24_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_24_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">42723</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_24_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15_24_unemployment_rate_percent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ddf–datapoints–aged_15_64_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_64_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">84589</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15_64_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15_64_labour_force_participation_rate_percent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ddf–datapoints–aged_15plus_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">84550</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_employment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15plus_employment_rate_percent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ddf–datapoints–aged_15plus_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">87350</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15plus_labour_force_participation_rate_percent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ddf–datapoints–aged_15plus_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">65710</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_15plus_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_15plus_unemployment_rate_percent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ddf–datapoints–aged_25_54_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_25_54_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">84546</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_25_54_labour_force_participation_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_25_54_labour_force_participation_rate_percent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ddf–datapoints–aged_25_54_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_25_54_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: right;">40953</td>
+<td style="text-align: left;">https://raw.githubusercontent.com/open-numbers/ddf–gapminder–systema_globalis/master/countries-etc-datapoints/ddf–datapoints–aged_25_54_unemployment_rate_percent–by–geo–time.csv</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">geo</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">aged_25_54_unemployment_rate_percent</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="we-cannot-extract-the-info-from-str-nor-summary" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span> We cannot extract the info from <code>str</code> nor <code>summary</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>summary_info <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>))</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>summary_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Length Class  Mode   
+a 1      -none- numeric
+b 1      -none- numeric
+c 1      -none- numeric</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(summary_info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> &#39;summaryDefault&#39; chr [1:3, 1:3] &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;-none-&quot; &quot;-none-&quot; &quot;-none-&quot; ...
+ - attr(*, &quot;dimnames&quot;)=List of 2
+  ..$ : chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+  ..$ : chr [1:3] &quot;Length&quot; &quot;Class&quot; &quot;Mode&quot;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(summary_info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;summaryDefault&quot; &quot;table&quot;         </code></pre>
 </div>
 </div>
 </section>
