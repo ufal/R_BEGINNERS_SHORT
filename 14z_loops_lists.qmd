@@ -114,7 +114,7 @@ library(httr)
 url <- glue("https://api.github.com/repos/open-numbers",
             "/ddf--gapminder--systema_globalis/",
             "contents/countries-etc-datapoints")
-url <- "https://api.github.com/repos/open-numbers/ddf--gapminder--systema_globalis/contents/countries-etc-datapoints"
+
 # Make the GET request
 response <- httr::GET(url) 
 ```
@@ -376,12 +376,14 @@ metadata_explored2 <- left_join(filenames_df, otest, by = c("download_url" = "ur
 ## Metadata explored
 
 ```{r}
-metadata_explored %>% slice(1:2) %>% kableExtra::kable()
+#| warning: false
+metadata_explored %>% slice(1:2) #%>% kableExtra::kable()
 
 ```
 
 ```{r}
-metadata_explored2 %>% slice(1:2) %>% kableExtra::kable() 
+#| warning: false
+metadata_explored2 %>% slice(1:2) #%>% kableExtra::kable() 
 ```
 
 ## Try out `mutate`
@@ -414,7 +416,7 @@ filenames_df %>%
   mutate(newcol = list(get_details_list(download_url))) %>%
   unnest_wider(newcol, names_sep = "_") %>%
   unnest_wider(newcol_file_colnames, names_sep = "__") %>% 
-  ungroup() %>% kableExtra::kable()
+  ungroup() #%>% kableExtra::kable()
 ```
 
 ## We cannot extract the info from `str` nor `summary`
