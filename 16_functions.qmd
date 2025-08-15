@@ -55,7 +55,7 @@ Functions in programming are what verbs are in natural language. You may want to
 
 3.  In the main document with the script, apply the function `source` on that file. This will run the file and hence load all functions into your Global Environment.
 
-    -    `source(<"path/YourFileWithFunctions">.R)`
+    -   `source(<"path/YourFileWithFunctions">.R)`
 
 ## Syntax
 
@@ -195,7 +195,7 @@ list.files(pattern = "myresultstring", full.names = TRUE)
 file.remove("myresultstring.txt")
 ```
 
-## Visibility of outputs 
+## Visibility of outputs
 
 -   normally a result is visible but can be made invisible
 
